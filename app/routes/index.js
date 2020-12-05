@@ -97,6 +97,7 @@ import ForgotPassword from './Pages/ForgotPassword';
 import LockScreen from './Pages/LockScreen';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
+import setupAdmin from './Pages/Setup';
 import Success from './Pages/Success';
 import Timeline from './Pages/Timeline';
 
@@ -216,6 +217,7 @@ export const RoutedContent = () => {
             <Route component={ LockScreen } path="/pages/lock-screen" />
             <Route component={ Login } path="/pages/login" />
             <Route component={ Register } path="/pages/register" />
+            <Route component={ setupAdmin } path="/pages/setup" />
             <Route component={ Success } path="/pages/success" />
             <Route component={ Timeline } path="/pages/timeline" />
 
