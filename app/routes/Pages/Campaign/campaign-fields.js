@@ -13,18 +13,19 @@ import {
     CustomInput,
     StarRating,
     ButtonGroup
-} from './../../../../components';
+} from '../../../../app/components';
 import { CustomExportCSV } from '../../Tables/components/CustomExportButton';
 import { CustomSearch } from '../../Tables/components/CustomSearch';
 import { CustomPaginationPanel } from '../../Tables/components/CustomPaginationPanel';
 import { CustomSizePerPageButton } from '../../Tables/components/CustomSizePerPageButton';
 import { CustomPaginationTotal } from '../../Tables/components/CustomPaginationTotal';
-import { randomArray } from './../../../../utilities';
+import { randomArray } from '../../../utilities';
 import {
     buildCustomTextFilter,
     buildCustomSelectFilter,
     buildCustomNumberFilter
-} from './../filters';
+} from '../../../../app/routes/Tables/ExtendedTable/filters/index';
+import { Link } from 'react-router-dom';
 
 const INITIAL_PRODUCTS_COUNT = 500;
 
@@ -85,14 +86,9 @@ export class CampaignField extends React.Component {
     }
 
     handleAddRow() {
-        const currentSize = this.state.products.length;
-
-        this.setState({
-            products: [
-                generateRow(currentSize + 1),
-                ...this.state.products,
-            ]
-        });
+        return (
+            <Link to='/create-campaign'></Link>
+        )
     }
 
     handleDeleteRow() {
@@ -260,7 +256,7 @@ export class CampaignField extends React.Component {
                     <React.Fragment>
                         <div className="d-flex justify-content-end align-items-center mb-2">
                             <h6 className="my-0">
-                                AdvancedTable A
+                                Campaign
                             </h6>
                             <div className="d-flex ml-auto">
                                 <CustomSearch

@@ -60,6 +60,8 @@ import Editor from './Forms/Editor';
 import DatePicker from './Forms/DatePicker';
 import Dropzone from './Forms/Dropzone';
 import Sliders from './Forms/Sliders';
+import CreateCampaign from './Forms/CreateCampaign';
+import CampaignTable from './Pages/Campaign';
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -174,6 +176,8 @@ export const RoutedContent = () => {
             <Route component={ DatePicker } path="/forms/date-picker" />
             <Route component={ Dropzone } path="/forms/dropzone" />
             <Route component={ Sliders } path="/forms/sliders" />
+            <Route component={ CreateCampaign } path="/create-campaign" />
+            <Route component={ CampaignTable } path="/campaign" />
             
             { /*    Graphs Routes   */ }
             <Route component={ ReCharts } path="/graphs/re-charts" />

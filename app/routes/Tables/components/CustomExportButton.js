@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import {
     Button
-} from './../../../../components';
+} from '../../../../app/components';
 
 export const CustomExportCSV = ({children, onExport, ...props}) => {
     return (

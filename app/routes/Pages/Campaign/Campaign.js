@@ -6,7 +6,7 @@ import {
 } from './campaign-fields';
 import { HeaderMain } from "../../components/HeaderMain";
 
-export const ExtendedTable = () => (
+export const CampaignTable = () => (
     <Container>
         <HeaderMain 
             title="Campaigns"

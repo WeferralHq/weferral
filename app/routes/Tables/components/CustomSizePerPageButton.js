@@ -6,7 +6,7 @@ import {
     DropdownToggle,
     DropdownMenu,
     DropdownItem
-} from './../../../../components';
+} from '../../../../app/components';
 
 export const CustomSizePerPageButton = ({
     options,

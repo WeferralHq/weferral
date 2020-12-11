@@ -17,7 +17,6 @@ import {
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
 import { FooterAuth } from "../../components/Pages/FooterAuth";
-import axios from "axios";
 
 
 class setupAdmin extends React.Component{
