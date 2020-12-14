@@ -219,7 +219,7 @@ export const RoutedContent = () => {
             <Route component={ Error404 } path="/pages/error-404" />
             <Route component={ ForgotPassword } path="/pages/forgot-password" />
             <Route component={ LockScreen } path="/pages/lock-screen" />
-            <Route component={ Login } path="/pages/login" />
+            <Route component={ Login } path="/login" />
             <Route component={ Register } path="/pages/register" />
             <Route component={ setupAdmin } path="/pages/setup" />
             <Route component={ Success } path="/pages/success" />
