@@ -65,7 +65,7 @@ export class CreateCampaign extends React.Component {
 
         console.log(JSON.stringify(payload));
 
-        Fetcher(`${port}/campaign`, 'POST', payload).then((res) => {
+        Fetcher(`${port}/api/v1/campaign`, 'POST', payload).then((res) => {
             return <link to='/'></link>
         }, (error) => {
             console.log(error);

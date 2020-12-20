@@ -86,9 +86,9 @@ export class CampaignField extends React.Component {
     }
 
     handleAddRow() {
-        return (
+        //return (
             <Link to='/create-campaign'></Link>
-        )
+        //)
     }
 
     handleDeleteRow() {
