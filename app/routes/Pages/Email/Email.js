@@ -1,13 +1,17 @@
 import React from 'react';
-
 import { 
     Container,
     Row,
     Col,
+    Input,
     Card,
-    CardTitle,
+    Button,
     CardBody,
-    Table,
+    CardTitle,
+    Label,
+    FormGroup,
+    Form,
+    Table
 } from './../../../components';
 
 import { HeaderMain } from "../../components/HeaderMain";
