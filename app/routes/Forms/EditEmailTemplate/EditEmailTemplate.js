@@ -18,7 +18,7 @@ import {
 import { HeaderMain } from "../../components/HeaderMain";
 import { HeaderDemo } from "../../components/HeaderDemo";
 
-class NotificationTemplateForm extends React.Component {
+export class NotificationTemplateForm extends React.Component {
 
     constructor(props) {
         super(props);
@@ -146,5 +146,3 @@ class NotificationTemplateForm extends React.Component {
         )
     }
 }
-
-export default NotificationTemplateForm

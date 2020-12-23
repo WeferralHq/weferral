@@ -26,21 +26,21 @@ const colorStatus = [
 const TrTableDefault = (props) => (
     <React.Fragment>
         {
-            _.times(4, (index) => (
-                <tr key={ index }>
+            props.templates.map(template => (
+                <tr key={template.id}>
                     <td className="align-middle">
-                        <div className={ props.projectColor }>
-                            { props.templates.name } 
+                        <div className={props.projectColor}>
+                            {template.name}
                         </div>
                     </td>
                     <td className="align-middle">
-                        <div>
-                            { props.templates.subject } 
-                        </div>
+                        <span className="text-inverse">
+                            {template.subject}
+                        </span>
                     </td>
                     <td className="align-middle">
                         <div>
-                            { props.templates.send_email}
+                            {template.send_email.toString()}
                         </div>
                     </td>
                     <td className="align-middle">
@@ -50,7 +50,7 @@ const TrTableDefault = (props) => (
                     </td>
                     <td className="align-middle text-right">
                         <UncontrolledButtonDropdown>
-                            <DropdownToggle color="link" className={` text-decoration-none ${ props.dropdownColor } `}>
+                            <DropdownToggle color="link" className={` text-decoration-none ${props.dropdownColor} `}>
                                 <i className="fa fa-gear"></i><i className="fa fa-angle-down ml-2"></i>
                             </DropdownToggle>
                             <DropdownMenu right>
@@ -65,10 +65,11 @@ const TrTableDefault = (props) => (
                             </DropdownMenu>
                         </UncontrolledButtonDropdown>
                     </td>
+
                 </tr>
-            ))
-        }
+            ))}
     </React.Fragment>
+    
 )
 
 TrTableDefault.propTypes = {

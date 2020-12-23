@@ -63,6 +63,7 @@ import Sliders from './Forms/Sliders';
 import CreateCampaign from './Forms/CreateCampaign';
 import CampaignTable from './Pages/Campaign';
 import CampaignPageEditor from './Forms/CampaignPageEditor';
+import Email from './Pages/Email';
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -179,6 +180,7 @@ export const RoutedContent = () => {
             <Route component={ Sliders } path="/forms/sliders" />
             <Route component={ CreateCampaign } path="/create-campaign" />
             <Route component={ CampaignPageEditor } path="/edit-campaign-page" />
+            <Route component={ Email } path="/notifications-templates" />
             <Route component={ CampaignTable } path="/campaign" />
             
             { /*    Graphs Routes   */ }

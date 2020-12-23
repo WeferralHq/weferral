@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import faker from 'faker/locale/en_US';
 
 import { 
+    Button,
     Container,
     Row,
     Col,
@@ -23,6 +24,20 @@ const text= `
             <br/>
             <p>${ faker.lorem.paragraph() }</p>
         `;
+const modules = {
+    toolbar: [
+        [{ 'header': [1, 2, false] }],
+        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
+        ['clean']
+    ],
+}
+    
+const formats = [
+    'header',
+    'bold', 'italic', 'underline', 'strike', 'blockquote',
+    'list', 'bullet', 'indent'
+]
 export class CampaignPageEditor extends React.Component {
 
     constructor(props) {
@@ -30,96 +45,114 @@ export class CampaignPageEditor extends React.Component {
         this.state = {
             loading : true,
             campaigns : [],
-            text: text,
+            text: '',
+            id: 0,
             url : `${port}/api/v1/campaigns/`
         };
 
-        this.handleResponse = this.handleResponse.bind(this);
-        this.insertString = this.insertString.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.fetchData = this.fetchData.bind(this);
+        this._handleChange = this._handleChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
     componentDidMount() {
+        this.fetchData();
+    };
+
+    fetchData() {
         let self = this;
-        Fetcher(self.state.url).then(function(response){
+        alert('this');
+        Fetcher(`${port}/api/v1/campaigns/`).then(function(response){
             if(!response.error){
                 console.log(response);
-                self.setState({campaigns : response});
+                self.setState({campaigns: response, loading: false});
+                //console.log(self.state.campaigns);
             }
         });
     }
 
     handleChange(e) {
-        let id = e.target.id;
+        let value = e.target.value;
         let self = this;
-        Fetcher(`${port}/api/v1/campaign/${id}`).then(function(response){
+        self.setState({id: value});
+        Fetcher(`${port}/api/v1/campaign/${value}`).then(function(response){
             if(!response.error){
                 console.log(response);
-                self.setState({campaign : response});
+                self.setState({text: response.data.description});
             }
         });
     }
 
-    modules = {
-        toolbar: [
-            [{ 'header': [1, 2, false] }],
-            ['bold', 'italic', 'underline','strike', 'blockquote'],
-            [{'list': 'ordered'}, {'list': 'bullet'}, {'indent': '-1'}, {'indent': '+1'}],
-            ['clean']
-        ],
+    onSubmit() {
+        let self = this;
+        let payload = {description: self.state.text}
+        Fetcher(`${port}/api/v1/campaign-page/${self.state.id}`, 'POST', payload).then(function(response){
+            if(!response.error){
+                console.log('SUCCESS');
+            }
+        });
     }
 
-    formats = [
-        'header',
-        'bold', 'italic', 'underline', 'strike', 'blockquote',
-        'list', 'bullet', 'indent'
-    ]
-
-    _handleChange = (text) => {
-        this.setState({ text })
+    _handleChange(tar) {
+        let self = this;
+        //alert(tar);
+        self.setState({ text: tar });
     }
 
     render() {
-        return (
-            <Container>
-                <HeaderMain 
-                    title="Editor"
-                    className="mb-5 mt-4"
-                />
-                <p>
-                    <strong>Quill</strong> is a modern rich text editor built for compatibility and extensibility.
-                </p>
-                <Card>
-                    <Form>
-                        <FormGroup>
-                            <Label for="defaultSelect" sm={3}>
-                                Select Campaign
-                            </Label>
-                            <Col sm={9}>
-                                {this.state.campaigns.map(camp => (
-                                    <Input
-                                        type="select"
-                                        onChange={this.handleChange}
-                                        name="select"
-                                        id="defaultSelect"
-                                    >
-                                        <option defaultValue="">Select Campaign</option>
-                                        <option id={camp.data.id}>{camp.data.name}</option>
-                                    </Input>
-                                ))}
-                            </Col>
-                        </FormGroup>
-                    </Form>
-                    {this.state.campaign.id !== 0 && <ReactQuill
-                        value={ this.state.text }
-                        onChange={ this._handleChange }
-                        modules={ this.modules }
-                        formats={ this.formats }
-                        style={{
-                            minHeight: '300px'
-                        }}
-                    />}
-                </Card>
-            </Container>
-        );
+        if(this.state.loading === false){
+            return (
+                <Container>
+                    <HeaderMain 
+                        title="Editor"
+                        className="mb-5 mt-4"
+                    />
+                    <p>
+                        <strong>Quill</strong> is a modern rich text editor built for compatibility and extensibility.
+                    </p>
+                    <Card>
+                        <Form>
+                            <FormGroup>
+                                <Label for="defaultSelect" sm={3}>
+                                    Select Campaign
+                                </Label>
+                                <Col sm={9}>
+                                    
+                                        <Input
+                                            type="select"
+                                            onChange={this.handleChange}
+                                            name="select"
+                                            id="defaultSelect"
+                                        >
+                                            <option defaultValue="">Select Campaign</option>
+                                            {this.state.campaigns.map(camp => (
+                                            <option value={camp.id}>{camp.name}</option>))}
+                                        </Input>
+                                    
+                                </Col>
+                            </FormGroup>
+                        </Form>
+                        <ReactQuill
+                            value={ this.state.text }
+                            onChange={ this._handleChange }
+                            modules={ modules }
+                            formats={ formats }
+                            style={{
+                                minHeight: '300px'
+                            }}
+                        />
+                    </Card>
+                    <Button color='primary' onClick={() => { this.onSubmit() }} className="ml-auto px-4">
+                        Submit
+                    </Button>
+                </Container>
+            );
+        } else {
+            return(
+                <p>Loading</p>
+            )
+        }
+        
     }
 }
