@@ -4,13 +4,11 @@ import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
 import { Button } from './../../../components';
 
-const emailEditorRef = useRef(null);
-
 class EmailTemplateEditor extends React.Component {
 
-    constructor() {
-        super();
-        
+    constructor(props) {
+        super(props);
+        this.emailEditorRef = React.createRef();
         this.state = {
             id: this.props.id,
             emailJson: {},
@@ -22,10 +20,12 @@ class EmailTemplateEditor extends React.Component {
 
     onSubmit() {
         let self = this;
-        emailEditorRef.current.editor.saveDesign((data) =>{
-            const { design } = data
+        self.emailEditorRef.current.editor.saveDesign((data) =>{
+            const { design } = data;
+            console.log(JSON.stringify(data));
+            const payload = {message: design};
             
-            Fetcher(`${port}/api/v1/emailbody/${self.state.id}`, 'POST', design).then((res) => {
+            Fetcher(`${port}/api/v1/emailbody/${self.state.id}`, 'POST', payload).then((res) => {
                 if (!res.err) {
                     self.setState({ emailJson: res });
                 }
@@ -38,11 +38,10 @@ class EmailTemplateEditor extends React.Component {
         return(
             <div>
                 <div>
-                    <Button onClick={onsubmit}></Button>
+                    <Button onClick={this.onSubmit}>Save Design</Button>
                 </div>
                 <EmailEditor
-                    ref={emailEditorRef}
-                    saveDesign={}
+                    ref={this.emailEditorRef}
                 />
             </div>
         )

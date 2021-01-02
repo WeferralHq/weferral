@@ -42,7 +42,7 @@ export class Email extends React.Component {
 
     componentDidMount(){
         let self = this;
-        alert('this');
+        //alert('this');
         Fetcher(`${port}/api/v1/campaigns`).then((res) => {
             if(!res.err){
                 self.setState({campaign : res});

@@ -1,3 +1,3 @@
-import NotificationTemplateForm from './EditEmailTemplate';
+import {NotificationTemplateForm} from './EditEmailTemplate';
 
 export default NotificationTemplateForm;

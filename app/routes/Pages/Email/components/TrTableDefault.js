@@ -2,6 +2,7 @@ import React from 'react';
 import faker from 'faker/locale/en_US';
 import _ from 'lodash';
 import PropTypes from 'prop-types';
+import { NavLink as Link } from 'react-router-dom';
 
 import { 
     UncontrolledButtonDropdown,
@@ -12,15 +13,7 @@ import {
     Avatar,
     AvatarAddOn
 } from './../../../../components';
-import { randomAvatar } from './../../../../utilities';
 
-/*eslint-disable */
-const colorStatus = [
-    "danger",
-    "success",
-    "warning",
-    "secondary"
-];
 /*eslint-enable */
 
 const TrTableDefault = (props) => (
@@ -54,7 +47,7 @@ const TrTableDefault = (props) => (
                                 <i className="fa fa-gear"></i><i className="fa fa-angle-down ml-2"></i>
                             </DropdownToggle>
                             <DropdownMenu right>
-                                <DropdownItem>
+                                <DropdownItem tag={ Link } to={`/edit-template/${template.id}`}>
                                     <i className="fa fa-fw fa-envelope mr-2"></i>
                                     Edit
                                 </DropdownItem>
