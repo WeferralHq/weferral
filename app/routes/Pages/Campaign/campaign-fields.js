@@ -26,13 +26,15 @@ import {
     buildCustomNumberFilter
 } from '../../../../app/routes/Tables/ExtendedTable/filters/index';
 import { Link } from 'react-router-dom';
+import DateFormat from '../../../utilities/dateformat';
+import Fetcher from '../../../utilities/fetcher';
+import port from '../../../port';
 
 const INITIAL_PRODUCTS_COUNT = 500;
 
 const CampaignStatus = {
     Publish: true,
-    Unpublish: false,
-    Unknown: false
+    Unpublish: false
 };
 
 const sortCaret = (order) => {
@@ -42,29 +44,56 @@ const sortCaret = (order) => {
         return <i className={`fa fa-fw text-muted fa-sort-${order}`}></i>
 }
 
-const generateRow = (index) => ({
-    id: index,
-    name: faker.commerce.productName(),
-    quality: randomArray([
-        CampaignStatus.Publish,
-        CampaignStatus.Unpublish,
-        CampaignStatus.Unknown
-    ]),
-    price: (1000 + Math.random() * 1000).toFixed(2),
-    satisfaction: Math.round(Math.random() * 6),
-    inStockDate: faker.date.past()
-});
 
 export class CampaignField extends React.Component {
     constructor() {
         super();
         
         this.state = {
-            products: _.times(INITIAL_PRODUCTS_COUNT, generateRow),
-            selected: []
+            //products: _.times(INITIAL_PRODUCTS_COUNT, generateRow),
+            selected: [],
+            loading : true,
+            campaigns : [],
+            generatedrows : [],
         };
 
         this.headerCheckboxRef = React.createRef();
+        this.fetchData = this.fetchData.bind(this);
+        this.generateRow = this.generateRow.bind(this);
+    }
+
+    componentDidMount() {
+        this.fetchData();
+    };
+
+    fetchData() {
+        let self = this;
+        Fetcher(`${port}/api/v1/campaigns/`).then(function(response){
+            if(!response.error){
+                console.log(response);
+                self.setState({campaigns: response, loading: false});
+                self.generateRow();
+                //console.log(self.state.campaigns);
+            }
+        });
+    }
+
+    generateRow(){
+        let self = this;
+
+        const campaigns = self.state.campaigns.map(function (camps){
+            //alert(DateFormat(camps.created_at));
+            return {
+                id: camps.id,
+                name: camps.name,
+                published: camps.published,
+                reward_type: camps.reward_type,
+                commission_type: camps.commission_type,
+                created_at: DateFormat(camps.created_at)
+            }
+        });
+        //alert(JSON.stringify(campaigns));
+        self.setState({generatedrows: campaigns});
     }
 
     handleSelect(row, isSelected) {
@@ -92,18 +121,27 @@ export class CampaignField extends React.Component {
     }
 
     handleDeleteRow() {
-        this.setState({
-            products: _.filter(this.state.products, product =>
+        alert(this.state.selected);
+        Fetcher(`${port}/api/v1/campaign/${this.state.selected}/delete`, 'POST').then(function(response){
+            if(!response.error){
+                console.log(response);
+                self.setState({campaigns: response, loading: false});
+                self.generateRow();
+                //console.log(self.state.campaigns);
+            }
+        });
+        /*this.setState({
+            generatedrows: _.filter(this.state.generatedrows, product =>
                 !_.includes(this.state.selected, product.id))
-        })
+        })*/
     }
 
-    handleResetFilters() {
+    /*handleResetFilters() {
         this.nameFilter('');
         this.qualityFilter('');
-        this.priceFilter('');
-        this.satisfactionFilter('');
-    }
+        this.rewardFilter('');
+        this.commissionFilter('');
+    }*/
 
     createColumnDefinitions() {
         return [{
@@ -112,13 +150,7 @@ export class CampaignField extends React.Component {
             headerFormatter: column => (
                 <React.Fragment>
                     <span className="text-nowrap">{ column.text }</span>
-                    <a
-                        href="javascript:;"
-                        className="d-block small text-decoration-none text-nowrap"
-                        onClick={ this.handleResetFilters.bind(this) }
-                    >
-                        Reset Filters <i className="fa fa-times fa-fw text-danger"></i>
-                    </a>
+                    
                 </React.Fragment>
             )
         }, {
@@ -130,34 +162,28 @@ export class CampaignField extends React.Component {
                 <span className="text-inverse">
                     { cell }
                 </span>
-            ),
-            ...buildCustomTextFilter({
+            )
+            /*...buildCustomTextFilter({
                 placeholder: 'Enter campaign name...',
                 getFilter: filter => { this.nameFilter = filter; }
-            })
+            })*/
         }, {
-            dataField: 'quality',
-            text: 'Campaign Status',
+            dataField: 'published',
+            text: 'Publish',
             formatter: (cell) => {
                 let pqProps;
                 switch (cell) {
                     case CampaignStatus.Publish:
                         pqProps = {
                             color: 'success',
-                            text: 'Good'
+                            text: 'True'
                         }
                     break;
                     case CampaignStatus.Unpublish:
-                        pqProps = {
-                            color: 'danger',
-                            text: 'Bad'
-                        }
-                    break;
-                    case CampaignStatus.Unknown:
                     default:
                         pqProps = {
-                            color: 'secondary',
-                            text: 'Unknown'
+                            color: 'danger',
+                            text: 'False'
                         }
                 }
 
@@ -168,137 +194,141 @@ export class CampaignField extends React.Component {
                 )
             },
             sort: true,
-            sortCaret,
-            ...buildCustomSelectFilter({
+            sortCaret
+            /*...buildCustomSelectFilter({
                 placeholder: 'Select Status',
                 options: [
-                    { value: CampaignStatus.Publish, label: 'Published' },
-                    { value: CampaignStatus.Unpublish, label: 'Un-published' }
+                    { value: CampaignStatus.Publish, label: 'True' },
+                    { value: CampaignStatus.Unpublish, label: 'False' }
                 ],
                 getFilter: filter => { this.qualityFilter = filter; }
-            })
+            })*/
         }, {
-            dataField: 'price',
-            text: 'Product Price',
+            dataField: 'reward_type',
+            text: 'Reward Type',
             sort: true,
-            sortCaret,
-            ...buildCustomNumberFilter({
-                comparators: [Comparator.EQ, Comparator.GT, Comparator.LT],
-                getFilter: filter => { this.priceFilter = filter; }
-            })
+            sortCaret
+            /*...buildCustomTextFilter({
+                placeholder: 'Enter reward type...',
+                getFilter: filter => { this.rewardFilter = filter; }
+            })*/
         }, {
-            dataField: 'satisfaction',
-            text: 'Buyer Satisfaction',
+            dataField: 'commission_type',
+            text: 'Commission Type',
             sort: true,
-            sortCaret,
-            formatter: (cell) =>
-                <StarRating at={ cell } max={ 6 } />,
-            ...buildCustomSelectFilter({
-                placeholder: 'Select Satisfaction',
-                options: _.times(6, (i) => ({ value: i + 1, label: i + 1 })),
-                getFilter: filter => { this.satisfactionFilter = filter; }
-            })
+            sortCaret
+               /* ...buildCustomTextFilter({
+                    placeholder: 'Enter Commission type...',
+                    getFilter: filter => { this.commissionFilter = filter; }
+                })*/
         }, {
-            dataField: 'inStockDate',
-            text: 'In Stock From',
+            dataField: 'created_at',
+            text: 'Date Created',
             formatter: (cell) =>
                 moment(cell).format('DD/MM/YYYY'),
-            filter: dateFilter({
+            /*filter: dateFilter({
                 className: 'd-flex align-items-center',
                 comparatorClassName: 'd-none',
                 dateClassName: 'form-control form-control-sm',
                 comparator: Comparator.GT,
                 getFilter: filter => { this.stockDateFilter = filter; }
-            }),
+            }),*/
             sort: true,
             sortCaret
         }]; 
     }
 
     render() {
-        const columnDefs = this.createColumnDefinitions();
-        const paginationDef = paginationFactory({
-            paginationSize: 5,
-            showTotal: true,
-            pageListRenderer: (props) => (
-                <CustomPaginationPanel { ...props } size="sm" className="ml-md-auto mt-2 mt-md-0" />
-            ),
-            sizePerPageRenderer: (props) => (
-                <CustomSizePerPageButton { ...props } />
-            ),
-            paginationTotalRenderer: (from, to, size) => (
-                <CustomPaginationTotal { ...{ from, to, size } } />
-            )
-        });
-        const selectRowConfig = {
-            mode: 'checkbox',
-            selected: this.state.selected,
-            onSelect: this.handleSelect.bind(this),
-            onSelectAll: this.handleSelectAll.bind(this),
-            selectionRenderer: ({ mode, checked, disabled }) => (
-                <CustomInput type={ mode } checked={ checked } disabled={ disabled } />
-            ),
-            selectionHeaderRenderer: ({ mode, checked, indeterminate }) => (
-                <CustomInput type={ mode } checked={ checked } innerRef={el => el && (el.indeterminate = indeterminate)} />
-            )
-        };
-
-        return (
-            <ToolkitProvider
-                keyField="id"
-                data={ this.state.products }
-                columns={ columnDefs }
-                search
-                exportCSV
-            >
-            {
-                props => (
-                    <React.Fragment>
-                        <div className="d-flex justify-content-end align-items-center mb-2">
-                            <h6 className="my-0">
-                                Campaign
-                            </h6>
-                            <div className="d-flex ml-auto">
-                                <CustomSearch
-                                    className="mr-2"
-                                    { ...props.searchProps }
-                                />
-                                <ButtonGroup>
-                                    <CustomExportCSV
-                                        { ...props.csvProps }
-                                    >
-                                        Export
-                                    </CustomExportCSV>
-                                    <Button
-                                        size="sm"
-                                        outline
-                                        onClick={ this.handleDeleteRow.bind(this) }
-                                    >
-                                        Delete
-                                    </Button>
-                                    <Button
-                                        size="sm"
-                                        outline
-                                        onClick={ this.handleAddRow.bind(this) }
-                                    >
-                                        <i className="fa fa-fw fa-plus"></i>
-                                    </Button>
-                                </ButtonGroup>
-                            </div>
-                        </div>
-                        <BootstrapTable
-                            classes="table-responsive"
-                            pagination={ paginationDef }
-                            filter={ filterFactory() }
-                            selectRow={ selectRowConfig }
-                            bordered={ false }
-                            responsive
-                            { ...props.baseProps }
-                        />
-                    </React.Fragment>
+        if(this.state.loading === false){
+            const columnDefs = this.createColumnDefinitions();
+            const paginationDef = paginationFactory({
+                paginationSize: 5,
+                showTotal: true,
+                pageListRenderer: (props) => (
+                    <CustomPaginationPanel {...props} size="sm" className="ml-md-auto mt-2 mt-md-0" />
+                ),
+                sizePerPageRenderer: (props) => (
+                    <CustomSizePerPageButton {...props} />
+                ),
+                paginationTotalRenderer: (from, to, size) => (
+                    <CustomPaginationTotal {...{ from, to, size }} />
                 )
-            }
-            </ToolkitProvider>
-        );
+            });
+            const selectRowConfig = {
+                mode: 'checkbox',
+                selected: this.state.selected,
+                onSelect: this.handleSelect.bind(this),
+                onSelectAll: this.handleSelectAll.bind(this),
+                selectionRenderer: ({ mode, checked, disabled }) => (
+                    <CustomInput type={mode} checked={checked} disabled={disabled} />
+                ),
+                selectionHeaderRenderer: ({ mode, checked, indeterminate }) => (
+                    <CustomInput type={mode} checked={checked} innerRef={el => el && (el.indeterminate = indeterminate)} />
+                )
+            };
+
+            return (
+                <ToolkitProvider
+                    keyField="id"
+                    data={this.state.generatedrows}
+                    columns={columnDefs}
+                    search
+                    exportCSV
+                >
+                    {
+                        props => (
+                            <React.Fragment>
+                                <div className="d-flex justify-content-end align-items-center mb-2">
+                                    <h6 className="my-0">
+                                        Campaign
+                            </h6>
+                                    <div className="d-flex ml-auto">
+                                        <CustomSearch
+                                            className="mr-2"
+                                            {...props.searchProps}
+                                        />
+                                        <ButtonGroup>
+                                            <CustomExportCSV
+                                                {...props.csvProps}
+                                            >
+                                                Export
+                                    </CustomExportCSV>
+                                            <Button
+                                                size="sm"
+                                                outline
+                                                onClick={this.handleDeleteRow.bind(this)}
+                                            >
+                                                Delete
+                                    </Button>
+                                            <Button
+                                                size="sm"
+                                                outline
+                                                onClick={this.handleAddRow.bind(this)}
+                                            >
+                                                <i className="fa fa-fw fa-plus"></i>
+                                            </Button>
+                                        </ButtonGroup>
+                                    </div>
+                                </div>
+                                <BootstrapTable
+                                    classes="table-responsive"
+                                    pagination={paginationDef}
+                                    //filter={filterFactory()}
+                                    selectRow={ selectRowConfig }
+                                    bordered={false}
+                                    responsive
+                                    {...props.baseProps}
+                                />
+                            </React.Fragment>
+                        )
+                    }
+                </ToolkitProvider>
+            );
+        } else{
+            return(
+                <p>Loading</p>
+            )
+        }
+        
     }
 }
