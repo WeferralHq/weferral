@@ -384,7 +384,7 @@ export class CreateCampaign extends React.Component {
                                                         <FormGroup>
                                                             <Label for="cookie-life">
                                                                 Cookie Life
-                                                        </Label>
+                                                            </Label>
                                                             <Input
                                                                 type="text"
                                                                 onChange={this.handleChange}

@@ -185,7 +185,7 @@ export const RoutedContent = () => {
             <Route component={ Email } path="/notifications-templates" />
             <Route component={ CampaignTable } path="/campaign" />
             <Route component={ NotificationTemplateForm } path="/edit-template/:id" />
-            <Route component={ CampaignSettings } path="/campaign-settings" />
+            <Route component={ CampaignSettings } path="/campaign-settings/:id" />
 
             
             { /*    Graphs Routes   */ }
