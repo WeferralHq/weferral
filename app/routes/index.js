@@ -104,6 +104,7 @@ import LockScreen from './Pages/LockScreen';
 import Login from './Pages/Login';
 import Register from './Pages/Register';
 import setupAdmin from './Pages/Setup';
+import referralSignup from './Pages/ReferralSignup';
 import Success from './Pages/Success';
 import Timeline from './Pages/Timeline';
 
@@ -231,6 +232,7 @@ export const RoutedContent = () => {
             <Route component={ Login } path="/login" />
             <Route component={ Register } path="/pages/register" />
             <Route component={ setupAdmin } path="/pages/setup" />
+            <Route component={ referralSignup } path="/:campaignName/signup" />
             <Route component={ Success } path="/pages/success" />
             <Route component={ Timeline } path="/pages/timeline" />
 
