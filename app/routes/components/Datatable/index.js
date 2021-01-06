@@ -1,3 +1,3 @@
-import WeferralTableBase from './WeferalTableBase';
+import {WeferralTableBase} from './WeferalTableBase';
 
 export default WeferralTableBase;

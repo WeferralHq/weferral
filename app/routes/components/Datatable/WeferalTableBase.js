@@ -37,13 +37,13 @@ export class WeferralTableBase extends React.Component {
 
     renderCustomClearSearchBtn(onClick) {
         return (
-            <Button onClick={ onClick }>Clear Search</Button>
+            <Button color="primary" onClick={ onClick }>Clear Search</Button>
         );
     };
 
     renderExportCSVButton(onClick) {
         return (
-            <Button onClick={ onClick }>Export</Button>
+            <Button color="primary" onClick={ onClick }>Export</Button>
         );
     }
 
@@ -52,7 +52,7 @@ export class WeferralTableBase extends React.Component {
         return (
             <ButtonGroup>
                 {self.props.createItemAction &&
-                <Button {...self.props.createItemProps} type='button' size="md" onClick={() => {
+                <Button color="primary" {...self.props.createItemProps} type='button' size="md" onClick={() => {
                     self.props.createItemAction ? self.props.createItemAction() :
                         console.error('You must pass a prop "createItem" to WeferralTableBase component.');
                 }}><i className="fa fa-plus"/> {self.props.createItemLabel}
@@ -73,7 +73,7 @@ export class WeferralTableBase extends React.Component {
                     [25, 50, 100].map((n, idx) => {
                         const isActive = (n === props.currSizePerPage) ? 'active' : null;
                         return (
-                            <Button key={ idx } type='button' className={ `btn btn-default ${isActive}` }
+                            <Button color="primary" key={ idx } type='button' className={ `btn btn-default ${isActive}` }
                                     onClick={ () => props.changeSizePerPage(n) }>{ n }</Button>
                         );
                     })

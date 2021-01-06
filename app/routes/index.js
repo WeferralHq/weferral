@@ -66,6 +66,7 @@ import CampaignPageEditor from './Forms/CampaignPageEditor';
 import Email from './Pages/Email';
 import NotificationTemplateForm from './Forms/EditEmailTemplate';
 import CampaignSettings from './Forms/SystemOptions';
+import ManageParticipantList from './Pages/Participant';
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -187,6 +188,7 @@ export const RoutedContent = () => {
             <Route component={ CampaignTable } path="/campaign" />
             <Route component={ NotificationTemplateForm } path="/edit-template/:id" />
             <Route component={ CampaignSettings } path="/campaign-settings/:id" />
+            <Route component={ ManageParticipantList } path="/participants" />
 
             
             { /*    Graphs Routes   */ }

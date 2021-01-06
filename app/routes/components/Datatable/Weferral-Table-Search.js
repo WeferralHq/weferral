@@ -23,7 +23,7 @@ class WeferralTableSearch extends React.Component {
         return (
             <div>
                 <span>
-                    <Button type="button" onClick={ this.toggleAdvanced }></Button>
+                    <Button color="primary" type="button" onClick={ this.toggleAdvanced }>Advanced Search</Button>
                 </span>
             </div>
         );
