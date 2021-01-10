@@ -24,6 +24,7 @@ import SidebarDefault from './Layouts/SidebarDefault';
 import SidebarA from './Layouts/SidebarA';
 import DragAndDropLayout from './Layouts/DragAndDropLayout';
 import SidebarWithNavbar from './Layouts/SidebarWithNavbar';
+import ParticipantNavBar from './Layouts/ParticipantNavBar';
 
 import Accordions from './Interface/Accordions';
 import Alerts from './Interface/Alerts';
@@ -67,6 +68,7 @@ import Email from './Pages/Email';
 import NotificationTemplateForm from './Forms/EditEmailTemplate';
 import CampaignSettings from './Forms/SystemOptions';
 import ManageParticipantList from './Pages/Participant';
+import ParticipantDetails from './Pages/ParticipantDetails';
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
