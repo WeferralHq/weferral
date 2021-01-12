@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import port from '../../../port';
 import Fetcher from '../../../utilities/fetcher';
+import { HeaderSignup } from './SignupHeader';
 
 import {
     Form,
@@ -111,40 +112,10 @@ class referralSignup extends React.Component{
             console.log("colorSettings", colorSettings);
             
             return (  
-                <div>
-                    {types.map((type) => {
-                        //alert(type);
-                        return(
-                            <EmptyLayout>
-                                <EmptyLayout.Section center width={480}>
-                                {group[type].map((group) => {
-                                if(group.option === 'campaign_title_form'){
-                                    return(
-                                        <div className="mb-4">
-                                            <h5 className="text-center mb-4">
-                                                {group.value}
-                                            </h5>
-                                        </div>
-                                    )
-                                }else if(group.option === 'campaign_title_description'){
-                                    return(
-                                        <div className="mb-4">
-                                            <p className="text-center">
-                                                {group.value}
-                                            </p>
-                                        </div>
-                                    )
-                                }
-                            
-                            })}
-                                </EmptyLayout.Section>
-                            </EmptyLayout>
-                        )
-                    })}
                     <EmptyLayout>
                         <EmptyLayout.Section center width={480}>
                             { /* START Header */}
-                            
+                            <HeaderSignup types={types} group={group}/>
                             
                             { /* END Header */}
                             { /* START Form */}
@@ -268,8 +239,6 @@ class referralSignup extends React.Component{
                             { /* END Footer */}
                         </EmptyLayout.Section>
                     </EmptyLayout>
-                    
-                </div>
             )
         }else {
             return(

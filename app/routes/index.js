@@ -69,6 +69,7 @@ import NotificationTemplateForm from './Forms/EditEmailTemplate';
 import CampaignSettings from './Forms/SystemOptions';
 import ManageParticipantList from './Pages/Participant';
 import ParticipantDetails from './Pages/ParticipantDetails';
+import ManageCustomerList from './Pages/Customer';
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -191,6 +192,7 @@ export const RoutedContent = () => {
             <Route component={ NotificationTemplateForm } path="/edit-template/:id" />
             <Route component={ CampaignSettings } path="/campaign-settings/:id" />
             <Route component={ ManageParticipantList } path="/participants" />
+            <Route component={ ManageCustomerList } path="/customers" />
 
             
             { /*    Graphs Routes   */ }
