@@ -5,6 +5,7 @@ import {
     Avatar,
     AvatarAddOn,
     Container,
+    EmptyLayout,
     Row,
     Col,
     Card,
@@ -15,6 +16,7 @@ import {
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import Cookies from 'js-cookie';
+import { ProfileOverviewCard } from "../../components/Profile/ProfileOverviewCard";
 
 export class ParticipantDetails extends React.Component {
 
@@ -37,8 +39,9 @@ export class ParticipantDetails extends React.Component {
 
     fetchData() {
         let self = this;
-        let pid = Cookies.get("pid");
-        let url = `${port}/api/v1/participant/profile/${pid}`;
+        let id = Cookies.get("pid");
+        alert(id);
+        let url = `${port}/api/v1/participant/profile/${id}`;
         Fetcher(url).then(function (response) {
             if (!response.error) {
                 self.setState({rows: response});
@@ -54,91 +57,92 @@ export class ParticipantDetails extends React.Component {
             )
         } else {
             return(
-                <React.Fragment>
-                    <Container>
-                        <Row>
-                            <Col lg={4}>
-                                <Card>
-                                    <CardBody>
-                                        <div className="d-flex justify-content-center my-3">
-                                            <Avatar.Image
-                                                size="lg"
-                                                src="http://bs4.webkom.co/img/avatars/2.jpg"
-                                                addOns={[
-                                                    <AvatarAddOn.Icon
-                                                        className="fa fa-circle"
-                                                        color="white"
-                                                        key="avatar-icon-white-bg"
+                <EmptyLayout>
+                    <EmptyLayout.Section width={1080}>
+                            <Container>
+                                <Row>
+                                    <Col lg={4}>
+                                        <Card>
+                                            <CardBody>
+                                                <div className="d-flex justify-content-center my-3">
+                                                    <Avatar.Image
+                                                        size="lg"
+                                                        src="http://bs4.webkom.co/img/avatars/2.jpg"
+                                                        addOns={[
+                                                            <AvatarAddOn.Icon
+                                                                className="fa fa-circle"
+                                                                color="white"
+                                                                key="avatar-icon-white-bg"
+                                                            />
+                                                        ]}
                                                     />
-                                                ]}
-                                            />
-                                        </div>
-                                        <div className="mb-4 text-center">
-                                            <a className="h6 text-decoration-none" href="#">
-                                                {this.state.rows.name}
-                                            </a>
-                                        </div>
-                                        <Row className="mt-3">
-                                            <Col sm={12} md={12}>
-                                                <Button color="secondary" outline block tag={Link} to="/apps/profile-edit">
-                                                    Edit
+                                                </div>
+                                                <div className="mb-4 text-center">
+                                                    <a className="h6 text-decoration-none" href="#">
+                                                        {this.state.rows.name}
+                                                    </a>
+                                                </div>
+                                                <Row className="mt-3">
+                                                    <Col sm={12} md={12}>
+                                                        <Button color="secondary" outline block tag={Link} to="/apps/profile-edit">
+                                                            Edit
                                                 </Button>
-                                            </Col>
-                                        </Row>
-                                    </CardBody>
-                                </Card>
-                            </Col>
-                            <Col lg={8}>
-                                <CardGroup className="mb-5">
-                                    <Card body>
-                                        <ProfileOverviewCard
-                                            title="SIGNUPS"
-                                            badgeColor="primary"
-                                            //badgeTitle="Monthly"
-                                            value={this.state.rows.totalsignups}
-                                            valueTitle="Total Signups"
-                                            //footerTitle="Last Month"
-                                            //footerTitleClassName="text-success"
-                                            //footerIcon="caret-up"
-                                            //footerValue="23%"
-                                        />
-                                    </Card>
-                                    <Card body>
-                                        <ProfileOverviewCard
-                                            title="Customers"
-                                            badgeColor="info"
-                                            //badgeTitle="Annual"
-                                            value={this.state.rows.totalcustomers}
-                                            valueTitle="Total Customers"
-                                            //footerTitle="Last Annual"
-                                            //footerTitleClassName="text-danger"
-                                            //footerIcon="caret-down"
-                                            //footerValue="96%"
-                                        />
-                                    </Card>
-                                    <Card body>
-                                        <ProfileOverviewCard
-                                            title="Clicks"
-                                            //badgeColor="secondary"
-                                            //badgeTitle="Today"
-                                            value={this.state.rows.totalcustomers}
-                                            valueTitle="Total Clicks"
-                                        />
-                                    </Card>
-                                    <Card body>
-                                        <ProfileOverviewCard
-                                            title="Awaiting Payouts"
-                                            //badgeColor="secondary"
-                                            //badgeTitle="Today"
-                                            value={`$${this.state.rows.awaitingpayout}`}
-                                            valueTitle="Total Awaiting Payouts"
-                                        />
-                                    </Card>
-                                </CardGroup>
-                            </Col>
-                        </Row>
-                    </Container>
-                </React.Fragment>
+                                                    </Col>
+                                                </Row>
+                                            </CardBody>
+                                        </Card>
+                                    </Col>
+                                    <Col lg={8}>
+                                        <CardGroup className="mb-5">
+                                            <Card body>
+                                                <ProfileOverviewCard
+                                                    title="Signups"
+                                                    //badgeTitle="Monthly"
+                                                    value={this.state.rows.totalsignups}
+                                                    valueTitle="Total Signups"
+                                                //footerTitle="Last Month"
+                                                //footerTitleClassName="text-success"
+                                                //footerIcon="caret-up"
+                                                //footerValue="23%"
+                                                />
+                                            </Card>
+                                            <Card body>
+                                                <ProfileOverviewCard
+                                                    title="Customers"
+                                                    //badgeTitle="Annual"
+                                                    value={this.state.rows.totalcustomers}
+                                                    valueTitle="Total Customers"
+                                                //footerTitle="Last Annual"
+                                                //footerTitleClassName="text-danger"
+                                                //footerIcon="caret-down"
+                                                //footerValue="96%"
+                                                />
+                                            </Card>
+                                            <Card body>
+                                                <ProfileOverviewCard
+                                                    title="Clicks"
+                                                    //badgeColor="secondary"
+                                                    //badgeTitle="Today"
+                                                    value={this.state.rows.totalclicks}
+                                                    valueTitle="Total Clicks"
+                                                />
+                                            </Card>
+                                            <Card body>
+                                                <ProfileOverviewCard
+                                                    title="Awaiting Payouts"
+                                                    //badgeColor="secondary"
+                                                    //badgeTitle="Today"
+                                                    value={`$${this.state.rows.awaitingpayout}`}
+                                                    valueTitle="Total Awaiting Payouts"
+                                                />
+                                            </Card>
+                                        </CardGroup>
+                                    </Col>
+                                </Row>
+                            </Container>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
+                
             )
         }
     }

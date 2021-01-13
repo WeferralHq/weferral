@@ -193,6 +193,7 @@ export const RoutedContent = () => {
             <Route component={ CampaignSettings } path="/campaign-settings/:id" />
             <Route component={ ManageParticipantList } path="/participants" />
             <Route component={ ManageCustomerList } path="/customers" />
+            <Route component={ ParticipantDetails } path="/my-dashboard" />
 
             
             { /*    Graphs Routes   */ }

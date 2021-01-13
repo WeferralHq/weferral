@@ -128,7 +128,7 @@ export class ManageParticipantList extends React.Component {
                     <Col xl={ 12 }>
                         <WeferralTableBase
                             rows={this.state.rows}
-                            createItemAction={() => { this.props.history.push.push('/participant/create') }}
+                            createItemAction={() => { this.props.history.push('/participant/create') }}
                             createItemLabel={'Create a Participant'}
                             fetchRows={this.fetchData}
                             sortColumn="created_at"

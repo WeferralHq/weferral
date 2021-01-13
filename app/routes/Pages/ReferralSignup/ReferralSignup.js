@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import port from '../../../port';
 import Fetcher from '../../../utilities/fetcher';
 import { HeaderSignup } from './SignupHeader';
+import Cookies from 'js-cookie';
 
 import {
     Form,
@@ -82,7 +83,12 @@ class referralSignup extends React.Component{
         
 
         Fetcher(`${port}/api/v1/participant/${this.state.id}`, 'POST', payload).then((res) => {
-            return <link to='/'></link>
+            if(!res.error){
+                console.log(JSON.stringify(res));
+                Cookies.set("pid", res.data.id);
+                const dash = '/my-dashboard';
+                this.props.history.push(dash);
+            }
         }, (error) => {
             console.log(error);
         })

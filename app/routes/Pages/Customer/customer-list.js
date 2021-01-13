@@ -3,8 +3,15 @@ import { NavLink as Link } from 'react-router-dom';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import DateFormat from '../../../utilities/dateformat';
+import ImportCsv from '../../../utilities/import';
 import { 
     Badge,
+    Button,
+    CustomInput,
+    UncontrolledModal,
+    ModalHeader,
+    ModalBody,
+    ModalFooter,
     UncontrolledButtonDropdown,
     DropdownToggle,
     DropdownMenu,
@@ -15,6 +22,7 @@ import {
 } from '../../../components';
 import WeferralTableBase from '../../components/Datatable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import Dropzone from 'react-dropzone';
 
 //const history = useHistory();
 
@@ -54,6 +62,12 @@ export class ManageCustomerList extends React.Component {
             }
             self.setState({loading: false});
         });
+    }
+
+    handleFileUpload(e) {
+        const file = e.target.files[0];
+        const resp = ImportCsv(file);
+        return resp;
     }
 
     /**
@@ -129,6 +143,25 @@ export class ManageCustomerList extends React.Component {
             return(
                 <Row>
                     <Col xl={ 12 }>
+                        <Button id="modalImportCustomer" color="primary">
+                            Import Customers
+                        </Button>
+                        <UncontrolledModal target="modalImportCustomer" size="lg">
+                            <ModalHeader tag="h5">
+                                Import Customer
+                            </ModalHeader>
+                            <ModalBody>
+                                <CustomInput type="file" accept=".csv,.xlsx,.xls" id="uploadYourFile" onChange={this.handleFileUpload} name="customFile" label="Browse for a file to upload...." />
+                            </ModalBody>
+                            <ModalFooter>
+                                <UncontrolledModal.Close color="link" className="text-primary" size="lg">
+                                    Close
+                            </UncontrolledModal.Close>
+                                <UncontrolledModal.Close color="primary" size="lg">
+                                    Save
+                            </UncontrolledModal.Close>
+                            </ModalFooter>
+                        </UncontrolledModal>
                         <WeferralTableBase
                             rows={this.state.rows}
                             createItemAction={() => { this.props.history.push.push('/participant/create') }}

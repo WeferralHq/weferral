@@ -12,9 +12,9 @@ const ProfileOverviewCard = (props) => (
             <CardTitle tag="h6">
                 { props.title }
             </CardTitle>
-            <Badge pill color={ `${ props.badgeColor }` } className="align-self-start ml-auto">
+            {/*<Badge pill color={ `${ props.badgeColor }` } className="align-self-start ml-auto">
                 { props.badgeTitle }
-            </Badge>
+            </Badge>*/}
         </div>
         <div className="text-center my-4">
             <h2>{ props.value }</h2>
@@ -22,7 +22,7 @@ const ProfileOverviewCard = (props) => (
                 { props.valueTitle }
             </span>
         </div>
-        <div className="d-flex">
+        {/*<div className="d-flex">
             <span>
                 { props.footerTitle }
             </span>
@@ -30,7 +30,7 @@ const ProfileOverviewCard = (props) => (
                 <i className={ `fa mr-1 fa-${ props.footerIcon }` }></i>
                 { props.footerValue }
             </span>
-        </div>
+        </div>*/}
     </React.Fragment>
 )
 ProfileOverviewCard.propTypes = {
