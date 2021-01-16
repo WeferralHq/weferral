@@ -67,6 +67,7 @@ import CampaignPageEditor from './Forms/CampaignPageEditor';
 import Email from './Pages/Email';
 import NotificationTemplateForm from './Forms/EditEmailTemplate';
 import CampaignSettings from './Forms/SystemOptions';
+import EditParticipant from './Forms/EditParticipant';
 import ManageParticipantList from './Pages/Participant';
 import ParticipantDetails from './Pages/ParticipantDetails';
 import ManageCustomerList from './Pages/Customer';
@@ -194,6 +195,7 @@ export const RoutedContent = () => {
             <Route component={ ManageParticipantList } path="/participants" />
             <Route component={ ManageCustomerList } path="/customers" />
             <Route component={ ParticipantDetails } path="/my-dashboard" />
+            <Route component={ EditParticipant } path="/edit-participant/:id" />
 
             
             { /*    Graphs Routes   */ }

@@ -27,6 +27,7 @@ export class ManageParticipantList extends React.Component {
             publishingModal: false,
             deleteModal: false,
             rows: {},
+            alerts: {},
             currentDataObject: {},
             lastFetch: Date.now(),
             loading: true,
@@ -35,6 +36,7 @@ export class ManageParticipantList extends React.Component {
 
         this.fetchData = this.fetchData.bind(this);
         this.rowActionsFormatter = this.rowActionsFormatter.bind(this);
+        this.DeleteParticipant = this.DeleteParticipant.bind(this);
     }
 
     componentDidMount() {
@@ -54,6 +56,24 @@ export class ManageParticipantList extends React.Component {
             }
             self.setState({loading: false});
         });
+    }
+
+    DeleteParticipant(id){
+        let self = this;
+        Fetcher(`${port}/api/v1/participant/${id}`, 'DELETE').then(function (response) {
+            if(!response.error){
+                self.setState({success: true, response: response});
+            }else{
+                let msg = 'Cannot delete a participant that has records attached to it.'
+                self.setState({
+                    alerts: {
+                        color: 'danger',
+                        icon: 'times',
+                        message: `${response.error} : ${msg}`
+                    }
+                });
+            }
+        })
     }
 
     /**
