@@ -3,6 +3,7 @@ import { NavLink as Link } from 'react-router-dom';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import DateFormat from '../../../utilities/dateformat';
+import { ToastContainer, toast } from 'react-toastify';
 import { 
     Badge,
     UncontrolledButtonDropdown,
@@ -11,10 +12,13 @@ import {
     DropdownItem,
     Row,
     Col,
-    AvatarAddOn
+    Media,
+    Button,
+    Container
 } from '../../../components';
 import WeferralTableBase from '../../components/Datatable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
+import { ImportButton } from './ImportButton';
 
 //const history = useHistory();
 
@@ -37,6 +41,7 @@ export class ManageParticipantList extends React.Component {
         this.fetchData = this.fetchData.bind(this);
         this.rowActionsFormatter = this.rowActionsFormatter.bind(this);
         this.DeleteParticipant = this.DeleteParticipant.bind(this);
+        this.showHandler = this.showHandler.bind(this);
     }
 
     componentDidMount() {
@@ -74,6 +79,37 @@ export class ManageParticipantList extends React.Component {
                 });
             }
         })
+    }
+
+    contentInfo(closeToast) {
+        return(
+            <Media>
+                <Media middle left className="mr-3">
+                    <i className="fa fa-fw fa-2x fa-info"></i>
+                </Media>
+                <Media body>
+                    <Media heading tag="h6">
+                        Information!
+                    </Media>
+                    <p>
+                        This alert needs your attention, but it's not important.
+                    </p>
+                    <div className="d-flex mt-2">
+                        <Button color="primary" onClick={() => { closeToast }} >
+                            I Understand
+                        </Button>
+                        <Button color="link" onClick={() => { closeToast }} className="ml-2 text-primary">
+                            Cancel
+                        </Button>
+                    </div>
+                </Media>
+            </Media>
+        )
+    }
+
+    showHandler(){
+        let self = this;
+        toast.info(self.contentInfo);
     }
 
     /**
@@ -128,10 +164,12 @@ export class ManageParticipantList extends React.Component {
                         <i className="fa fa-fw fa-envelope mr-2"></i>
                             Edit
                     </DropdownItem>
-                    <DropdownItem>
+                    <DropdownItem onClick={() => { this.showHandler() }}>
                         <i className="fa fa-fw fa-phone mr-2"></i>
+        {/*<Button id="modalDelete" color="primary" outline size="sm" >Delete</Button>*/}
                             Delete
                     </DropdownItem>
+                    
                 </DropdownMenu>
             </UncontrolledButtonDropdown>
         )
@@ -144,8 +182,10 @@ export class ManageParticipantList extends React.Component {
             )
         }else {
             return(
-                <Row>
+                <Container>
+                    <Row>
                     <Col xl={ 12 }>
+                        <ImportButton />
                         <WeferralTableBase
                             rows={this.state.rows}
                             createItemAction={() => { this.props.history.push('/participant/create') }}
@@ -201,6 +241,14 @@ export class ManageParticipantList extends React.Component {
                         </WeferralTableBase>
                     </Col>
                 </Row>
+                    <ToastContainer 
+                    position="top-center"
+                    autoClose={50000}
+                    draggable={true}
+                    hideProgressBar={true}
+                   />
+                </Container>
+                
             )
         }
     }
