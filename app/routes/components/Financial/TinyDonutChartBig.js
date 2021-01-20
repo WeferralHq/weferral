@@ -11,20 +11,23 @@ import colors from './../../../colors';
 const data = [
     {name: 'Group A', value: 400},
     {name: 'Group B', value: 300},
-    {name: 'Group C', value: 300},
     {name: 'Group C', value: 300}
 ];
 
-const COLORS = [ colors['primary'], colors['purple'], colors['success'], colors['yellow']];
+const COLORS = [ colors['primary'], colors['success'], colors['yellow']];
 
 const TinyDonutChartBig = (props) => (
-    <PieChart width={ 270 } height={ 270 }>
+    <PieChart width={ 80 } height={ 80 }>
         <Pie
-            data={data}
+            data={[
+                {name: 'Group A', value: props.stats.active},
+                {name: 'Group B', value: props.stats.invited},
+                {name: 'Group C', value: props.stats.flagged}
+            ]}
             dataKey="value"
             stroke={ colors['white'] }
-            innerRadius={ 98 }
-            outerRadius={ 109 }
+            innerRadius={ 26 }
+            outerRadius={ 35 }
             fill={ colors[ props.pieBg ] }
         >
         {

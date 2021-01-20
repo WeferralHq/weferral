@@ -1,5 +1,6 @@
 import React from 'react';
 import {
+    Badge,
     Container,
     Row,
     Card,
@@ -15,10 +16,15 @@ import {
     ListGroup,
     ListGroupItem,
     Button,
-    Col
+    Col,
+    Media
 } from './../../../components';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
+import {
+    TinyDonutChartBig
+} from "../../components/Financial/TinyDonutChartBig";
+import { CampaignAnalytics } from './CampaignAnalytics';
 
 export class Dashboard extends React.Component {
 
@@ -60,7 +66,7 @@ export class Dashboard extends React.Component {
             return(
                 <Container>
                     <Row>
-                        <Col lg={3}>
+                        <Col md={3}>
                             <Card className="mb-3">
                                 <CardBody>
                                     <CardTitle tag="h5" className="mb-4">
@@ -74,7 +80,7 @@ export class Dashboard extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Col lg={3}>
+                        <Col md={3}>
                             <Card className="mb-3">
                                 <CardBody>
                                     <CardTitle tag="h5" className="mb-4">
@@ -88,7 +94,7 @@ export class Dashboard extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Col lg={3}>
+                        <Col md={3}>
                             <Card className="mb-3">
                                 <CardBody>
                                     <CardTitle tag="h6" className="mb-4">
@@ -102,7 +108,7 @@ export class Dashboard extends React.Component {
                                 </CardBody>
                             </Card>
                         </Col>
-                        <Col lg={3}>
+                        <Col md={3}>
                             <Card className="mb-3">
                                 <CardBody>
                                     <CardTitle tag="h6" className="mb-4">
@@ -117,6 +123,60 @@ export class Dashboard extends React.Component {
                             </Card>
                         </Col>
                     </Row>
+                    <Row>
+                        <Col lg={ 6 } md={ 6 }>
+                            <div className="hr-text hr-text-left my-2">
+                                <span>Participants</span>
+                            </div>
+                            <Media>
+                                <Media left className="mr-3">
+                                    <TinyDonutChartBig stats={stats.participantStats} />
+                                </Media>
+                                <Media body>
+                                    <div>
+                                        <i className="fa fa-circle mr-1 text-primary"></i>
+                                        <span className="text-inverse">{stats.participantStats.active}</span> Active Participant
+                                    </div>
+                                    <div>
+                                        <i className="fa fa-circle mr-1 text-success"></i>
+                                        <span className="text-inverse">{stats.participantStats.invited}</span> Invited Participant
+                                    </div>
+                                    <div>
+                                        <i className="fa fa-circle mr-1 text-purple"></i>
+                                        <span className="text-inverse">{stats.participantStats.flagged}</span> Flagged Participant
+                                    </div>
+                                </Media>
+                            </Media>
+                        </Col>
+                        <Col lg={6}>
+                            <div className="hr-text hr-text-left my-2">
+                                <span>Others</span>
+                            </div>
+                            <Table size="sm">
+                                <tbody>
+                                    <tr>
+                                        <td className="text-inverse bt-0">Redemmed Rewards</td>
+                                        <td className="text-right bt-0">
+                                            <Badge color="success" pill>{`$${stats.redeemedCredits}`}</Badge>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-inverse">Awaiting Payouts</td>
+                                        <td className="text-right">
+                                            <Badge color="primary" pill>{`$${stats.awaitingPayouts}`}</Badge>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-inverse">Flagged Customers</td>
+                                        <td className="text-right">
+                                            <Badge color="red" pill>{stats.customerStats.flagged_customers}</Badge>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
+                    <CampaignAnalytics />
                 </Container>
             )
         }
