@@ -107,7 +107,7 @@ import Danger from './Pages/Danger';
 import Error404 from './Pages/Error404';
 import ForgotPassword from './Pages/ForgotPassword';
 import LockScreen from './Pages/LockScreen';
-import Login from './Pages/Login';
+import Login from './Pages/Login/Login';
 import Register from './Pages/Register';
 import setupAdmin from './Pages/Setup';
 import referralSignup from './Pages/ReferralSignup';
@@ -122,136 +122,171 @@ import { DefaultSidebar } from './../layout/components/DefaultSidebar';
 
 import { SidebarANavbar } from './../layout/components/SidebarANavbar';
 import { SidebarASidebar } from './../layout/components/SidebarASidebar';
+import { store } from "../store";
+import { Provider } from 'react-redux';
+import Cookies from 'js-cookie';
+import port from '../port';
+import Fetcher from '../utilities/fetcher';
+
+let initializedState = async function(dispatch){
+    let initialState = {
+        allForms : {},
+        options: {},
+        notifications: [],
+        system_notifications: [],
+        uid : Cookies.get("uid")
+    };
+    initialState.options = await Fetcher(`${port}/api/v1/system-options/public`);
+    try {
+        if (Cookies.get("uid")) { // if user is logged in
+            initialState.user = (await Fetcher(`${port}/api/v1/users/own`))[0];
+            initialState.notifications = await Fetcher(`${port}/api/v1/notifications/own`);
+        }
+    }
+    catch(err){
+
+    }
+    return dispatch(initializeState(initialState));
+};
+
+store.dispatch(initializedState);
+
+store.subscribe(()=>{
+    // console.log("store changed", store.getState());
+});
 
 //------ Route Definitions --------
 // eslint-disable-next-line no-unused-vars
 export const RoutedContent = () => {
     return (
-        <Switch>
-            <Redirect from="/" to="/dashboards/projects" exact />
-            
-            <Route path="/dashboards/analytics" exact component={Analytics} />
-            <Route path="/dashboards/projects" exact component={ProjectsDashboard} />
-            <Route path="/dashboards/system" exact component={System} />
-            <Route path="/dashboards/monitor" exact component={Monitor} />
-            <Route path="/dashboards/financial" exact component={Financial} />
-            <Route path="/dashboards/stock" exact component={Stock} />
-            <Route path="/dashboards/reports" exact component={Reports} />
-            <Route path="/dashboard" exact component={Dashboard} />
+        <Provider store={store}>
+            <Switch>
+                <Redirect from="/" to="/dashboards/projects" exact />
 
-            <Route path='/widgets' exact component={Widgets} />
-            
-            { /*    Cards Routes     */ }
-            <Route path='/cards/cards' exact component={Cards} />
-            <Route path='/cards/cardsheaders' exact component={CardsHeaders} />
-            
-            { /*    Layouts     */ }
-            <Route path='/layouts/navbar' component={NavbarOnly} />
-            <Route path='/layouts/sidebar' component={SidebarDefault} />
-            <Route path='/layouts/sidebar-a' component={SidebarA} />
-            <Route path="/layouts/sidebar-with-navbar" component={SidebarWithNavbar} />
-            <Route path='/layouts/dnd-layout' component={DragAndDropLayout} />
+                <Route path="/dashboards/analytics" exact component={Analytics} />
+                <Route path="/dashboards/projects" exact component={ProjectsDashboard} />
+                <Route path="/dashboards/system" exact component={System} />
+                <Route path="/dashboards/monitor" exact component={Monitor} />
+                <Route path="/dashboards/financial" exact component={Financial} />
+                <Route path="/dashboards/stock" exact component={Stock} />
+                <Route path="/dashboards/reports" exact component={Reports} />
+                <Route path="/dashboard" exact component={Dashboard} />
 
-            { /*    Interface Routes   */ }
-            <Route component={ Accordions } path="/interface/accordions" />
-            <Route component={ Alerts } path="/interface/alerts" />
-            <Route component={ Avatars } path="/interface/avatars" />
-            <Route component={ BadgesLabels } path="/interface/badges-and-labels" />
-            <Route component={ Breadcrumbs } path="/interface/breadcrumbs" />
-            <Route component={ Buttons } path="/interface/buttons" />
-            <Route component={ Colors } path="/interface/colors" />
-            <Route component={ Dropdowns } path="/interface/dropdowns" />
-            <Route component={ Images } path="/interface/images" />
-            <Route component={ ListGroups } path="/interface/list-groups" />
-            <Route component={ MediaObjects } path="/interface/media-objects" />
-            <Route component={ Modals } path="/interface/modals" />
-            <Route component={ Navbars } path="/interface/navbars" />
-            <Route component={ Paginations } path="/interface/paginations" />
-            <Route component={ ProgressBars } path="/interface/progress-bars" />
-            <Route component={ TabsPills } path="/interface/tabs-pills" />
-            <Route component={ TooltipPopovers } path="/interface/tooltips-and-popovers" />
-            <Route component={ Typography } path="/interface/typography" />
-            <Route component={ Notifications } path="/interface/notifications" />
-            <Route component={ CropImage } path="/interface/crop-image" />
-            <Route component={ DragAndDropElements } path="/interface/drag-and-drop-elements" />
-            <Route component={ Calendar } path="/interface/calendar" />
+                <Route path='/widgets' exact component={Widgets} />
 
-            { /*    Forms Routes    */ }
-            <Route component={ Forms } path="/forms/forms" />
-            <Route component={ FormsLayouts } path="/forms/forms-layouts" />
-            <Route component={ InputGroups } path="/forms/input-groups" />
-            <Route component={ Wizard } path="/forms/wizard" />
-            <Route component={ TextMask } path="/forms/text-mask" />
-            <Route component={ Typeahead } path="/forms/typeahead" />
-            <Route component={ Toggles } path="/forms/toggles" />
-            <Route component={ Editor } path="/forms/editor" />
-            <Route component={ DatePicker } path="/forms/date-picker" />
-            <Route component={ Dropzone } path="/forms/dropzone" />
-            <Route component={ Sliders } path="/forms/sliders" />
-            <Route component={ CreateCampaign } path="/create-campaign" />
-            <Route component={ CampaignPageEditor } path="/edit-campaign-page" />
-            <Route component={ Email } path="/notifications-templates" />
-            <Route component={ CampaignTable } path="/campaign" />
-            <Route component={ NotificationTemplateForm } path="/edit-template/:id" />
-            <Route component={ CampaignSettings } path="/campaign-settings/:id" />
-            <Route component={ ManageParticipantList } path="/participants" />
-            <Route component={ ManageCustomerList } path="/customers" />
-            <Route component={ ParticipantDetails } path="/my-dashboard" />
-            <Route component={ EditParticipant } path="/edit-participant/:id" />
+                { /*    Cards Routes     */}
+                <Route path='/cards/cards' exact component={Cards} />
+                <Route path='/cards/cardsheaders' exact component={CardsHeaders} />
 
-            
-            { /*    Graphs Routes   */ }
-            <Route component={ ReCharts } path="/graphs/re-charts" />
+                { /*    Layouts     */}
+                <Route path='/layouts/navbar' component={NavbarOnly} />
+                <Route path='/layouts/sidebar' component={SidebarDefault} />
+                <Route path='/layouts/sidebar-a' component={SidebarA} />
+                <Route path="/layouts/sidebar-with-navbar" component={SidebarWithNavbar} />
+                <Route path='/layouts/dnd-layout' component={DragAndDropLayout} />
 
-            { /*    Tables Routes   */ }
-            <Route component={ Tables } path="/tables/tables" />
-            <Route component={ ExtendedTable } path="/tables/extended-table" />
-            <Route component={ AgGrid } path="/tables/ag-grid" />
+                { /*    Interface Routes   */}
+                <Route component={Accordions} path="/interface/accordions" />
+                <Route component={Alerts} path="/interface/alerts" />
+                <Route component={Avatars} path="/interface/avatars" />
+                <Route component={BadgesLabels} path="/interface/badges-and-labels" />
+                <Route component={Breadcrumbs} path="/interface/breadcrumbs" />
+                <Route component={Buttons} path="/interface/buttons" />
+                <Route component={Colors} path="/interface/colors" />
+                <Route component={Dropdowns} path="/interface/dropdowns" />
+                <Route component={Images} path="/interface/images" />
+                <Route component={ListGroups} path="/interface/list-groups" />
+                <Route component={MediaObjects} path="/interface/media-objects" />
+                <Route component={Modals} path="/interface/modals" />
+                <Route component={Navbars} path="/interface/navbars" />
+                <Route component={Paginations} path="/interface/paginations" />
+                <Route component={ProgressBars} path="/interface/progress-bars" />
+                <Route component={TabsPills} path="/interface/tabs-pills" />
+                <Route component={TooltipPopovers} path="/interface/tooltips-and-popovers" />
+                <Route component={Typography} path="/interface/typography" />
+                <Route component={Notifications} path="/interface/notifications" />
+                <Route component={CropImage} path="/interface/crop-image" />
+                <Route component={DragAndDropElements} path="/interface/drag-and-drop-elements" />
+                <Route component={Calendar} path="/interface/calendar" />
 
-            { /*    Apps Routes     */ }
-            <Route component={ AccountEdit } path="/apps/account-edit" />
-            <Route component={ BillingEdit } path="/apps/billing-edit" />
-            <Route component={ Chat } path="/apps/chat" />
-            <Route component={ Clients } path="/apps/clients" />
-            <Route component={ EmailDetails } path="/apps/email-details" />
-            <Route component={ Files } path="/apps/files/:type"/>
-            <Route component={ GalleryGrid } path="/apps/gallery-grid" />
-            <Route component={ GalleryTable } path="/apps/gallery-table" />
-            <Route component={ ImagesResults } path="/apps/images-results" />
-            <Route component={ Inbox } path="/apps/inbox" />
-            <Route component={ NewEmail } path="/apps/new-email" />
-            <Route component={ ProfileDetails } path="/apps/profile-details" />
-            <Route component={ ProfileEdit } path="/apps/profile-edit" />
-            <Route component={ Projects } path="/apps/projects/:type" />
-            <Route component={ SearchResults } path="/apps/search-results" />
-            <Route component={ SessionsEdit } path="/apps/sessions-edit" />
-            <Route component={ SettingsEdit } path="/apps/settings-edit" />
-            <Route component={ Tasks } path="/apps/tasks/:type" />
-            <Route component={ TasksDetails } path="/apps/task-details" />
-            <Route component={ TasksKanban } path="/apps/tasks-kanban" />
-            <Route component={ Users } path="/apps/users/:type" />
-            <Route component={ UsersResults } path="/apps/users-results" />
-            <Route component={ VideosResults } path="/apps/videos-results" />
+                { /*    Forms Routes    */}
+                <Route component={Forms} path="/forms/forms" />
+                <Route component={FormsLayouts} path="/forms/forms-layouts" />
+                <Route component={InputGroups} path="/forms/input-groups" />
+                <Route component={Wizard} path="/forms/wizard" />
+                <Route component={TextMask} path="/forms/text-mask" />
+                <Route component={Typeahead} path="/forms/typeahead" />
+                <Route component={Toggles} path="/forms/toggles" />
+                <Route component={Editor} path="/forms/editor" />
+                <Route component={DatePicker} path="/forms/date-picker" />
+                <Route component={Dropzone} path="/forms/dropzone" />
+                <Route component={Sliders} path="/forms/sliders" />
+                <Route component={CreateCampaign} path="/create-campaign" />
+                <Route component={CampaignPageEditor} path="/edit-campaign-page" />
+                <Route component={Email} path="/notifications-templates" />
+                <Route component={CampaignTable} path="/campaign" />
+                <Route component={NotificationTemplateForm} path="/edit-template/:id" />
+                <Route component={CampaignSettings} path="/campaign-settings/:id" />
+                <Route component={ManageParticipantList} path="/participants" />
+                <Route component={ManageCustomerList} path="/customers" />
+                <Route component={ParticipantDetails} path="/my-dashboard" />
+                <Route component={EditParticipant} path="/edit-participant/:id" />
 
-            { /*    Pages Routes    */ }
-            <Route component={ ComingSoon } path="/pages/coming-soon" />
-            <Route component={ Confirmation } path="/pages/confirmation" />
-            <Route component={ Danger } path="/pages/danger" />
-            <Route component={ Error404 } path="/pages/error-404" />
-            <Route component={ ForgotPassword } path="/pages/forgot-password" />
-            <Route component={ LockScreen } path="/pages/lock-screen" />
-            <Route component={ Login } path="/login" />
-            <Route component={ Register } path="/pages/register" />
-            <Route component={ setupAdmin } path="/pages/setup" />
-            <Route component={ referralSignup } path="/:campaignName/signup" />
-            <Route component={ Success } path="/pages/success" />
-            <Route component={ Timeline } path="/pages/timeline" />
 
-            <Route path='/icons' exact component={Icons} />
+                { /*    Graphs Routes   */}
+                <Route component={ReCharts} path="/graphs/re-charts" />
 
-            { /*    404    */ }
-            <Redirect to="/pages/error-404" />
-        </Switch>
+                { /*    Tables Routes   */}
+                <Route component={Tables} path="/tables/tables" />
+                <Route component={ExtendedTable} path="/tables/extended-table" />
+                <Route component={AgGrid} path="/tables/ag-grid" />
+
+                { /*    Apps Routes     */}
+                <Route component={AccountEdit} path="/apps/account-edit" />
+                <Route component={BillingEdit} path="/apps/billing-edit" />
+                <Route component={Chat} path="/apps/chat" />
+                <Route component={Clients} path="/apps/clients" />
+                <Route component={EmailDetails} path="/apps/email-details" />
+                <Route component={Files} path="/apps/files/:type" />
+                <Route component={GalleryGrid} path="/apps/gallery-grid" />
+                <Route component={GalleryTable} path="/apps/gallery-table" />
+                <Route component={ImagesResults} path="/apps/images-results" />
+                <Route component={Inbox} path="/apps/inbox" />
+                <Route component={NewEmail} path="/apps/new-email" />
+                <Route component={ProfileDetails} path="/apps/profile-details" />
+                <Route component={ProfileEdit} path="/apps/profile-edit" />
+                <Route component={Projects} path="/apps/projects/:type" />
+                <Route component={SearchResults} path="/apps/search-results" />
+                <Route component={SessionsEdit} path="/apps/sessions-edit" />
+                <Route component={SettingsEdit} path="/apps/settings-edit" />
+                <Route component={Tasks} path="/apps/tasks/:type" />
+                <Route component={TasksDetails} path="/apps/task-details" />
+                <Route component={TasksKanban} path="/apps/tasks-kanban" />
+                <Route component={Users} path="/apps/users/:type" />
+                <Route component={UsersResults} path="/apps/users-results" />
+                <Route component={VideosResults} path="/apps/videos-results" />
+
+                { /*    Pages Routes    */}
+                <Route component={ComingSoon} path="/pages/coming-soon" />
+                <Route component={Confirmation} path="/pages/confirmation" />
+                <Route component={Danger} path="/pages/danger" />
+                <Route component={Error404} path="/pages/error-404" />
+                <Route component={ForgotPassword} path="/pages/forgot-password" />
+                <Route component={LockScreen} path="/pages/lock-screen" />
+                <Route component={Login} path="/login" />
+                <Route component={Register} path="/pages/register" />
+                <Route component={setupAdmin} path="/pages/setup" />
+                <Route component={referralSignup} path="/:campaignName/signup" />
+                <Route component={Success} path="/pages/success" />
+                <Route component={Timeline} path="/pages/timeline" />
+
+                <Route path='/icons' exact component={Icons} />
+
+                { /*    404    */}
+                <Redirect to="/pages/error-404" />
+            </Switch>
+        </Provider>
+        
     );
 };
 

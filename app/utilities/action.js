@@ -1,4 +1,5 @@
 import Fetcher from './fetcher';
+import port from '../port';
 
 /*
  * action types
@@ -15,16 +16,16 @@ export const INITIALIZE = "INITIALIZE";
 /*
  * other constants
  */
-export function fetchUsers(uid = null, callback){
+export async function fetchUsers(uid = null, callback){
     let user = null;
     if(uid){
         // console.log("redux action setUser", uid);
-        Fetcher("/api/v1/users/own", "GET").then(function (response) {
+        Fetcher(`${port}/api/v1/users/own`).then(function (response) {
             // console.log("user response", response);
-            if(!response.error && response.length){
+            if (!response.error && response.length) {
                 user = response[0];
                 callback(null, user);
-            }else{
+            } else {
                 callback(response.error)
                 // console.log("error fetching own user after login");
             }

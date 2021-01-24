@@ -4,8 +4,10 @@ import port from '../../../port';
 import Fetcher from '../../../utilities/fetcher';
 import {setUid, setUser, fetchUsers} from "../../../utilities/action";
 import {Authorizer, isAuthorized} from "../../../utilities/authorizer";
+import {isAdmin} from "../../../utilities/admin";
 import Cookies from 'js-cookie';
 import update from "immutability-helper";
+import {connect} from "react-redux";
 
 import {
     Form,
@@ -40,15 +42,19 @@ class Login extends React.Component {
 
         Fetcher(`${port}/api/v1/auth/session`, "POST", that.state.form).then(function(result){
             if(!result.error) {
+                Fetcher(`${port}/api/v1/auth/token`).then(async function(response){
+                    if(response){
+                        localStorage.setItem("jwtToken", response.token);
+                        await fetchUsers(Cookies.get("uid"), (err, user) => (that.props.setUser(user)));
 
-                localStorage.setItem("permissions", result.permissions);
+                        //update redux store with the uid
+                        that.props.setUid(Cookies.get("uid"));
 
-                fetchUsers(Cookies.get("uid"), (err, user) => (that.props.setUser(user)));
+                        that.props.history.push("/dashboard");
+                    }
+                })
 
-                //update redux store with the uid
-                that.props.setUid(Cookies.get("uid"));
-
-                that.props.hide();
+                //localStorage.setItem("permissions", result.permissions);
             }else{
                 console.log("Login error", result.error);
                 that.setState({errors: result.error});
@@ -64,13 +70,14 @@ class Login extends React.Component {
         this.setState(formState);
     }
 
-    componentWillUnmount(){
+    /*componentWillUnmount(){
         document.body.classList.remove('login')
-    }
+    }*/
 
     componentDidMount(){
-        if(!isAuthorized({anonymous:true})){
-            return browserHistory.push("/");
+        if(!isAdmin()){
+            return this.props.history.push("/login");
+            //return browserHistory.push("/");
         }
 
         if(this.props.email){
@@ -79,7 +86,7 @@ class Login extends React.Component {
             this.setState(formState);
         }
 
-        document.body.classList.add('login')
+        //document.body.classList.add('login')
 
     }
 
@@ -143,4 +150,16 @@ class Login extends React.Component {
 
 };
 
-export default Login;
+const mapDispatchToProps = (dispatch) => {
+    return {
+        setUid: (uid) => {
+            dispatch(setUid(uid))
+        },
+        setUser: (uid) => {
+            dispatch(setUser(uid))
+        }
+    }
+};
+
+export default connect(null, mapDispatchToProps)(Login);
+//export default Login;

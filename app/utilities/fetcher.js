@@ -6,9 +6,14 @@ let Fetcher = function(path, method="GET", body, init=null){
         let headers = new Headers({
             "Content-Type": "application/json"
         });
+        if( localStorage.getItem("jwtToken")) {
+            let token = localStorage.getItem("jwtToken");
+            headers.append("Authorization", `JWT ${token}`);
+        }
 
         init = { method: method,
             headers: headers,
+            credentials: 'include',
         };
 
         if(method == "POST" || method=="PUT"){
