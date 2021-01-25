@@ -9,16 +9,14 @@ import {
     CustomInput,
     Input,
     Card,
+    CardBody,
     Label,
     FormGroup,
-    Form,
-    UncontrolledModal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter
+    Form
 } from '../../../components';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
+import {WebhookModal,WebhookEdit} from './Modal';
 
 export class Webhook extends React.Component {
 
@@ -28,16 +26,19 @@ export class Webhook extends React.Component {
         this.state = {
             alerts: {},
             currentDataObject: {},
+            hooks: [],
+            rows: [],
             loading: true,
         };
 
         this.fetchData = this.fetchData.bind(this);
-        this.webhookForm = this.webhookForm.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.fetchWebhooks = this.fetchWebhooks.bind(this);
     }
 
     componentDidMount() {
         this.fetchData();
+        this.fetchWebhooks();
     }
 
     fetchData() {
@@ -48,6 +49,18 @@ export class Webhook extends React.Component {
                 self.setState({rows: response});
             }
             self.setState({loading: false});
+        });
+    }
+
+    fetchWebhooks(campaign_id){
+        let self = this;
+        let url = !campaign_id ? `${port}/api/v1/webhooks` : `${port}/api/v1/webhooks/${campaign_id}`;
+        Fetcher(url).then(function (response) {
+            if(response.message === 'Webhooks not found'){
+                self.setState({hooks: []});
+            }else{
+                self.setState({hooks: response});
+            }
         });
     }
 
@@ -64,64 +77,11 @@ export class Webhook extends React.Component {
     handleChange(e) {
         let self = this;
         let target = e.target;
-        let value = target.type === "checkbox" ? target.checked : target.value;
-        let name = target.name;
+        let value = target.value;
+        alert(value);
+        self.fetchWebhooks(value);
 
-        self.setState({[name]: value});
-    }
-
-    webhookForm(){
-        let self = this;
-        return (
-            <div>
-                <Button id="webhookModal" color="primary" size="md"></Button>
-                <UncontrolledModal target="webhookModal">
-                    <ModalHeader tag="h6">
-                        Modal: Default
-                    </ModalHeader>
-                    <ModalBody>
-                        <Form>
-                            <FormGroup row>
-                                <Label for="defaultSelect" sm={3}>
-                                    Select Campaign
-                                </Label>
-                                <Col sm={9}>
-
-                                    <Input type="select" onChange={this.handleChange}
-                                        name="select"
-                                        id="defaultSelect"
-                                    >
-                                        <option defaultValue="">Select Campaign</option>
-                                        {this.state.campaign.map(camp => (
-                                            <option value={camp.id}>{camp.name}</option>))}
-                                    </Input>
-                                </Col>
-                            </FormGroup>
-                            <FormGroup>
-                                <Input name="endpoint_url" type="text" placeholder="Endpoint URL: https://" />
-                            </FormGroup>
-                            <FormGroup>
-                                <CustomInput onChange={this.handleChange} type="select"
-                                    name="asynchronous"
-                                    id="asynchronous">
-                                    <option value="True">Asynchronous</option>
-                                    <option value="False">Synchronous</option>
-                                </CustomInput>
-                            </FormGroup>
-                        </Form>
-                    </ModalBody>
-                    <ModalFooter>
-                        <UncontrolledModal.Close color="link" className="text-primary">
-                            Close
-                        </UncontrolledModal.Close>
-                        <UncontrolledModal.Close color="primary" onClick={() => { this.onSubmit() }} >
-                            Save
-                        </UncontrolledModal.Close>
-                    </ModalFooter>
-                </UncontrolledModal>
-            </div>
-            
-        )
+        //self.setState({[name]: value});
     }
 
     render(){
@@ -132,24 +92,43 @@ export class Webhook extends React.Component {
                 <div><p>loading</p></div>
             )
         }else{
+            let hooks = this.state.hooks;
             return(
                 <React.Fragment>
                     <h3>Webhooks</h3>
-                    <p>Weferral can send webhook events that notify your application or third-party system any time an event happens.
-                        Use it for events, like new customer conversion or Payout due time, that
-                        your application needs to know about.</p>
-                    {this.webhookForm}
-
-                    <div className="form-row">
+                    <Card className="mb-3">
+                        <CardBody className="d-flex">
+                            <div>
+                                <p>Weferral can send webhook events that notify your application or third-party system any time an event happens.
+                                Use it for events, like new customer conversion or Payout due time, that
+                                your application needs to know about.</p>
+                            </div>
+                        </CardBody>
+                    </Card>
+                    <WebhookModal rows={this.state.rows}/>
+                    <br/>
+                    <Form>
+                        <FormGroup row>
+                            <Input type="select" onChange={this.handleChange}
+                                name="campaignId"
+                                id="defaultSelect"
+                            >
+                                <option defaultValue="">Select Campaign</option>
+                                {this.state.rows.map(camp => (
+                                    <option value={camp.id}>{camp.name}</option>))}
+                            </Input>
+                        </FormGroup>
+                    </Form>
+                    <Row>
                         {hooks.map((hook, index) => {
                             //Set health check
-                            let health = <span><Badge pill color="red"><i
+                            /*let health = <span><Badge pill color="red"><i
                                 className="fa fa-times"></i>{hook.health}</Badge> </span>;
                             if (!hook.health) {
                                 health = <span><Badge pill color="primary">Test Endpoints</Badge></span>;
                             } else if (hook.health === 'OK') {
                                 health = <span><Badge pill color="info"><i className="fa fa-check"></i></Badge></span>;
-                            }
+                            }*/
                             //Set Type
                             let type = <span className="m-r-5"><Badge pill color="blue">Asynchronous</Badge></span>;
                             if (hook.async_lifecycle === false) {
@@ -157,29 +136,32 @@ export class Webhook extends React.Component {
                             }
                             return (
                                 <div className="hook" key={"hook-" + index}>
-                                    <div className="url">{hook.endpoint_url}</div>
-                                    <div className="row">
-                                        <div className="col-md-8">
-                                            <span>{type}</span>
-                                            <span>{health}</span>
-                                        </div>
-                                        <div className="hook-actions col-md-4">
-                                            <Button color="primary" outline size="lg" onClick={() => {
+                                    
+                                    <Row>
+                                        <Col md={4}>
+                                            <div className="url">{hook.endpoint_url}</div>
+                                        </Col>
+                                        <Col md={4}>
+                                            {type}
+                                        </Col>
+                                        <Col md={4}>
+                                            <WebhookEdit text="Edit" hook={hook}/>
+                                            {/*<Button color="primary" outline size="sm" onClick={() => {
                                                 this.openHookForm(hook)
                                             }} type="submit" value="submit"><i className="fa fa-pencil"></i> Edit
-                                            </Button>
-                                            <Button color="primary" outline size="lg" onClick={() => {
+                                            </Button>*/}
+                                            <Button color="primary" outline size="sm" onClick={() => {
                                                 this.deleteHook(hook)
                                             }} type="submit" value="submit"><i className="fa fa-times"></i> Delete
                                             </Button>
-                                        </div>
+                                        </Col>
 
-                                    </div>
+                                    </Row>
                                 </div>
                             )
                         })}
 
-                    </div>
+                    </Row>
                 </React.Fragment>
             )
         }

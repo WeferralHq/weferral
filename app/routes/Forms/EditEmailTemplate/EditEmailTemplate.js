@@ -22,14 +22,23 @@ import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
 import { NavLink as Link } from 'react-router-dom';
 import EmailEditor from './EmailEditor';
-import ReactQuill from 'react-quill';
+import ReactQuill, {Quill} from 'react-quill';
 
 const modules = {
     toolbar: [
-        [{ 'header': [1, 2, false] }],
-        ['bold', 'italic', 'underline', 'strike', 'blockquote'],
-        [{ 'list': 'ordered' }, { 'list': 'bullet' }, { 'indent': '-1' }, { 'indent': '+1' }],
-        ['clean']
+        ['bold', 'italic', 'underline', 'strike'],       // toggled buttons
+        ['blockquote', 'code-block'],                    // blocks
+        [{ 'header': 1 }, { 'header': 2 }],              // custom button values
+        [{ 'list': 'ordered' }, { 'list': 'bullet' }],    // lists
+        [{ 'script': 'sub' }, { 'script': 'super' }],     // superscript/subscript
+        [{ 'indent': '-1' }, { 'indent': '+1' }],         // outdent/indent
+        [{ 'direction': 'rtl' }],                        // text direction
+        [{ 'size': ['small', false, 'large', 'huge'] }], // custom dropdown
+        [{ 'header': [1, 2, 3, 4, 5, 6, false] }],       // header dropdown
+        [{ 'color': [] }, { 'background': [] }],         // dropdown with defaults
+        [{ 'font': [] }],                                // font family
+        [{ 'align': [] }],                               // text align
+        ['clean'], 
     ],
 }
     
@@ -54,12 +63,13 @@ export class NotificationTemplateForm extends React.Component {
             url : `${port}/api/v1/notification-template/${id}`,
             fetchUrl : `${port}/api/v1/email-template/${id}`
         };
-
+        this.quillRef = null;
+        this.reactQuillRef = null;
         this.handleResponse = this.handleResponse.bind(this);
         this._handleChange = this._handleChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
-        //this.insertString = this.insertString.bind(this);
+        this.attachQuillRefs = this.attachQuillRefs.bind(this);
     }
 
     componentDidMount() {
@@ -67,15 +77,41 @@ export class NotificationTemplateForm extends React.Component {
         //alert(JSON.stringify(self.props));
         Fetcher(self.state.url).then(function(response){
             if(!response.error){
-
                 console.log(response);
                 self.setState({template : response, message : response.data.message});
             }
             self.setState({loading:false});
-        });
+        }).then(function (){
+            this.attachQuillRefs();
+        })
+        
+    }
+
+    componentDidUpdate () {
+        if(this.state.loading === false){
+            this.attachQuillRefs();
+        }
+        
     }
 
     handleResponse(response) {}
+
+    attachQuillRefs() {
+        // Ensure React-Quill reference is available:
+        if (typeof this.reactQuillRef.getEditor !== 'function') return;
+        // Skip if Quill reference is defined:
+        if (this.quillRef != null) return;
+
+        const quillRef = this.reactQuillRef.getEditor();
+        if (quillRef != null) this.quillRef = quillRef;
+      }
+
+    insertString(html) {
+        //alert(html);
+        let range = this.quillRef.getSelection();
+        let position = range ? range.index : 0;
+        this.quillRef.insertText(position, html);
+    }
 
     humanString(text){
         return(text.replace(/_/g, ' '));
@@ -114,7 +150,8 @@ export class NotificationTemplateForm extends React.Component {
         if(this.state.loading === false){
             let pageName = this.state.template.data.name || this.props.route.name;
             let template = this.state.template;
-            //let references = template.schema.references;
+            let references = template.schema.references;
+            //alert(template.data.name);
 
             return (
                 <React.Fragment>
@@ -179,7 +216,43 @@ export class NotificationTemplateForm extends React.Component {
                                     </FormGroup>
                                     { /* END Input */}
                                 </Form>
+                                <Row>
+                                    <Col lg={12}>
+                                        <h6><strong>Data Fields</strong></h6>
+                                        <h6 className="help-block">Available data fields, you can insert data fields related to this event ({this.humanString(template.data.name)}) into the body of your notification.</h6>
+                                        <h6 className="help-block text-capitalize">{this.humanString(template.data.name)} Fields</h6>
+                                        <Row className = "templateList">
+                                        
+                                            {Object.keys(template.schema).map(field => {
+                                                if (field == "references") {
+                                                    return Object.keys(references).map(reference => {
+                                                        return (
+                                                            <Row key={reference} className="referenceList list-group">
+                                                                <h6 className="help-block text-capitalize">{this.humanString(reference)} Fields</h6>
+                                                                {Object.keys(references[reference]).map(referenceColumn => {
+                                                                    return (
+                                                                        <Col lg={4} key={referenceColumn} className="column reference-column list-unstyled">
+                                                                            <Button color="info" size="sm" outline onClick={() => { this.insertString(`[[references.${reference}.${referenceColumn}]]`) } }>{referenceColumn}</Button>
+                                                                        </Col>)
+                                                                })}
+                                                            </Row>
+                                                        )
+                                                    })
+                                                } else {
+                                                    return (
+                                                        <div>
+                                                            <Col key={field} className="column list-unstyled">
+                                                                <Button color="info" size="sm" outline onClick={() => { this.insertString(`[[${field}]]`) } }>{field}</Button>
+                                                            </Col>
+                                                        </div>
+                                                    )
+                                                }
+                                            })}
+                                        </Row>
+                                    </Col>
+                                </Row>
                                 <ReactQuill
+                                    ref={(el) => { this.reactQuillRef = el }}
                                     value={this.state.message}
                                     onChange={this._handleChange}
                                     modules={modules}

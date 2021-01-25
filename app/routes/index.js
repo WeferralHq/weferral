@@ -72,6 +72,7 @@ import EditParticipant from './Forms/EditParticipant';
 import ManageParticipantList from './Pages/Participant';
 import ParticipantDetails from './Pages/ParticipantDetails';
 import ManageCustomerList from './Pages/Customer';
+import Webhook from "./Pages/Webhook";
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -231,6 +232,7 @@ export const RoutedContent = () => {
                 <Route component={ManageCustomerList} path="/customers" />
                 <Route component={ParticipantDetails} path="/my-dashboard" />
                 <Route component={EditParticipant} path="/edit-participant/:id" />
+                <Route component={Webhook} path="/webhook" />
 
 
                 { /*    Graphs Routes   */}
