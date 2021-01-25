@@ -119,16 +119,16 @@ export class Webhook extends React.Component {
                             </Input>
                         </FormGroup>
                     </Form>
-                    <Row>
+                    <div>
                         {hooks.map((hook, index) => {
                             //Set health check
-                            /*let health = <span><Badge pill color="red"><i
+                            let health = <span><Badge pill color="red"><i
                                 className="fa fa-times"></i>{hook.health}</Badge> </span>;
                             if (!hook.health) {
                                 health = <span><Badge pill color="primary">Test Endpoints</Badge></span>;
                             } else if (hook.health === 'OK') {
                                 health = <span><Badge pill color="info"><i className="fa fa-check"></i></Badge></span>;
-                            }*/
+                            }
                             //Set Type
                             let type = <span className="m-r-5"><Badge pill color="blue">Asynchronous</Badge></span>;
                             if (hook.async_lifecycle === false) {
@@ -143,6 +143,7 @@ export class Webhook extends React.Component {
                                         </Col>
                                         <Col md={4}>
                                             {type}
+                                            {health}
                                         </Col>
                                         <Col md={4}>
                                             <WebhookEdit text="Edit" hook={hook}/>
@@ -161,7 +162,7 @@ export class Webhook extends React.Component {
                             )
                         })}
 
-                    </Row>
+                    </div>
                 </React.Fragment>
             )
         }

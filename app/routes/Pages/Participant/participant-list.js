@@ -5,6 +5,7 @@ import port from '../../../port';
 import DateFormat from '../../../utilities/dateformat';
 import { ToastContainer, toast } from 'react-toastify';
 import { 
+    Alert,
     Badge,
     UncontrolledButtonDropdown,
     DropdownToggle,
@@ -36,12 +37,15 @@ export class ManageParticipantList extends React.Component {
             lastFetch: Date.now(),
             loading: true,
             advancedFilter: null,
+            selectedId: 0,
+            content: ''
         };
 
         this.fetchData = this.fetchData.bind(this);
         this.rowActionsFormatter = this.rowActionsFormatter.bind(this);
         this.DeleteParticipant = this.DeleteParticipant.bind(this);
         this.showHandler = this.showHandler.bind(this);
+        this.contentInfo = this.contentInfo.bind(this);
     }
 
     componentDidMount() {
@@ -63,25 +67,45 @@ export class ManageParticipantList extends React.Component {
         });
     }
 
-    DeleteParticipant(id){
+    DeleteParticipant(id, value){
         let self = this;
-        Fetcher(`${port}/api/v1/participant/${id}`, 'DELETE').then(function (response) {
-            if(!response.error){
-                self.setState({success: true, response: response});
-            }else{
-                let msg = 'Cannot delete a participant that has records attached to it.'
-                self.setState({
-                    alerts: {
-                        color: 'danger',
-                        icon: 'times',
-                        message: `${response.error} : ${msg}`
-                    }
-                });
-            }
-        })
+        if(value === 'suspend'){
+            Fetcher(`${port}/api/v1/participant/suspend/${id}`).then(function (response) {
+                if(!response.error){
+                    self.setState({success: true, response: response, alerts: {color:'info', message: 'Successfully suspended'}});
+                }else{
+                    let msg = 'Cannot suspend participant.'
+                    self.setState({
+                        alerts: {
+                            color: 'danger',
+                            message: `${response.error} : ${msg}`
+                        }
+                    });
+                }
+            })
+        }else{
+            Fetcher(`${port}/api/v1/participant/${id}`, 'DELETE').then(function (response) {
+                if(!response.error){
+                    self.setState({success: true, response: response, alerts: {color:'info', message: response.message}});
+                }else{
+                    let msg = 'Cannot delete a participant that has records attached to it.'
+                    self.setState({
+                        alerts: {
+                            color: 'danger',
+                            message: `${response.error} : ${response.message}`
+                        }
+                    });
+                }
+            })
+        }
+        
     }
 
     contentInfo(closeToast) {
+        let self = this;
+        let id = self.state.selectedId;
+        let value = self.state.content;
+        alert(id);
         return(
             <Media>
                 <Media middle left className="mr-3">
@@ -92,14 +116,20 @@ export class ManageParticipantList extends React.Component {
                         Information!
                     </Media>
                     <p>
-                        This alert needs your attention, but it's not important.
+                        Are you sure you want to do this.
                     </p>
                     <div className="d-flex mt-2">
-                        <Button color="primary" onClick={() => { closeToast }} >
-                            I Understand
+                        {value === 'suspend' &&
+                        <Button color="primary" onClick={() => { self.DeleteParticipant(id, value) }} >
+                        Suspend
+                        </Button>}
+                        {value === 'delete' &&
+                        <Button color="primary" onClick={() => { self.DeleteParticipant(id, value) }} >
+                        Delete
                         </Button>
+                        }
                         <Button color="link" onClick={() => { closeToast }} className="ml-2 text-primary">
-                            Cancel
+                            No
                         </Button>
                     </div>
                 </Media>
@@ -107,9 +137,10 @@ export class ManageParticipantList extends React.Component {
         )
     }
 
-    showHandler(){
+    async showHandler(id, value){
         let self = this;
-        toast.info(self.contentInfo);
+        await self.setState({selectedId: id, content: value});
+        toast.info(self.contentInfo());
     }
 
     /**
@@ -164,9 +195,12 @@ export class ManageParticipantList extends React.Component {
                         <i className="fa fa-fw fa-envelope mr-2"></i>
                             Edit
                     </DropdownItem>
-                    <DropdownItem onClick={() => { this.showHandler() }}>
+                    <DropdownItem onClick={() => { this.showHandler(row.id, 'suspend') }}>
                         <i className="fa fa-fw fa-phone mr-2"></i>
-        {/*<Button id="modalDelete" color="primary" outline size="sm" >Delete</Button>*/}
+                            Suspend
+                    </DropdownItem>
+                    <DropdownItem onClick={() => { this.showHandler(row.id, 'delete') }}>
+                        <i className="fa fa-fw fa-phone mr-2"></i>
                             Delete
                     </DropdownItem>
                     
@@ -181,8 +215,12 @@ export class ManageParticipantList extends React.Component {
                 <div><p>loading</p></div>
             )
         }else {
+            let alert = this.state.alerts;
             return(
                 <Container>
+                    {alert.message && <Alert color={alert.color}>
+                        {alert.message}
+                    </Alert>}
                     <Row>
                     <Col xl={ 12 }>
                         <ImportButton />

@@ -46,9 +46,8 @@ const sortCaret = (order) => {
 
 
 export class CampaignField extends React.Component {
-    constructor() {
-        super();
-        
+    constructor(props) {
+        super(props);
         this.state = {
             //products: _.times(INITIAL_PRODUCTS_COUNT, generateRow),
             selected: [],
@@ -60,6 +59,8 @@ export class CampaignField extends React.Component {
         this.headerCheckboxRef = React.createRef();
         this.fetchData = this.fetchData.bind(this);
         this.generateRow = this.generateRow.bind(this);
+        this.handleAddCampaign = this.handleAddCampaign.bind(this);
+        this.editCampaign = this.editCampaign.bind(this);
     }
 
     componentDidMount() {
@@ -114,10 +115,12 @@ export class CampaignField extends React.Component {
         }
     }
 
-    handleAddRow() {
-        //return (
+    handleAddCampaign() {
+        console.log(this.props);
+        this.props.history.push('/create-campaign');
+        /*return (
             <Link to='/create-campaign'></Link>
-        //)
+        )*/
     }
 
     handleDeleteRow() {
@@ -125,23 +128,15 @@ export class CampaignField extends React.Component {
         Fetcher(`${port}/api/v1/campaign/${this.state.selected}/delete`, 'POST').then(function(response){
             if(!response.error){
                 console.log(response);
-                self.setState({campaigns: response, loading: false});
-                self.generateRow();
+                this.setState({campaigns: response, loading: false});
+                this.generateRow();
                 //console.log(self.state.campaigns);
             }
         });
-        /*this.setState({
-            generatedrows: _.filter(this.state.generatedrows, product =>
-                !_.includes(this.state.selected, product.id))
-        })*/
     }
-
-    /*handleResetFilters() {
-        this.nameFilter('');
-        this.qualityFilter('');
-        this.rewardFilter('');
-        this.commissionFilter('');
-    }*/
+    editCampaign(){
+        this.props.history.push(`/create-campaign?_id=${this.state.selected}`);
+    }
 
     createColumnDefinitions() {
         return [{
@@ -163,10 +158,6 @@ export class CampaignField extends React.Component {
                     { cell }
                 </span>
             )
-            /*...buildCustomTextFilter({
-                placeholder: 'Enter campaign name...',
-                getFilter: filter => { this.nameFilter = filter; }
-            })*/
         }, {
             dataField: 'published',
             text: 'Publish',
@@ -195,51 +186,28 @@ export class CampaignField extends React.Component {
             },
             sort: true,
             sortCaret
-            /*...buildCustomSelectFilter({
-                placeholder: 'Select Status',
-                options: [
-                    { value: CampaignStatus.Publish, label: 'True' },
-                    { value: CampaignStatus.Unpublish, label: 'False' }
-                ],
-                getFilter: filter => { this.qualityFilter = filter; }
-            })*/
         }, {
             dataField: 'reward_type',
             text: 'Reward Type',
             sort: true,
             sortCaret
-            /*...buildCustomTextFilter({
-                placeholder: 'Enter reward type...',
-                getFilter: filter => { this.rewardFilter = filter; }
-            })*/
         }, {
             dataField: 'commission_type',
             text: 'Commission Type',
             sort: true,
             sortCaret
-               /* ...buildCustomTextFilter({
-                    placeholder: 'Enter Commission type...',
-                    getFilter: filter => { this.commissionFilter = filter; }
-                })*/
         }, {
             dataField: 'created_at',
             text: 'Date Created',
             formatter: (cell) =>
                 moment(cell).format('DD/MM/YYYY'),
-            /*filter: dateFilter({
-                className: 'd-flex align-items-center',
-                comparatorClassName: 'd-none',
-                dateClassName: 'form-control form-control-sm',
-                comparator: Comparator.GT,
-                getFilter: filter => { this.stockDateFilter = filter; }
-            }),*/
             sort: true,
             sortCaret
         }]; 
     }
 
     render() {
-        if(this.state.loading === false){
+        if(!this.state.loading){
             const columnDefs = this.createColumnDefinitions();
             const paginationDef = paginationFactory({
                 paginationSize: 5,
@@ -292,22 +260,30 @@ export class CampaignField extends React.Component {
                                                 {...props.csvProps}
                                             >
                                                 Export
-                                    </CustomExportCSV>
+                                           </CustomExportCSV>
                                             <Button
                                                 size="sm"
                                                 outline
                                                 onClick={this.handleDeleteRow.bind(this)}
                                             >
                                                 Delete
-                                    </Button>
-                                            <Button
+                                            </Button>
+                                            
+                                        </ButtonGroup>
+                                        <Button
                                                 size="sm"
                                                 outline
-                                                onClick={this.handleAddRow.bind(this)}
+                                                tag={ Link } to="/create-campaign"
                                             >
                                                 <i className="fa fa-fw fa-plus"></i>
-                                            </Button>
-                                        </ButtonGroup>
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            outline
+                                            tag={ Link } to={`/create-campaign?_id=${this.state.selected}`}
+                                        >
+                                            <i className="fa fa-fw fa-pencil"></i>
+                                        </Button>
                                     </div>
                                 </div>
                                 <BootstrapTable
