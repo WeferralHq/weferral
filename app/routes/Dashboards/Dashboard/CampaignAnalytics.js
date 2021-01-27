@@ -15,6 +15,8 @@ import {
     CardHeader
 } from './../../../components';
 var moment = require('moment');
+import ClickVsConvMetrics from './components/ClickVsConvMetrics';
+import ReferralMetrics from './components/ReferralMetrics';
 
 export class CampaignAnalytics extends React.Component {
 
@@ -23,7 +25,8 @@ export class CampaignAnalytics extends React.Component {
         this.state = {
             campaigns: [],
             clicks:[],
-            conversions:[]
+            conversions:[],
+            referrals:[]
         };
 
         this.fetchData = this.fetchData.bind(this);
@@ -71,6 +74,16 @@ export class CampaignAnalytics extends React.Component {
                     console.log(conversion_data)
                     self.setState({conversions: conversion_data});
                 })
+        }).then(function(){
+            Fetcher(`${port}/api/v1/participants`).then(function (response) {
+                console.log(response);
+                let referral_data = response.filter(entry => {
+                    const time = new Date(entry.data.created_at);
+                    return time >= fromDate && time <= toDate
+                });
+                console.log(referral_data)
+                self.setState({referrals: referral_data});
+            })
         })
 
         console.log(`From ${fromDate} to ${toDate}`);
@@ -122,6 +135,14 @@ export class CampaignAnalytics extends React.Component {
                         </Col>
                     </FormGroup>
                 </Form>
+                {this.state.referrals.length > 0 && <Row>
+                    <Col md={6}>
+                        <ClickVsConvMetrics clicks={this.state.clicks} conversions={this.state.conversions}/>
+                    </Col>
+                    <Col md={6}>
+                        <ReferralMetrics referrals={this.state.referrals} />
+                    </Col>
+                </Row>}
             </React.Fragment>
         )
     }

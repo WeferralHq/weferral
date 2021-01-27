@@ -18,8 +18,10 @@ const logOut = function(){
 
 const NavbarUser = (props) => (
     <NavItem { ...props }>
-        <NavLink onClick={ () => { logOut() } }
-            tag={ Link } to="/pages/login">
+        <NavLink 
+            tag={ Link } 
+            to="/logout"
+            >
             <i className="fa fa-power-off"></i>
         </NavLink>
     </NavItem>
