@@ -74,6 +74,8 @@ import ParticipantDetails from './Pages/ParticipantDetails';
 import ManageCustomerList from './Pages/Customer';
 import Webhook from "./Pages/Webhook";
 import Logout from "./Pages/Logout";
+import ManageRewardList from "./Pages/Reward";
+import ManageCommissionList from './Pages/Commission';
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -235,6 +237,8 @@ export const RoutedContent = () => {
                 <Route component={EditParticipant} path="/edit-participant/:id" />
                 <Route component={Webhook} path="/webhook" />
                 <Route component={Logout} path="/logout" />
+                <Route component={ManageRewardList} path="/payouts" />
+                <Route component={ManageCommissionList} path="/commissions" />
 
 
                 { /*    Graphs Routes   */}
