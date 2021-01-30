@@ -16,6 +16,7 @@ import {
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import {WebhookModal,WebhookEdit} from './Modal';
+import DeleteModal from '../../components/DeleteModal';
 
 export class Webhook extends React.Component {
 
@@ -150,10 +151,11 @@ export class Webhook extends React.Component {
                                                 this.openHookForm(hook)
                                             }} type="submit" value="submit"><i className="fa fa-pencil"></i> Edit
                                             </Button>*/}
-                                            <Button color="primary" outline size="sm" onClick={() => {
+                                            <DeleteModal size="sm" id={hook.id} text="Delete" color="primary" outline={true} icon="fa fa-times" />
+                                            {/*<Button color="primary" outline size="sm" onClick={() => {
                                                 this.deleteHook(hook)
                                             }} type="submit" value="submit"><i className="fa fa-times"></i> Delete
-                                            </Button>
+                                            </Button>*/}
                                         </Col>
 
                                     </Row>
