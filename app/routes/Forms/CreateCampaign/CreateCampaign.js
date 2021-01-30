@@ -41,6 +41,7 @@ export class CreateCampaign extends React.Component {
         this.state = {
             data: {},
             loading: true,
+            recurring: false,
             rewardType: '',
             comType: '',
             reward: '',
@@ -101,16 +102,20 @@ export class CreateCampaign extends React.Component {
         let value = target.type === "checkbox" ? target.checked : target.value;
         let name = target.name;
 
-        if(value === 'cash_reward'){
+        if(name === 'cash_reward'){
             self.setState({rewardType: 'cash_reward'});
-        }else if(value === 'discount_coupon'){
+        }else if(name === 'discount_coupon'){
             self.setState({rewardType: 'discount_coupon'})
         }
 
-        if(value === 'fixed'){
+        if(name === 'fixed'){
             self.setState({comType: 'fixed'});
-        }else if(value === 'percentage'){
+        }else if(name === 'percentage'){
             self.setState({comType: 'percentage'});
+        }
+
+        if(name === 'enable_recurring'){
+            self.setState({recurring: value});
         }
 
         self.setState({[name]: value});
@@ -334,7 +339,47 @@ export class CreateCampaign extends React.Component {
                                                                         label="Auto Approve referrals who sign up for this campaign"
                                                                         className="mb-3"
                                                                     />
+                                                                    <CustomInput
+                                                                        type="checkbox"
+                                                                        onChange={this.handleChange}
+                                                                        id="enable_recurring"
+                                                                        name="enable_recurring"
+                                                                        label="Enable recurring commission"
+                                                                        className="mb-3"
+                                                                    />
                                                                 </FormGroup>
+                                                                {this.state.recurring && <FormGroup>
+                                                                    <Label for="recurring_limit">
+                                                                        Recurring Limit
+                                                                </Label>
+                                                                    <Input
+                                                                        type="text"
+                                                                        onChange={this.handleChange}
+                                                                        defaultValue={data.recurring_limit || ''}
+                                                                        name="recurring_limit"
+                                                                        id="recurring_limit"
+                                                                        placeholder="Recurring Limit"
+                                                                    />
+                                                                    <p>Maximum number of transactions to be rewarded. for eg. if you want 
+                                                                        to give only 12 months commission, set the value to <strong>12</strong>
+                                                                    </p>
+                                                                </FormGroup>}
+                                                                {this.state.recurring && <FormGroup>
+                                                                    <Label for="trial_period_days">
+                                                                        Trial Period in Days
+                                                                    </Label>
+                                                                    <Input
+                                                                        type="text"
+                                                                        onChange={this.handleChange}
+                                                                        defaultValue={data.trial_period_days || ''}
+                                                                        name="trial_period_days"
+                                                                        id="trial_period_days"
+                                                                        placeholder="Trial Period in Days"
+                                                                    />
+                                                                    <p>If your subscription product or service has trial option 
+                                                                        you can set the value of the trial period in days or leave empty
+                                                                    </p>
+                                                                </FormGroup>}
                                                                 <FormGroup>
                                                                     <Label for="minimum_cash_payout">
                                                                         Minimum Cash Payout
