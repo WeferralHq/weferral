@@ -76,6 +76,7 @@ import Webhook from "./Pages/Webhook";
 import Logout from "./Pages/Logout";
 import ManageRewardList from "./Pages/Reward";
 import ManageCommissionList from './Pages/Commission';
+import File from "./Pages/Settings/Files";
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -239,6 +240,7 @@ export const RoutedContent = () => {
                 <Route component={Logout} path="/logout" />
                 <Route component={ManageRewardList} path="/payouts" />
                 <Route component={ManageCommissionList} path="/commissions" />
+                <Route component={File} path="/files" />
 
 
                 { /*    Graphs Routes   */}

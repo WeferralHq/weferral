@@ -10,7 +10,7 @@ import {
     UncontrolledCollapse,
     SidebarTrigger,
     ThemeConsumer
-} from './../../components';
+} from '../../../components';
 
 export class SettingNavBar extends React.Component {
 
