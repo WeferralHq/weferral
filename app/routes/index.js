@@ -77,6 +77,7 @@ import Logout from "./Pages/Logout";
 import ManageRewardList from "./Pages/Reward";
 import ManageCommissionList from './Pages/Commission';
 import File from "./Pages/Settings/Files";
+import secretKey from "./Pages/Settings/SecretKey";
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -241,6 +242,8 @@ export const RoutedContent = () => {
                 <Route component={ManageRewardList} path="/payouts" />
                 <Route component={ManageCommissionList} path="/commissions" />
                 <Route component={File} path="/files" />
+                <Route component={secretKey} path="/secret-key" />
+
 
 
                 { /*    Graphs Routes   */}

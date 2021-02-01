@@ -9,7 +9,11 @@ import {
     Badge,
     Button,
     CustomInput,
-    ButtonGroup
+    ButtonGroup,
+    UncontrolledButtonDropdown,
+    DropdownToggle,
+    DropdownMenu,
+    DropdownItem
 } from '../../../../app/components';
 import { CustomExportCSV } from '../../Tables/components/CustomExportButton';
 import { CustomSearch } from '../../Tables/components/CustomSearch';
@@ -44,6 +48,7 @@ export class ManageCommissionList extends React.Component {
         this.headerCheckboxRef = React.createRef();
         this.fetchData = this.fetchData.bind(this);
         this.generateRow = this.generateRow.bind(this);
+        this.changeStatus = this.changeStatus.bind(this);
     }
 
     componentDidMount() {
@@ -72,7 +77,7 @@ export class ManageCommissionList extends React.Component {
                 id: row.id,
                 commission: row.amount,
                 cost: row.conversion_amount,
-                status: row.payout,
+                status: row.status,
                 referrer: row.references.participants[0].referral_code,
                 amount_paid: row.redeemedCredit,
                 campaign_name: row.references.campaigns[0].name,
@@ -113,6 +118,25 @@ export class ManageCommissionList extends React.Component {
         });
     }
 
+    changeStatus(status){
+        let self = this;
+        let selected = self.state.selected
+        if(selected !== []){
+            selected.map((id) => {
+                let payload = {status: status};
+                Fetcher(`${port}/api/v1/commissions/${id}`, 'PUT', payload).then(async function(response){
+                    if(!response.error){
+                        //console.log(response);
+                        self.setState({rows: response});
+                        //console.log(self.state.rows);
+                        await self.generateRow();
+                        //console.log(self.state.campaigns);
+                    }
+                });
+            })
+        }
+    }
+
     createColumnDefinitions() {
         return [{
             dataField: 'id',
@@ -147,15 +171,27 @@ export class ManageCommissionList extends React.Component {
             dataField: 'status',
             text: 'Status',
             formatter: (cell) => {
-                if (cell === false) {
-                    return(
-                        <Badge color="warning">Pending</Badge>
-                    ) 
-                } else {
-                    return(
-                    <Badge color="info">Approved</Badge>
-                    )
+                let pqProps;
+                switch (cell) {
+                    case 'approved':
+                        pqProps = {
+                            color: 'success',
+                            text: 'Approved'
+                        }
+                        break;
+                    case 'pending':
+                        pqProps = {
+                            color: 'warning',
+                            text: 'Pending'
+                        }
+                        break;
+                    default:
+                        pqProps = {
+                            color: 'danger',
+                            text: 'Rejected'
+                        }
                 }
+                return (<Badge color={pqProps.color}>{pqProps.text}</Badge>);
             },
             sort: true,
             sortCaret
@@ -249,6 +285,17 @@ export class ManageCommissionList extends React.Component {
                                             </Button>
                                             
                                         </ButtonGroup>
+                                        <UncontrolledButtonDropdown size="sm">
+                                            <DropdownToggle caret color="secondary" outline>
+                                                Set Status
+                                            </DropdownToggle>
+                                            <DropdownMenu persist>
+                                                <DropdownItem onClick={ () => { this.changeStatus('approved') } }>Approved</DropdownItem>
+                                                <DropdownItem>Pending</DropdownItem>
+                                                <DropdownItem divider />
+                                                <DropdownItem>Rejected</DropdownItem>
+                                            </DropdownMenu>
+                                        </UncontrolledButtonDropdown>
                                     </div>
                                 </div>
                                 <BootstrapTable
