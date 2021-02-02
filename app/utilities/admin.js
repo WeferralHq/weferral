@@ -2,10 +2,10 @@ import Cookies from 'js-cookie';
 import Fetcher from './fetcher';
 import port from '../port';
 
-export function isAdmin(){
+export async function isAdmin(){
     let uid = Cookies.get("uid");
     if(uid){
-        Fetcher(`${port}/api/v1/role/user/${uid}`).then(function (response) {
+        await Fetcher(`${port}/api/v1/role/user/${uid}`).then(function (response) {
             if(response.admin){
                 return true;
             }else{

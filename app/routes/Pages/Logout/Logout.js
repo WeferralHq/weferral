@@ -2,6 +2,7 @@ import { bind } from 'lodash';
 import React from 'react';
 import port from '../../../port';
 import Fetcher from '../../../utilities/fetcher';
+import Cookie from 'js-cookie';
 
 export class Logout extends React.Component {
 
@@ -17,8 +18,12 @@ export class Logout extends React.Component {
     logOutUser(){
         let self = this;
         localStorage.removeItem("jwtToken");
+        Cookie.remove('uid');
         Fetcher(`${port}/api/v1/auth/session/clear`).then(function (response) {
-            self.props.history.push("/login");
+            if(response.message === 'successful logout'){
+                self.props.history.push("/login");
+            }
+            
         });
     }
 

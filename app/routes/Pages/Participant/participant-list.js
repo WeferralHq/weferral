@@ -20,6 +20,7 @@ import {
 import WeferralTableBase from '../../components/Datatable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { ImportButton } from './ImportButton';
+import {isAdmin} from '../../../utilities/admin';
 
 //const history = useHistory();
 
@@ -49,6 +50,9 @@ export class ManageParticipantList extends React.Component {
     }
 
     componentDidMount() {
+        if (!isAdmin()) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     }
 

@@ -25,6 +25,7 @@ import {
     TinyDonutChartBig
 } from "../../components/Financial/TinyDonutChartBig";
 import { CampaignAnalytics } from './CampaignAnalytics';
+import {isAdmin} from '../../../utilities/admin';
 
 export class Dashboard extends React.Component {
 
@@ -39,12 +40,10 @@ export class Dashboard extends React.Component {
     }
 
     componentDidMount() {
+        if (!isAdmin()) {
+            return this.props.history.push("/login");
+        }
         this.fetchAnalytics();
-        /*if (!isAuthorized({permissions: ["can_administrate", "can_manage"]})) {
-            return browserHistory.push("/login");
-        } else {
-            this.fetchAnalytics();
-        }*/
     }
 
     fetchAnalytics() {
