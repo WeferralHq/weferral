@@ -5,6 +5,7 @@ import {
     Button,
     ButtonToolbar,
     Input,
+    CustomInput,
     Form,
     FormGroup,
     Label,
@@ -15,6 +16,7 @@ import {
 } from './../../../components';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
+import ImportCsv from '../../../utilities/import';
 
 export class ImportButton extends React.Component {
 
@@ -22,12 +24,15 @@ export class ImportButton extends React.Component {
         super(props);
         //this.history = useHistory();
         this.state = {
-            campaign: []
+            campaign: [],
+            files: []
         };
 
         this.fetchData = this.fetchData.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.fileSubmit = this.fileSubmit.bind(this);
+        this.handleFileUpload = this.handleFileUpload.bind(this);
     }
 
     componentDidMount() {
@@ -51,6 +56,27 @@ export class ImportButton extends React.Component {
         let name = target.name;
 
         self.setState({[name]: value});
+    }
+
+    handleFileUpload(e) {
+        let self = this;
+        const file = e.target.files[0];
+        const files = ImportCsv(file);
+        self.setState({files: files});
+        console.log(self.state.files);
+    }
+
+    fileSubmit(){
+        let self = this;
+        let files = self.state.files;
+        files.shift();
+        files.map((file) => {
+            Fetcher(`${port}/api/v1//participant/invite/${self.state.campaign_id}`, 'POST', file).then(function (response) {
+                if (!response.error) {
+                    console.log('SUCCESS');
+                }
+            });
+        })
     }
 
     handleSubmit(){
@@ -85,9 +111,37 @@ export class ImportButton extends React.Component {
                 
                 <Col lg={6}>
                     <ButtonToolbar className="ml-auto">
-                        <Button color="primary" size="md" className="mr-2">
+                        <Button color="primary" id="modalImportParticipant" size="md" className="mr-2">
                             Import Participants
                         </Button>
+                        <UncontrolledModal target="modalImportParticipant" size="lg">
+                            <ModalHeader tag="h5">
+                                Import Participants
+                            </ModalHeader>
+                            <ModalBody>
+                                <Form>
+                                        <FormGroup>
+                                            <Input type="select" onChange={this.handleChange}
+                                                name="campaign_id"
+                                                id="defaultSelect"
+                                            >
+                                                <option defaultValue="">Select Campaign</option>
+                                                {this.state.campaign.map(camp => (
+                                                    <option value={camp.id}>{camp.name}</option>))}
+                                            </Input>
+                                        </FormGroup>
+                                        <FormGroup>
+                                        <CustomInput type="file" accept=".csv,.xlsx,.xls" id="uploadYourFile" onChange={this.handleFileUpload} name="customFile" label="Browse for a file to upload...." />
+                                        </FormGroup>
+                                </Form>
+                                <Button color="primary" size="lg" onClick={ () => this.fileSubmit() }>Upload</Button>
+                            </ModalBody>
+                            <ModalFooter>
+                                <UncontrolledModal.Close color="link" className="text-primary" size="lg">
+                                    Close
+                                </UncontrolledModal.Close>
+                            </ModalFooter>
+                        </UncontrolledModal>
                         <Button id="modalDefault203" color="primary" outline size="md">
                             Invite Participant
                         </Button>

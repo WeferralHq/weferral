@@ -4,6 +4,7 @@ import port from '../port';
 
 let ImportCsv = function(files){
     //var file = files[0];
+    let newImport =[];
 
     const reader = new FileReader();
     reader.onload = () => {
@@ -23,13 +24,16 @@ let ImportCsv = function(files){
                         if (d[d.length - 1] == '"')
                             d = d.substring(d.length - 2, 1);
                     }
-                    if (headers[j] !== d) {
-                        dataList[headers[j]] = d;
+                    if (headers[j] !== d && d !== '') {
+                            dataList[headers[j]] = d;
                     }
                 }
-                Fetcher(`${port}/api/v1/import`, 'POST', dataList).then(function (response) {
+
+                newImport.push(dataList);
+                
+                /*Fetcher(`${port}/api/v1/import`, 'POST', dataList).then(function (response) {
                     return response;
-                });
+                });*/
             }
           /*const name = data[i][0];
           const phoneNumber = data[i][1];
@@ -44,6 +48,8 @@ let ImportCsv = function(files){
     };
 
     reader.readAsBinaryString(files);
+
+    return newImport;
 }
 
 export default ImportCsv;
