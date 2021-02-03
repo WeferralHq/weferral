@@ -18,7 +18,9 @@ export class Logout extends React.Component {
     logOutUser(){
         let self = this;
         localStorage.removeItem("jwtToken");
+        localStorage.removeItem("bearerToken")
         Cookie.remove('uid');
+        Cookie.remove('pid');
         Fetcher(`${port}/api/v1/auth/session/clear`).then(function (response) {
             if(response.message === 'successful logout'){
                 self.props.history.push("/login");

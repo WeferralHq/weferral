@@ -20,14 +20,20 @@ const ShareCard = () => (
                             <CardTitle tag="h6" className="text-center">
                                 Share by email or on social media
                                 <ButtonToolbar className="ml-auto">
-                                    <Button color="primary" size="md" className="mr-2">
-                                        <i className="fa fa-fw fa-facebook"></i>
+                                    <Button color="facebook" size="md" className="mr-2">
+                                        <i className="fa fa-facebook"></i>
                                     </Button>
-                                    <Button color="primary" size="sm" className="mr-2">
-                                        <i className="fa fa-fw fa-facebook"></i>
+                                    <Button color="twitter" size="sm" className="mr-2">
+                                        <i className="fa fa-twitter"></i>
                                     </Button>
-                                    <Button color="primary" outline size="sm">
-                                        <i className="fa fa-fw fa-twitter"></i>
+                                    <Button color="linkedin" outline size="sm">
+                                        <i className="fa fa-fw fa-linkedin"></i>
+                                    </Button>
+                                    <Button color="secondary" outline size="sm">
+                                        <i className="fa fa-email"></i>
+                                    </Button>
+                                    <Button color="medium" outline size="sm">
+                                        <i className="fa fa-whatsapp"></i>
                                     </Button>
                                 </ButtonToolbar>
                             </CardTitle>

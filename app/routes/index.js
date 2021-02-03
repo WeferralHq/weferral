@@ -78,6 +78,7 @@ import ManageRewardList from "./Pages/Reward";
 import ManageCommissionList from './Pages/Commission';
 import File from "./Pages/Settings/Files";
 import secretKey from "./Pages/Settings/SecretKey";
+import ReferralLogin from "./Pages/ReferralLogin/ReferralLogin";
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -287,6 +288,7 @@ export const RoutedContent = () => {
                 <Route component={ForgotPassword} path="/pages/forgot-password" />
                 <Route component={LockScreen} path="/pages/lock-screen" />
                 <Route component={Login} path="/login" />
+                <Route component={ReferralLogin} path="/:campaignName/login" />
                 <Route component={Register} path="/pages/register" />
                 <Route component={setupAdmin} path="/pages/setup" />
                 <Route component={referralSignup} path="/:campaignName/signup" />
