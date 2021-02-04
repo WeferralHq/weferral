@@ -17,6 +17,7 @@ import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import Cookies from 'js-cookie';
 import { ProfileOverviewCard } from "../../components/Profile/ProfileOverviewCard";
+import ShareCard from './ShareCard';
 
 export class ParticipantDetails extends React.Component {
 
@@ -100,10 +101,6 @@ export class ParticipantDetails extends React.Component {
                                                     //badgeTitle="Monthly"
                                                     value={this.state.rows.totalsignups}
                                                     valueTitle="Total Signups"
-                                                //footerTitle="Last Month"
-                                                //footerTitleClassName="text-success"
-                                                //footerIcon="caret-up"
-                                                //footerValue="23%"
                                                 />
                                             </Card>
                                             <Card body>
@@ -112,17 +109,11 @@ export class ParticipantDetails extends React.Component {
                                                     //badgeTitle="Annual"
                                                     value={this.state.rows.totalcustomers}
                                                     valueTitle="Total Customers"
-                                                //footerTitle="Last Annual"
-                                                //footerTitleClassName="text-danger"
-                                                //footerIcon="caret-down"
-                                                //footerValue="96%"
                                                 />
                                             </Card>
                                             <Card body>
                                                 <ProfileOverviewCard
                                                     title="Clicks"
-                                                    //badgeColor="secondary"
-                                                    //badgeTitle="Today"
                                                     value={this.state.rows.totalclicks}
                                                     valueTitle="Total Clicks"
                                                 />
@@ -130,13 +121,12 @@ export class ParticipantDetails extends React.Component {
                                             <Card body>
                                                 <ProfileOverviewCard
                                                     title="Awaiting Payouts"
-                                                    //badgeColor="secondary"
-                                                    //badgeTitle="Today"
                                                     value={`$${this.state.rows.awaitingpayout}`}
                                                     valueTitle="Total Awaiting Payouts"
                                                 />
                                             </Card>
                                         </CardGroup>
+                                        <ShareCard rows={this.state.rows}/>
                                     </Col>
                                 </Row>
                             </Container>
