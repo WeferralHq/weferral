@@ -72,7 +72,6 @@ export class ReferralReset extends React.Component{
 
     handleChange(e) {
         let self = this;
-
         self.setState({ [e.target.name]: e.target.value });
     }
 
@@ -91,7 +90,7 @@ export class ReferralReset extends React.Component{
                             <Label for="emailAdress">
                                 Email Adress
                             </Label>
-                            <Input type="email" name="email" id="emailAdress" placeholder="Enter..." className="bg-white" />
+                            <Input type="email" name="email" id="emailAdress" placeholder="Enter..." className="bg-white" onChange={this.handleChange} />
                             <FormText color="muted">
                                 We&amp;ll never share your email with anyone else.
                             </FormText>

@@ -79,6 +79,7 @@ import ManageCommissionList from './Pages/Commission';
 import File from "./Pages/Settings/Files";
 import secretKey from "./Pages/Settings/SecretKey";
 import ReferralLogin from "./Pages/ReferralLogin/ReferralLogin";
+import ReferralNewPassword from "./Pages/ReferralNewPassword";
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
@@ -294,6 +295,7 @@ export const RoutedContent = () => {
                 <Route component={setupAdmin} path="/pages/setup" />
                 <Route component={referralSignup} path="/:campaignName/signup" />
                 <Route component={ReferralReset} path="/:campaignName/forgot-password" />
+                <Route component={ReferralNewPassword} path="reset-password/:pid/:token" />
                 <Route component={Success} path="/pages/success" />
                 <Route component={Timeline} path="/pages/timeline" />
 
