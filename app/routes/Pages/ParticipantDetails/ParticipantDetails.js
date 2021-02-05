@@ -18,6 +18,7 @@ import port from '../../../port';
 import Cookies from 'js-cookie';
 import { ProfileOverviewCard } from "../../components/Profile/ProfileOverviewCard";
 import ShareCard from './ShareCard';
+import {isParticipant} from '../../../utilities/admin';
 
 export class ParticipantDetails extends React.Component {
 
@@ -35,6 +36,9 @@ export class ParticipantDetails extends React.Component {
     }
 
     componentDidMount() {
+        if (!isParticipant()) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     }
 
@@ -62,69 +66,46 @@ export class ParticipantDetails extends React.Component {
                     <EmptyLayout.Section width={1080}>
                             <Container>
                                 <Row>
-                                    <Col lg={4}>
+                                    <Col lg={12}>
+                                        <CardGroup className="mb-5">
                                         <Card>
                                             <CardBody>
-                                                <div className="d-flex justify-content-center my-3">
-                                                    <Avatar.Image
-                                                        size="lg"
-                                                        src="http://bs4.webkom.co/img/avatars/2.jpg"
-                                                        addOns={[
-                                                            <AvatarAddOn.Icon
-                                                                className="fa fa-circle"
-                                                                color="white"
-                                                                key="avatar-icon-white-bg"
-                                                            />
-                                                        ]}
-                                                    />
-                                                </div>
-                                                <div className="mb-4 text-center">
-                                                    <a className="h6 text-decoration-none" href="#">
-                                                        {this.state.rows.name}
-                                                    </a>
-                                                </div>
-                                                <Row className="mt-3">
-                                                    <Col sm={12} md={12}>
-                                                        <Button color="secondary" outline block tag={Link} to="/apps/profile-edit">
-                                                            Edit
-                                                </Button>
-                                                    </Col>
-                                                </Row>
-                                            </CardBody>
-                                        </Card>
-                                    </Col>
-                                    <Col lg={8}>
-                                        <CardGroup className="mb-5">
-                                            <Card body>
                                                 <ProfileOverviewCard
                                                     title="Signups"
                                                     //badgeTitle="Monthly"
                                                     value={this.state.rows.totalsignups}
                                                     valueTitle="Total Signups"
                                                 />
-                                            </Card>
-                                            <Card body>
+                                            </CardBody>
+                                        </Card>
+                                        <Card>
+                                            <CardBody>
                                                 <ProfileOverviewCard
                                                     title="Customers"
                                                     //badgeTitle="Annual"
                                                     value={this.state.rows.totalcustomers}
                                                     valueTitle="Total Customers"
                                                 />
-                                            </Card>
-                                            <Card body>
+                                            </CardBody>
+                                        </Card>
+                                        <Card>
+                                            <CardBody>
                                                 <ProfileOverviewCard
                                                     title="Clicks"
                                                     value={this.state.rows.totalclicks}
                                                     valueTitle="Total Clicks"
                                                 />
-                                            </Card>
-                                            <Card body>
+                                            </CardBody>
+                                        </Card>
+                                        <Card>
+                                            <CardBody>
                                                 <ProfileOverviewCard
                                                     title="Awaiting Payouts"
                                                     value={`$${this.state.rows.awaitingpayout}`}
                                                     valueTitle="Total Awaiting Payouts"
                                                 />
-                                            </Card>
+                                            </CardBody>
+                                        </Card>
                                         </CardGroup>
                                         <ShareCard rows={this.state.rows}/>
                                     </Col>

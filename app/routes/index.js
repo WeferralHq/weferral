@@ -118,6 +118,7 @@ import Login from './Pages/Login/Login';
 import Register from './Pages/Register';
 import setupAdmin from './Pages/Setup';
 import referralSignup from './Pages/ReferralSignup';
+import ReferralReset from './Pages/ReferralReset';
 import Success from './Pages/Success';
 import Timeline from './Pages/Timeline';
 
@@ -292,6 +293,7 @@ export const RoutedContent = () => {
                 <Route component={Register} path="/pages/register" />
                 <Route component={setupAdmin} path="/pages/setup" />
                 <Route component={referralSignup} path="/:campaignName/signup" />
+                <Route component={ReferralReset} path="/:campaignName/forgot-password" />
                 <Route component={Success} path="/pages/success" />
                 <Route component={Timeline} path="/pages/timeline" />
 

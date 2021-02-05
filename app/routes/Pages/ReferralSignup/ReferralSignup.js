@@ -37,7 +37,7 @@ class referralSignup extends React.Component{
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fetchData = this.fetchData.bind(this);
         this.handleChange = this.handleChange.bind(this);
-      }
+    }
 
       componentDidMount() {
         let campaignName = this.props.match.params.campaignName || null;
@@ -92,13 +92,13 @@ class referralSignup extends React.Component{
         }, (error) => {
             console.log(error);
         })
-      }
+    }
 
-      handleChange(e) {
+    handleChange(e) {
           let self = this;
 
           self.setState({[e.target.name]: e.target.value});
-      }
+    }
 
     render() {
         if(this.state.loading === false){
