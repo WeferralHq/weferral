@@ -49,8 +49,8 @@ export class ManageParticipantList extends React.Component {
         this.contentInfo = this.contentInfo.bind(this);
     }
 
-    componentDidMount() {
-        if (!isAdmin()) {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
             return this.props.history.push("/login");
         }
         this.fetchData();

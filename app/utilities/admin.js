@@ -2,33 +2,39 @@ import Cookies from 'js-cookie';
 import Fetcher from './fetcher';
 import port from '../port';
 
-export async function isAdmin(){
+let isAdmin = async function(){
+    let result = false;
     let uid = Cookies.get("uid");
     if(uid){
         await Fetcher(`${port}/api/v1/role/user/${uid}`).then(function (response) {
             if(response.admin){
-                return true;
+                result = true;
             }else{
-                return false;
+                result = false;
             }
         });
     } else {
-        return false;
+        result = false;
     }
+    return result;
 }
 
-export async function isParticipant(){
+let isParticipant = async function(){
+    let result = false;
     let pid = Cookies.get("pid");
     if(pid){
-        await Fetcher(`${port}/api/v1/participant/${uid}`).then(function (response) {
+        await Fetcher(`${port}/api/v1/participant/${pid}`).then(function (response) {
             if(response.data){
-                return true;
+                result = true;
             }else{
-                return false;
+                result = false;
             }
         });
     } else {
-        return false;
+        result = false;
     }
+    return result;
 }
+
+export {isAdmin, isParticipant};
 

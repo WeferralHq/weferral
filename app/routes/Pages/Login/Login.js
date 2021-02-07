@@ -74,8 +74,8 @@ class Login extends React.Component {
         document.body.classList.remove('login')
     }*/
 
-    componentDidMount(){
-        if(!isAdmin()){
+    async componentDidMount(){
+        if(await isAdmin() === false){
             return this.props.history.push("/login");
             //return browserHistory.push("/");
         }

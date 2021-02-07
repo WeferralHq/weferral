@@ -39,8 +39,8 @@ export class Dashboard extends React.Component {
         this.fetchAnalytics = this.fetchAnalytics.bind(this);
     }
 
-    componentDidMount() {
-        if (!isAdmin()) {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
             return this.props.history.push("/login");
         }
         this.fetchAnalytics();

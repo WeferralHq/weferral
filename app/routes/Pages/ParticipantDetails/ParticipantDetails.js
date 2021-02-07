@@ -35,8 +35,8 @@ export class ParticipantDetails extends React.Component {
         this.fetchData = this.fetchData.bind(this);
     }
 
-    componentDidMount() {
-        if (!isParticipant()) {
+    async componentDidMount() {
+        if (await isParticipant() === false) {
             return this.props.history.push("/login");
         }
         this.fetchData();
@@ -62,8 +62,6 @@ export class ParticipantDetails extends React.Component {
             )
         } else {
             return(
-                <EmptyLayout>
-                    <EmptyLayout.Section width={1080}>
                             <Container>
                                 <Row>
                                     <Col lg={12}>
@@ -111,8 +109,6 @@ export class ParticipantDetails extends React.Component {
                                     </Col>
                                 </Row>
                             </Container>
-                    </EmptyLayout.Section>
-                </EmptyLayout>
                 
             )
         }
