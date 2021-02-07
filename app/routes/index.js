@@ -75,6 +75,8 @@ import ManageCustomerList from './Pages/Customer';
 import Webhook from "./Pages/Webhook";
 import Logout from "./Pages/Logout";
 import ManageRewardList from "./Pages/Reward";
+import ParticipantPayout from "./Pages/ParticipantPayout";
+import ParticipantCommision from "./Pages/ParticipantCommision";
 import ManageCommissionList from './Pages/Commission';
 import File from "./Pages/Settings/Files";
 import secretKey from "./Pages/Settings/SecretKey";
@@ -243,6 +245,8 @@ export const RoutedContent = () => {
                 <Route component={Webhook} path="/webhook" />
                 <Route component={Logout} path="/logout" />
                 <Route component={ManageRewardList} path="/payouts" />
+                <Route component={ParticipantPayout} path="/profile/payouts" />
+                <Route component={ParticipantCommision} path="/profile/commissions" />
                 <Route component={ManageCommissionList} path="/commissions" />
                 <Route component={File} path="/files" />
                 <Route component={secretKey} path="/secret-key" />

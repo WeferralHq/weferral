@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { SidebarMenu } from './../../components';
-import {isAdmin} from '../../utilities/admin';
+import {isAdmin, isParticipant} from '../../utilities/admin';
 
 export const SidebarMiddleNav = () => (
     <SidebarMenu>
@@ -49,6 +49,16 @@ export const SidebarMiddleNav = () => (
             icon={<i className="fa fa-fw fa-gear"></i>}
             title="Settings"
             to='/webhook'
+        ></SidebarMenu.Item>}
+        {isParticipant() && <SidebarMenu.Item
+            icon={<i className="fa fa-fw fa-money"></i>}
+            title="Commissions"
+            to='/profile/commissions'
+        ></SidebarMenu.Item>}
+        {isParticipant() && <SidebarMenu.Item
+            icon={<i className="fa fa-fw fa-credit-card"></i>}
+            title="Payouts"
+            to='/profile/Payouts'
         ></SidebarMenu.Item>}
         
         { /* -------- Forms ---------*/ }
