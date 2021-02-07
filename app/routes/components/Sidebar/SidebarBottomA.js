@@ -14,14 +14,14 @@ import { VersionSelector } from '../VersionSelector';
 const SidebarBottomA = () => (
     <React.Fragment>
         { /* START Desktop */ }
-        <Sidebar.HideSlim>
+        {/*<Sidebar.HideSlim>
             <Sidebar.Section className="pb-0">
                 <VersionSelector sidebar dashboard="Airframe" />
             </Sidebar.Section>
-            <Sidebar.Section>
+            {/*<Sidebar.Section>
                 <FooterAuth className="text-muted" />
-            </Sidebar.Section>
-        </Sidebar.HideSlim>
+            </Sidebar.Section>*/}
+        {/*</Sidebar.HideSlim>*/}
         { /* END Desktop */ }
 
         { /* START Slim Only */ }
@@ -45,11 +45,11 @@ const SidebarBottomA = () => (
                 >
                     <i className="fa fa-fw fa-question-circle-o"></i>
                 </Button>
-                <UncontrolledPopover placement="left-end" target="UncontrolledSidebarPopoverFooter">
+                {/*<UncontrolledPopover placement="left-end" target="UncontrolledSidebarPopoverFooter">
                     <PopoverBody>
                         <FooterText />
                     </PopoverBody>
-                </UncontrolledPopover>
+                </UncontrolledPopover>*/}
             </Sidebar.Section>
         </Sidebar.ShowSlim>
         { /* END Slim Only */ }

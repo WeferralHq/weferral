@@ -34,7 +34,7 @@ export const DefaultSidebar = () => (
 
         { /* START SIDEBAR: Only for Mobile */ }
         <Sidebar.MobileFluid>
-            <SidebarTopA />
+            {/*<SidebarTopA />*/}
             
             <Sidebar.Section fluid cover>
                 { /* SIDEBAR: Menu */ }

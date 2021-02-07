@@ -87,9 +87,9 @@ const SidebarBottomB = () => (
             </Sidebar.ShowSlim>
             { /* END SLIM Only View  */ }
             { /* START DESKTOP View */ }
-            <Sidebar.HideSlim>
+            {/*<Sidebar.HideSlim>
                 <FooterAuth />
-            </Sidebar.HideSlim>
+            </Sidebar.HideSlim>*/}
             { /* END DESKTOP View */ }
             { /* START SLIM Only View */ }
             <Sidebar.ShowSlim>
@@ -101,11 +101,11 @@ const SidebarBottomB = () => (
                     >
                         <i className="fa fa-fw fa-question-circle-o" />
                     </Button>
-                    <UncontrolledPopover placement="left-end" target="UncontrolledSidebarPopoverFooter">
+                    {/*<UncontrolledPopover placement="left-end" target="UncontrolledSidebarPopoverFooter">
                         <PopoverBody>
                             <FooterText />
                         </PopoverBody>
-                    </UncontrolledPopover>
+                    </UncontrolledPopover>*/}
                 </div>
             </Sidebar.ShowSlim>
             { /* END SLIM Only View */ }
