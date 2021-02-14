@@ -298,6 +298,7 @@ export const RoutedContent = () => {
                 <Route component={Register} path="/pages/register" />
                 <Route component={setupAdmin} path="/pages/setup" />
                 <Route component={referralSignup} path="/:campaignName/signup" />
+                <Route name="Finish Your Registration" path="/:campaignName/invitation/:token" component={referralSignup}/>
                 <Route component={ReferralReset} path="/:campaignName/forgot-password" />
                 <Route component={ReferralNewPassword} path="reset-password/:pid/:token" />
                 <Route component={Success} path="/pages/success" />

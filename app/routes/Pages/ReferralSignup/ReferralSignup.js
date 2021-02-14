@@ -26,13 +26,15 @@ class referralSignup extends React.Component{
     constructor(props) {
         super(props);
         let campaignName = this.props.match.params.campaignName || null;
+        let token = this.props.match.params.token;
         this.state = {
             system_settings: false,
             loading : true,
+            token: token,
             data: {},
             id: false,
             url: `${port}/api/v1/system-setting/${campaignName}`,
-            updateUrl: `${port}/api/v1/participant/${campaignName}`
+            createUrl: token ? `/api/v1/participant/${id}/register?token=${token}` : `${port}/api/v1/participant/${id}/register`
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fetchData = this.fetchData.bind(this);
@@ -66,23 +68,13 @@ class referralSignup extends React.Component{
               lname: this.state.lname,
               email: this.state.email,
               password: this.state.password
-              /*smtp_host: this.state.smtp_host,
-              smtp_password: this.state.smtp_password,
-              smtp_port: this.state.smtp_port,
-              smtp_user: this.state.smtp_user,
-              admin_user: this.state.admin_user,
-              admin_password: this.state.admin_password,
-              company_address: this.state.company_address,
-              company_email:this.state.company_email,
-              company_name: this.state.company_name,
-              company_phone_number: this.state.company_phone_number*/
           }
 
           //let payload = new FormData(document.getElementById("admin_form"))
         console.log(JSON.stringify(payload));
         
 
-        Fetcher(`${port}/api/v1/participant/${this.state.id}`, 'POST', payload).then((res) => {
+        Fetcher(this.state.createUrl, 'POST', payload).then((res) => {
             if(!res.error){
                 console.log(JSON.stringify(res));
                 Cookies.set("pid", res.data.id);
@@ -122,6 +114,12 @@ class referralSignup extends React.Component{
                         <EmptyLayout.Section center width={480}>
                             { /* START Header */}
                             <HeaderSignup types={types} group={group}/>
+                            {this.state.token &&
+                            <div className="mb-4">
+                                <h3 className="text-center mb-4">Finish Your Invitation</h3>
+                                <p className="text-center mb-4">Please enter your information to finish the invitation</p>
+                            </div> 
+                            }
                             
                             { /* END Header */}
                             { /* START Form */}
@@ -141,12 +139,12 @@ class referralSignup extends React.Component{
                                     <Input type="text" name="lname" id="lname" placeholder="Enter a Last Name..." className="bg-white" onChange={this.handleChange} />
 
                                 </FormGroup>
-                                <FormGroup>
+                                {!this.state.token &&<FormGroup>
                                     <Label for="email">
                                         Email Address
                                     </Label>
                                     <Input type="email" name="email" id="email" placeholder="Enter email..." className="bg-white" onChange={this.handleChange} />
-                                </FormGroup>
+                                </FormGroup>}
                                 <FormGroup>
                                     <Label for="password">
                                         Password
@@ -161,74 +159,7 @@ class referralSignup extends React.Component{
                                     <Input type="text" name="confirm_password" id="confirm_password" placeholder="Confirm Password" className="bg-white" onChange={this.handleChange} />
 
                                 </FormGroup>
-                                {/*<FormGroup>
-                    <Label for="smtp_host">
-                        SMTP Host
-                    </Label>
-                    <Input type="text" name="smtp_host" id="smtp_host" placeholder="SMTP Host..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>
-                <FormGroup>
-                    <Label for="smtp_user">
-                        SMTP User
-                    </Label>
-                    <Input type="text" name="smtp_user" id="smtp_user" placeholder="SMTP User..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>
-                <FormGroup>
-                    <Label for="smtp_password">
-                        SMTP Password
-                    </Label>
-                    <Input type="text" name="smtp_password" id="smtp_password" placeholder="SMTP Password..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>
-                <FormGroup>
-                    <Label for="smtp_port">
-                        SMTP Port
-                    </Label>
-                    <Input type="text" name="smtp_port" id="smtp_port" placeholder="SMTP Port..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>
-                <FormGroup>
-                    <Label for="admin_user">
-                        Email Address
-                    </Label>
-                    <Input type="email" name="admin_user" id="admin_user" placeholder="Enter email..." className="bg-white" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="admin_password">
-                        Password
-                    </Label>
-                    <Input type="password" name="admin_password" id="admin_password" placeholder="Password..." className="bg-white" onChange={this.handleChange}/>
-                </FormGroup>
-                <FormGroup>
-                    <Label for="company_name">
-                        Company Name
-                    </Label>
-                    <Input type="text" name="company_name" id="company_name" placeholder="Enter a Company Name..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>
-                <FormGroup>
-                    <Label for="company_address">
-                        Company Address
-                    </Label>
-                    <Input type="text" name="company_address" id="company_address" placeholder="Enter a Company Address..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>
-                <FormGroup>
-                    <Label for="company_email">
-                        Company Email
-                    </Label>
-                    <Input type="text" name="company_email" id="company_email" placeholder="Enter a Company Email..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>
-                <FormGroup>
-                    <Label for="company_phone_number">
-                        Company Phone Number
-                    </Label>
-                    <Input type="text" name="company_phone_number" id="company_phone_number" placeholder="Enter a Company Phone Number..." className="bg-white" onChange={this.handleChange}/>
-                    
-                </FormGroup>*/}
+                                
                                 <ThemeConsumer>
                                     {
                                         ({ color }) => (

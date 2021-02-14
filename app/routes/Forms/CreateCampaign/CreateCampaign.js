@@ -5,34 +5,33 @@ import {
     Container,
     Wizard,
     Card,
-    Nav,
-    NavItem,
-    NavLink,
     CardFooter,
     CardBody,
     Button,
     Row,
     Col,
-    Table,
     Form,
     FormGroup,
     Input,
     CustomInput,
-    InputGroup,
-    InputGroupAddon,
     Label,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
-    UncontrolledDropdown
 } from './../../../components';
 
 import { HeaderMain } from "../../components/HeaderMain";
 import { CardHeader, CardTitle } from 'reactstrap';
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
+import {isAdmin} from '../../../utilities/admin';
+import {
+    createAutoCorrectedDatePipe,
+    createNumberMask,
+    emailMask
+} from 'text-mask-addons';
+import MaskedInput from 'react-text-mask'
 
 const sequence = ['get-started', 'rewards', 'settings', 'finish'];
+const dolarsMask = createNumberMask({ prefix: '' });
+const percentageMask = createNumberMask({ prefix: '', suffix: '%', integerLimit: 3 });
 
 export class CreateCampaign extends React.Component {
     constructor(props) {
@@ -53,7 +52,11 @@ export class CreateCampaign extends React.Component {
         this.fetchData = this.fetchData.bind(this);
     }
 
-    componentDidMount(){
+    async componentDidMount(){
+        if(await isAdmin() === false){
+            return this.props.history.push("/login");
+            //return browserHistory.push("/");
+        }
         this.fetchData();
     }
 
@@ -72,7 +75,7 @@ export class CreateCampaign extends React.Component {
     }
 
     handleSubmit(e) {
-        e.preventDefault();
+        //e.preventDefault();
 
         const payload = {
             name: this.state.name,
@@ -102,16 +105,16 @@ export class CreateCampaign extends React.Component {
         let value = target.type === "checkbox" ? target.checked : target.value;
         let name = target.name;
 
-        if(name === 'cash_reward'){
+        if(value === 'cash_reward'){
             self.setState({rewardType: 'cash_reward'});
-        }else if(name === 'discount_coupon'){
+        }else if(value === 'discount_coupon'){
             self.setState({rewardType: 'discount_coupon'})
         }
 
-        if(name === 'fixed'){
+        if(value === 'fixed'){
             self.setState({comType: 'fixed'});
-        }else if(name === 'percentage'){
-            self.setState({comType: 'percentage'});
+        }else if(value === 'percentage_sale'){
+            self.setState({comType: 'percentage_sale'});
         }
 
         if(name === 'enable_recurring'){
@@ -133,7 +136,7 @@ export class CreateCampaign extends React.Component {
             return (
                 <Container>
                     <HeaderMain 
-                        title="Wizard"
+                        title="Create Campaign"
                         className="my-4"
                     />
                     <Card>
@@ -144,28 +147,28 @@ export class CreateCampaign extends React.Component {
                             >
                                 <Wizard.Step
                                     id={ sequence[0] }
-                                    icon={ <i className="fa fa-shopping-basket fa-fw"></i> }
+                                    icon={ <i className="fa fa-hourglass-1 fa-fw"></i> }
                                     complete={ this._isComplete(sequence[0]) }
                                 >
                                     Get Started
                                 </Wizard.Step>
                                 <Wizard.Step
                                     id={ sequence[1] }
-                                    icon={ <i className="fa fa-cube fa-fw"></i> }
+                                    icon={ <i className="fa fa-usd fa-fw"></i> }
                                     complete={ this._isComplete(sequence[1]) }
                                 >
                                     Rewards
                                 </Wizard.Step>
                                 <Wizard.Step
                                     id={ sequence[2] }
-                                    icon={ <i className="fa fa-credit-card fa-fw"></i> }
+                                    icon={ <i className="fa fa-wrench fa-fw"></i> }
                                     complete={ this._isComplete(sequence[2]) }
                                 >
                                     Settings
                                 </Wizard.Step>
                                 <Wizard.Step
                                     id={ sequence[3] }
-                                    icon={ <i className="fa fa-navicon fa-fw"></i> }
+                                    icon={ <i className="fa fa-hourglass-end fa-fw"></i> }
                                     complete={ this._isComplete(sequence[3]) }
                                 >
                                     Finish
@@ -180,24 +183,7 @@ export class CreateCampaign extends React.Component {
                                     case sequence[0]:
                                         return (
                                             <Row>
-                                                <Col md={6}>
-                                
-                                                    <div>
-                                                        <h3 className="mb-4">
-                                                            Your Bags are Ready to Check Out!
-                                                    </h3>
-                                                        <p>
-                                                            Discover goods you&apos;ll love from brands that inspire.
-                                                            The easiest way to open your own online store.
-                                                            Discover amazing stuff or open your own store for free!
-                                                    </p>
-                                                        <small>
-                                                            Below is a sample page for your cart,
-                                                            Created using pages design UI Elementes
-                                                    </small>
-                                                    </div>
-                                                </Col>
-                                                <Col md={6}>
+                                                <Col md={12}>
                                                     <Card>
                                                         <CardBody>
                                                             <div className="d-flex justify-content-between align-items-center pb-3">
@@ -258,10 +244,7 @@ export class CreateCampaign extends React.Component {
                                                                     <Label for="commission-type">
                                                                         Commission Type
                                                                     </Label>
-                                                                    <CustomInput
-                                                                        type="select"
-                                                                        onChange={this.handleChange}
-                                                                        name="commission_type"
+                                                                    <CustomInput  type="select" onChange={this.handleChange} name="commission_type"
                                                                         id="commission-type"
                                                                     >
                                                                         <option value="">Select Commission Type</option>
@@ -269,39 +252,30 @@ export class CreateCampaign extends React.Component {
                                                                         <option value="percentage_sale">Percentage Sale</option>
                                                                     </CustomInput>
                                                                 </FormGroup>}
-                                                                {this.state.comType === 'percentage' && <FormGroup>
+                                                                {this.state.comType === 'percentage_sale' && <FormGroup>
                                                                     <Label for="percent">
                                                                         Percentage
                                                                     </Label>
-                                                                    <Input
-                                                                        type="text"
-                                                                        onChange={this.handleChange}
-                                                                        name="reward"
-                                                                        id="percent"
-                                                                        placeholder="Enter Percentage..."
+                                                                    <Input type="text" onChange={this.handleChange} name="reward" id="percent"
+                                                                        placeholder="Enter Percentage..." mask={ percentageMask } tag={ MaskedInput}
                                                                     />
                                                                 </FormGroup>}
                                                                 {this.state.comType === 'fixed' && <FormGroup>
                                                                     <Label for="amount">
                                                                         Amount
-                                                                </Label>
+                                                                    </Label>
                                                                     <Input
-                                                                        type="text"
-                                                                        onChange={this.handleChange}
-                                                                        name="reward"
-                                                                        id="amount"
-                                                                        placeholder="Enter Amount..."
+                                                                        type="text" onChange={this.handleChange}
+                                                                        name="reward" id="amount" placeholder="Enter Amount..."
+                                                                        mask={ dolarsMask }
+                                                                        tag={ MaskedInput }
                                                                     />
                                                                 </FormGroup>}
                                                                 {this.state.rewardType === 'discount_coupon' && <FormGroup>
                                                                     <Label for="promo-code">
                                                                         Promo Code
                                                                 </Label>
-                                                                    <Input
-                                                                        type="text"
-                                                                        name="reward"
-                                                                        id="promo-code"
-                                                                        placeholder="Enter Promo Code"
+                                                                    <Input type="text" name="reward" id="promo-code" placeholder="Enter Promo Code"
                                                                     />
                                                                 </FormGroup>}
                                                             </Form>
@@ -385,12 +359,11 @@ export class CreateCampaign extends React.Component {
                                                                         Minimum Cash Payout
                                                                 </Label>
                                                                     <Input
-                                                                        type="text"
-                                                                        onChange={this.handleChange}
+                                                                        type="text" onChange={this.handleChange}
                                                                         defaultValue={data.minimum_cash_payout || ''}
-                                                                        name="minimum_cash_payout"
-                                                                        id="minimum_cash_payout"
+                                                                        name="minimum_cash_payout" id="minimum_cash_payout"
                                                                         placeholder="Minimum Cash Payout"
+                                                                        mask={ dolarsMask } tag={ MaskedInput }
                                                                     />
                                                                     <p>In case of cash rewards, pay your referrals only if their balance is over this value</p>
                                                                 </FormGroup>
