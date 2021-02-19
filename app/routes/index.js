@@ -17,9 +17,6 @@ import Dashboard from './Dashboards/Dashboard';
 
 import Widgets from './Widgets';
 
-import Cards from './Cards/Cards';
-import CardsHeaders from './Cards/CardsHeaders';
-
 import NavbarOnly from './Layouts/NavbarOnly';
 import ParticipantNavBar from './Layouts/ParticipantNavBar';
 
@@ -50,30 +47,6 @@ import ReferralNewPassword from "./Pages/ReferralNewPassword";
 
 import Tables from './Tables/Tables';
 import ExtendedTable from './Tables/ExtendedTable';
-
-import AccountEdit from './Apps/AccountEdit';
-import BillingEdit from './Apps/BillingEdit';
-import Chat from './Apps/Chat';
-import Clients from './Apps/Clients';
-import EmailDetails from './Apps/EmailDetails';
-import Files from './Apps/Files';
-import GalleryGrid from './Apps/GalleryGrid';
-import GalleryTable from './Apps/GalleryTable';
-import ImagesResults from './Apps/ImagesResults';
-import Inbox from './Apps/Inbox';
-import NewEmail from './Apps/NewEmail';
-import ProfileDetails from './Apps/ProfileDetails';
-import ProfileEdit from './Apps/ProfileEdit';
-import Projects from './Apps/Projects';
-import SearchResults from './Apps/SearchResults';
-import SessionsEdit from './Apps/SessionsEdit';
-import SettingsEdit from './Apps/SettingsEdit';
-import Tasks from './Apps/Tasks';
-import TasksDetails from './Apps/TasksDetails';
-import TasksKanban from './Apps/TasksKanban';
-import Users from './Apps/Users';
-import UsersResults from './Apps/UsersResults';
-import VideosResults from './Apps/VideosResults';
 
 import ComingSoon from './Pages/ComingSoon';
 import Confirmation from './Pages/Confirmation';
@@ -149,9 +122,6 @@ export const RoutedContent = () => {
 
                 <Route path='/widgets' exact component={Widgets} />
 
-                { /*    Cards Routes     */}
-                <Route path='/cards/cards' exact component={Cards} />
-                <Route path='/cards/cardsheaders' exact component={CardsHeaders} />
 
                 { /*    Layouts     */}
                 <Route path='/layouts/navbar' component={NavbarOnly} />
@@ -187,31 +157,6 @@ export const RoutedContent = () => {
                 { /*    Tables Routes   */}
                 <Route component={Tables} path="/tables/tables" />
                 <Route component={ExtendedTable} path="/tables/extended-table" />
-
-                { /*    Apps Routes     */}
-                <Route component={AccountEdit} path="/apps/account-edit" />
-                <Route component={BillingEdit} path="/apps/billing-edit" />
-                <Route component={Chat} path="/apps/chat" />
-                <Route component={Clients} path="/apps/clients" />
-                <Route component={EmailDetails} path="/apps/email-details" />
-                <Route component={Files} path="/apps/files/:type" />
-                <Route component={GalleryGrid} path="/apps/gallery-grid" />
-                <Route component={GalleryTable} path="/apps/gallery-table" />
-                <Route component={ImagesResults} path="/apps/images-results" />
-                <Route component={Inbox} path="/apps/inbox" />
-                <Route component={NewEmail} path="/apps/new-email" />
-                <Route component={ProfileDetails} path="/apps/profile-details" />
-                <Route component={ProfileEdit} path="/apps/profile-edit" />
-                <Route component={Projects} path="/apps/projects/:type" />
-                <Route component={SearchResults} path="/apps/search-results" />
-                <Route component={SessionsEdit} path="/apps/sessions-edit" />
-                <Route component={SettingsEdit} path="/apps/settings-edit" />
-                <Route component={Tasks} path="/apps/tasks/:type" />
-                <Route component={TasksDetails} path="/apps/task-details" />
-                <Route component={TasksKanban} path="/apps/tasks-kanban" />
-                <Route component={Users} path="/apps/users/:type" />
-                <Route component={UsersResults} path="/apps/users-results" />
-                <Route component={VideosResults} path="/apps/videos-results" />
 
                 { /*    Pages Routes    */}
                 <Route component={ComingSoon} path="/pages/coming-soon" />
