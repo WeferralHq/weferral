@@ -26,6 +26,7 @@ import Price from '../../../utilities/price';
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
 import Cookie from 'js-cookie';
+import {isParticipant} from '../../../utilities/admin';
 
 const sortCaret = (order) => {
     if (!order)
@@ -51,7 +52,10 @@ export class ParticipantCommission extends React.Component {
         this.generateRow = this.generateRow.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isParticipant() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

@@ -21,6 +21,7 @@ import DateFormat from '../../../utilities/dateformat';
 import Price from '../../../utilities/price';
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
+import {isAdmin} from '../../../utilities/admin';
 
 const CampaignStatus = {
     Publish: true,
@@ -51,7 +52,10 @@ export class ManageRewardList extends React.Component {
         this.generateRow = this.generateRow.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

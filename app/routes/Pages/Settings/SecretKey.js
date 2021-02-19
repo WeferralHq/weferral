@@ -1,6 +1,7 @@
 import React from 'react';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
+import {isAdmin} from '../../../utilities/admin';
 
 class SecretKey extends React.Component{
 
@@ -14,7 +15,10 @@ class SecretKey extends React.Component{
         this.fetchData = this.fetchData.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

@@ -25,6 +25,7 @@ import DateFormat from '../../../utilities/dateformat';
 import Price from '../../../utilities/price';
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
+import {isAdmin} from '../../../utilities/admin';
 
 const sortCaret = (order) => {
     if (!order)
@@ -51,7 +52,10 @@ export class ManageCommissionList extends React.Component {
         this.changeStatus = this.changeStatus.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

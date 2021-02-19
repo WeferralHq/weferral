@@ -17,6 +17,7 @@ import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import {WebhookModal,WebhookEdit} from './Modal';
 import DeleteModal from '../../components/DeleteModal';
+import {isAdmin} from '../../../utilities/admin';
 
 export class Webhook extends React.Component {
 
@@ -36,7 +37,10 @@ export class Webhook extends React.Component {
         this.fetchWebhooks = this.fetchWebhooks.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
         this.fetchWebhooks();
     }

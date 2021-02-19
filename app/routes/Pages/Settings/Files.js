@@ -15,6 +15,7 @@ import {
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import ImageUploader from '../../../utilities/image-uploader';
+import {isAdmin} from '../../../utilities/admin';
 
 class File extends React.Component {
 
@@ -33,7 +34,10 @@ class File extends React.Component {
         //this.handleFileUpload = this.handleFileUpload.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 
