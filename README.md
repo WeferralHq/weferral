@@ -7,69 +7,46 @@
 
 ___
 <p align="center">
-<b>Weferral is a referral & affiliata management software</b>
+<b>Weferral is a referral program & affiliata tracking software to grow your buiness</b>
 <p align="center"></p>
 <p align="center"><a href="https://subill.co"><img width="750" src="https://subill.co/newadmin.gif"></a></p>
 </p>
 
 ## Overview
-Weferral. The goal being Subill manages the lifecycle of any type of service a business can offer.
+Weferral provides all the tools needed to start, manage, and grow your affiliate program. Weferral affiliate management software is simple, powerful and easily customizable based on your needs
 
 
 ## Features
-- **Automate Billing:** Create and sell anything as a service in minutes.
-    - **Service designer:** Design service offerings that link directly to Stripe.
-    - **Subscription management:** Supports automatic recurring charges.
-    - **Quote system:** You can allow your customers to request quotes for your services before charging them.
-    - **Free trials:** Give out free trials of your subscription offerings to your customers.
-    - **Add-ons and Upsell:** Add custom fields to your service request form which influence the final price.
-    - **Adding charges:** Add one-time charges to a running service for custom work your clients want.
-    - **Refunds:** You can issue partial or full refunds on your customer invoices.
+- **Affiliates Reward:** Engage affiliates with just the right reward.
+    - **Recurring or lifetime:** Attract top influencers by linking a customer to an affiliate using our lifetime commissions feature.
+    - **One-time commissions:** Award one-time commissions(e-commerce).
+    - **Monthly commissions:** Award monthly commissions (subscription/SaaS).
+    - **Fixed or percentage-based commission** Award Fixed or percentage-based commission.
     
-- **Manage Customers:**.
-    - **Store-front:** Let your customers order from your catalog without needing another website.
-    - **Automatic invoicing:** Invoices are generated and sent to customers automatically.
-    - **Service cancellations:** Customers can request cancellations.
-    - **RBAC:** Customize roles for staff 
-    - **Communication:** Customers can send your business messages when they have questions
+- **Setup you affiliate program:**.
+    - **Customize your affiliate portal:** You can easily setup your own affiliate portal by adding your logo, cahnge the colors, text for your affiliate landing page.
+    - **Track Automatically:** Our system tracks all of your visitors, leads and sales immediately. Access the information in real-time from your own dashboard.
+    - **Affiliate Dashboard:** Wefraal save you time by providing affiliates an always up-to-date view of the status of leads, referrals and commissions.
+    - **Email Automation:** Set up emails that are automatically send to affiliates.
+    - **RBAC:** Customize roles for staff (coming soon)
+    - **Invite Customers:** Your customers can be the best affiliates. Send an invitation to your customer that asks them to join your affiliate program or import a csv list of customers & an invitation will be sent to them automatically.
 
 - **Extensibility:**
-    - **Full REST API:** Integrate Subill with your existing website or application
-    - **Plugin framework:** Develop plugins to extend the functionality of servicebot (documentation coming soon)
+    - **Full REST API:** Integrate Weferral with your existing website or application
+    - **Webhook:** Automate your workflow with Weferral webhooks
+    - **Plugin framework:** Develop plugins to extend the functionality of weferral (coming soon)
 
 
-**Managed Solution** - You can order a Subill instance online from [subill.co](https://subill.co)
+**Managed Solution** - (comming soon)
 
 
-## Usage Guide
+## Setup Guide
 
-Documentation: <https://docs.subill.co/> 
 
-API reference: <https://api-docs.subill.co/>
 
 
 ## Built With
 - [NodeJS](https://github.com/nodejs/node) &mdash; Our back end API is a Node express app. It responds to requests RESTfully in JSON.
 - [React](https://github.com/facebook/react) &mdash; Our front end is a React app that communicates with the Node Express api server.
 - [PostgreSQL](http://www.postgresql.org/) &mdash; Our database is Postgres.
-- [Paystack](https://paystack.com/) &mdash; Our platform integrates with Paystack to handle billing
 
-## Credit
-- Supported by [BrowserStack](https://www.browserstack.com/)
-
-## License
-Copyright (C) 2018 Subill
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-GNU General Public License for more details.
-
-
-You should have received a copy of the GNU General Public License
-along with this program.  If not, see <http://www.gnu.org/licenses/>.

@@ -15,8 +15,6 @@ import Stock from './Dashboards/Stock';
 import Reports from './Dashboards/Reports';
 import Dashboard from './Dashboards/Dashboard';
 
-import Widgets from './Widgets';
-
 import NavbarOnly from './Layouts/NavbarOnly';
 import ParticipantNavBar from './Layouts/ParticipantNavBar';
 
@@ -119,9 +117,6 @@ export const RoutedContent = () => {
                 <Route path="/dashboards/stock" exact component={Stock} />
                 <Route path="/dashboards/reports" exact component={Reports} />
                 <Route path="/dashboard" exact component={Dashboard} />
-
-                <Route path='/widgets' exact component={Widgets} />
-
 
                 { /*    Layouts     */}
                 <Route path='/layouts/navbar' component={NavbarOnly} />
