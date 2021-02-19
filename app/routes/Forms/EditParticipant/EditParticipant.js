@@ -20,6 +20,7 @@ import { HeaderMain } from "../../components/HeaderMain";
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
 import update from 'immutability-helper';
+import {isAdmin} from '../../../utilities/admin';
 let _ = require("lodash");
 
 export class EditParticipant extends React.Component {
@@ -41,7 +42,10 @@ export class EditParticipant extends React.Component {
         this.handleUpdateparticipant = this.handleUpdateparticipant.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

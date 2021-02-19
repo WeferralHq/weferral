@@ -18,6 +18,7 @@ import port from '../../../port';
 
 import { HeaderMain } from "../../components/HeaderMain";
 import { CustomInput } from 'reactstrap';
+import {isAdmin} from '../../../utilities/admin';
 let _ = require("lodash");
 
 export class CampaignSettings extends React.Component {
@@ -41,7 +42,10 @@ export class CampaignSettings extends React.Component {
         this.handleUpdateSettings = this.handleUpdateSettings.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

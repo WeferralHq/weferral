@@ -9,3 +9,4 @@ yarn.lock
 # other
 .DS_Store
 .vscode
+.env

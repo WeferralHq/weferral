@@ -15,6 +15,7 @@ import {
 } from '../../../components';
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
+import {isAdmin} from '../../../utilities/admin';
 
 import { HeaderMain } from "../../components/HeaderMain";
 const text= `
@@ -56,7 +57,10 @@ export class CampaignPageEditor extends React.Component {
         this.onSubmit = this.onSubmit.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

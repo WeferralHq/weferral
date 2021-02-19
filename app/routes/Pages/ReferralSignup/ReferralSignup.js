@@ -4,6 +4,7 @@ import port from '../../../port';
 import Fetcher from '../../../utilities/fetcher';
 import { HeaderSignup } from './SignupHeader';
 import Cookies from 'js-cookie';
+import update from "immutability-helper";
 
 import {
     Form,
@@ -32,6 +33,7 @@ class referralSignup extends React.Component{
             loading : true,
             token: token,
             data: {},
+            form : {},
             id: false,
             url: `${port}/api/v1/system-setting/${campaignName}`,
             createUrl: token ? `/api/v1/participant/${id}/register?token=${token}` : `${port}/api/v1/participant/${id}/register`
@@ -62,19 +64,20 @@ class referralSignup extends React.Component{
     
       handleSubmit(e) {
           e.preventDefault();
+          let self = this;
           
-          const payload = {
+          /*const payload = {
               fname: this.state.fname,
               lname: this.state.lname,
               email: this.state.email,
               password: this.state.password
-          }
+          }*/
 
           //let payload = new FormData(document.getElementById("admin_form"))
-        console.log(JSON.stringify(payload));
+        console.log(JSON.stringify(self.state.form));
         
 
-        Fetcher(this.state.createUrl, 'POST', payload).then((res) => {
+        Fetcher(this.state.createUrl, 'POST', self.state.form).then((res) => {
             if(!res.error){
                 console.log(JSON.stringify(res));
                 Cookies.set("pid", res.data.id);
@@ -87,9 +90,17 @@ class referralSignup extends React.Component{
     }
 
     handleChange(e) {
-          let self = this;
-
-          self.setState({[e.target.name]: e.target.value});
+        let self = this;
+        const target = e.target;
+        const value = target.type === 'checkbox' ? target.checked : target.value;
+        const name = target.name;
+        const formState = update(self.state, {
+            form: {
+                [name] : {$set:value}
+            }
+        });
+        console.log(formState);
+        self.setState(formState);
     }
 
     render() {

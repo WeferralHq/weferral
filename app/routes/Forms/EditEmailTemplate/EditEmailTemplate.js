@@ -23,6 +23,7 @@ import port from '../../../port';
 import { NavLink as Link } from 'react-router-dom';
 import EmailEditor from './EmailEditor';
 import ReactQuill, {Quill} from 'react-quill';
+import {isAdmin} from '../../../utilities/admin';
 
 const modules = {
     toolbar: [
@@ -72,9 +73,12 @@ export class NotificationTemplateForm extends React.Component {
         this.attachQuillRefs = this.attachQuillRefs.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
         let self = this;
         //alert(JSON.stringify(self.props));
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         Fetcher(self.state.url).then(function(response){
             if(!response.error){
                 console.log(response);

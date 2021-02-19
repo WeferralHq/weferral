@@ -51,17 +51,8 @@ import DragAndDropElements from './Interface/DragAndDropElements';
 import Calendar from './Interface/Calendar';
 import ReCharts from './Graphs/ReCharts';
 
-import Forms from './Forms/Forms';
-import FormsLayouts from './Forms/FormsLayouts';
-import InputGroups from './Forms/InputGroups';
-import Wizard from './Forms/Wizard';
-import TextMask from './Forms/TextMask';
-import Typeahead from './Forms/Typeahead';
-import Toggles from './Forms/Toggles';
-import Editor from './Forms/Editor';
 import DatePicker from './Forms/DatePicker';
 import Dropzone from './Forms/Dropzone';
-import Sliders from './Forms/Sliders';
 import CreateCampaign from './Forms/CreateCampaign';
 import CampaignTable from './Pages/Campaign';
 import CampaignPageEditor from './Forms/CampaignPageEditor';
@@ -172,7 +163,7 @@ export const RoutedContent = () => {
     return (
         <Provider store={store}>
             <Switch>
-                <Redirect from="/" to="/dashboards/projects" exact />
+                <Redirect from="/" to="/dashboard" exact />
 
                 <Route path="/dashboards/analytics" exact component={Analytics} />
                 <Route path="/dashboards/projects" exact component={ProjectsDashboard} />
@@ -221,17 +212,8 @@ export const RoutedContent = () => {
                 <Route component={Calendar} path="/interface/calendar" />
 
                 { /*    Forms Routes    */}
-                <Route component={Forms} path="/forms/forms" />
-                <Route component={FormsLayouts} path="/forms/forms-layouts" />
-                <Route component={InputGroups} path="/forms/input-groups" />
-                <Route component={Wizard} path="/forms/wizard" />
-                <Route component={TextMask} path="/forms/text-mask" />
-                <Route component={Typeahead} path="/forms/typeahead" />
-                <Route component={Toggles} path="/forms/toggles" />
-                <Route component={Editor} path="/forms/editor" />
                 <Route component={DatePicker} path="/forms/date-picker" />
                 <Route component={Dropzone} path="/forms/dropzone" />
-                <Route component={Sliders} path="/forms/sliders" />
                 <Route component={CreateCampaign} path="/create-campaign" />
                 <Route component={CampaignPageEditor} path="/edit-campaign-page" />
                 <Route component={Email} path="/notifications-templates" />

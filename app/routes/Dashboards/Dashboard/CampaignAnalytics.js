@@ -36,11 +36,6 @@ export class CampaignAnalytics extends React.Component {
 
     componentDidMount() {
         this.fetchData();
-        /*if (!isAuthorized({permissions: ["can_administrate", "can_manage"]})) {
-            return browserHistory.push("/login");
-        } else {
-            this.fetchAnalytics();
-        }*/
     }
 
     fetchData() {
