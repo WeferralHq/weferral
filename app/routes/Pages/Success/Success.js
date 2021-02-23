@@ -6,7 +6,6 @@ import {
 } from './../../../components';
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
 
 const Success = () => (
     <EmptyLayout>
@@ -30,9 +29,6 @@ const Success = () => (
                 </Link>
             </div>
             { /* END Bottom Links */}
-            { /* START Footer */}
-            <FooterAuth />
-            { /* END Footer */}
         </EmptyLayout.Section>
     </EmptyLayout>
 );

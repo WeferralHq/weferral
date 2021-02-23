@@ -133,17 +133,14 @@ class ReferralLogin extends React.Component {
                     { /* END Form */}
                     { /* START Bottom Links */}
                     <div className="d-flex mb-5">
-                        <Link to="/pages/forgotpassword" className="text-decoration-none">
+                        <Link to={`/${this.state.campaignName}/forgot-password`} className="text-decoration-none">
                             Forgot Password
                         </Link>
-                        <Link to="/pages/register" className="ml-auto text-decoration-none">
+                        <Link to={`/${this.state.campaignName}/signup`} className="ml-auto text-decoration-none">
                             Register
                         </Link>
                     </div>
                     { /* END Bottom Links */}
-                    { /* START Footer */}
-                    <FooterAuth />
-                    { /* END Footer */}
                 </EmptyLayout.Section>
             </EmptyLayout>
         )

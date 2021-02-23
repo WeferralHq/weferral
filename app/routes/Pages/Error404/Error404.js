@@ -14,7 +14,6 @@ import {
 } from './../../../components';
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
 
 const Error404 = () => (
     <EmptyLayout>
@@ -49,7 +48,7 @@ const Error404 = () => (
             { /* END Form */}
             { /* START Bottom Links */}
             <div className="d-flex mb-5">
-                <Link to="/pages/login">
+                <Link to="/login">
                     Back to Home
                 </Link>
                 <Link to="/" className="ml-auto text-decoration-none">
@@ -57,9 +56,6 @@ const Error404 = () => (
                 </Link>
             </div>
             { /* END Bottom Links */}
-            { /* START Footer */}
-            <FooterAuth />
-            { /* END Footer */}
         </EmptyLayout.Section>
     </EmptyLayout>
 );

@@ -18,9 +18,6 @@ import {
     ThemeConsumer
 } from './../../../components';
 
-import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
-
 
 class referralSignup extends React.Component{
 
@@ -182,9 +179,6 @@ class referralSignup extends React.Component{
                                 </ThemeConsumer>
                             </Form>
                             { /* END Bottom Links */}
-                            { /* START Footer */}
-                            <FooterAuth />
-                            { /* END Footer */}
                         </EmptyLayout.Section>
                     </EmptyLayout>
             )

@@ -102,15 +102,6 @@ class NavbarOnly extends React.Component {
                     </ul>
                 </section>
 
-                <section className="mb-5">
-                    <h6>
-                        Work Orders:
-                    </h6>
-                    <p>
-                        Regarding configuration, changes under client&apos;s requirements.<br />
-                        Pleace contact us through the <a href="http://wbkom.co/contact" className="text-primary" target="_blank" rel="noopener noreferrer">webkom.co/contact</a> website.
-                    </p>
-                </section>
             </Container>
         );
     }

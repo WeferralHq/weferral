@@ -22,7 +22,6 @@ import {
 } from './../../../components';
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
 
 class Login extends React.Component {
 
@@ -140,9 +139,6 @@ class Login extends React.Component {
                         </Link>
                     </div>
                     { /* END Bottom Links */}
-                    { /* START Footer */}
-                    <FooterAuth />
-                    { /* END Footer */}
                 </EmptyLayout.Section>
             </EmptyLayout>
         )

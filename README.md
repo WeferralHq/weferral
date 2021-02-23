@@ -41,7 +41,11 @@ Weferral provides all the tools needed to start, manage, and grow your affiliate
 
 
 ## Setup Guide
-
+Get the app running locally in the following way:
+```
+# Clone the Repo
+git clone https://github.com/WeferralHq/weferral
+```
 
 
 

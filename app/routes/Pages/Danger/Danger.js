@@ -22,9 +22,6 @@ const Danger = () => (
                 </Link>
             </div>
             { /* END Bottom Links */}
-            { /* START Footer */}
-            <FooterAuth />
-            { /* END Footer */}
         </EmptyLayout.Section>
     </EmptyLayout>
 );

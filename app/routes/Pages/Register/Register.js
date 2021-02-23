@@ -14,7 +14,6 @@ import {
 } from './../../../components';
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
 
 const Register = () => (
     <EmptyLayout>
@@ -77,9 +76,6 @@ const Register = () => (
                 </Link>
             </div>
             { /* END Bottom Links */}
-            { /* START Footer */}
-            <FooterAuth />
-            { /* END Footer */}
         </EmptyLayout.Section>
     </EmptyLayout>
 );

@@ -13,7 +13,6 @@ import {
 } from './../../../components';
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
 
 const ForgotPassword = () => (
     <EmptyLayout>
@@ -60,9 +59,6 @@ const ForgotPassword = () => (
                 </Link>
             </div>
             { /* END Bottom Links */}
-            { /* START Footer */}
-            <FooterAuth />
-            { /* END Footer */}
         </EmptyLayout.Section>
     </EmptyLayout>
 );

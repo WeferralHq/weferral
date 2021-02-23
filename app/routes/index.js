@@ -6,13 +6,6 @@ import {
 } from 'react-router';
 
 // ----------- Pages Imports ---------------
-import Analytics from './Dashboards/Analytics';
-import ProjectsDashboard from './Dashboards/Projects';
-import System from './Dashboards/System';
-import Monitor from './Dashboards/Monitor'; 
-import Financial from './Dashboards/Financial';
-import Stock from './Dashboards/Stock';
-import Reports from './Dashboards/Reports';
 import Dashboard from './Dashboards/Dashboard';
 
 import NavbarOnly from './Layouts/NavbarOnly';
@@ -109,13 +102,6 @@ export const RoutedContent = () => {
             <Switch>
                 <Redirect from="/" to="/dashboard" exact />
 
-                <Route path="/dashboards/analytics" exact component={Analytics} />
-                <Route path="/dashboards/projects" exact component={ProjectsDashboard} />
-                <Route path="/dashboards/system" exact component={System} />
-                <Route path="/dashboards/monitor" exact component={Monitor} />
-                <Route path="/dashboards/financial" exact component={Financial} />
-                <Route path="/dashboards/stock" exact component={Stock} />
-                <Route path="/dashboards/reports" exact component={Reports} />
                 <Route path="/dashboard" exact component={Dashboard} />
 
                 { /*    Layouts     */}

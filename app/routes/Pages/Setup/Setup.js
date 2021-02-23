@@ -16,7 +16,6 @@ import {
 } from './../../../components';
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
-import { FooterAuth } from "../../components/Pages/FooterAuth";
 
 
 class setupAdmin extends React.Component{
@@ -195,9 +194,6 @@ class setupAdmin extends React.Component{
                 </ThemeConsumer>
             </Form>
             { /* END Bottom Links */}
-            { /* START Footer */}
-            <FooterAuth />
-            { /* END Footer */}
         </EmptyLayout.Section>
     </EmptyLayout>
             </div>

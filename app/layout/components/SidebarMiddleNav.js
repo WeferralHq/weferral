@@ -99,46 +99,6 @@ export class SidebarMiddleNav extends React.Component{
                             title="Settings"
                             to='/webhook'
                         ></SidebarMenu.Item>
-
-                        { /* -------- Forms ---------*/}
-                        <SidebarMenu.Item
-                            icon={<i className="fa fa-fw fa-check-square-o"></i>}
-                            title="Forms"
-                        >
-                            <SidebarMenu.Item title="Forms" to='/forms/forms' />
-                            <SidebarMenu.Item title="Forms Layouts" to='/forms/forms-layouts' />
-                            <SidebarMenu.Item title="Input Groups" to='/forms/input-groups' />
-                            <SidebarMenu.Item title="Wizard" to='/forms/wizard' />
-                            <SidebarMenu.Item title="Text Mask" to='/forms/text-mask' />
-                            <SidebarMenu.Item title="Typeahead" to='/forms/typeahead' />
-                            <SidebarMenu.Item title="Toggles" to='/forms/toggles' />
-                            <SidebarMenu.Item title="Editor" to='/forms/editor' />
-                            <SidebarMenu.Item title="Date Picker" to='/forms/date-picker' />
-                            <SidebarMenu.Item title="Dropzone" to='/forms/dropzone' />
-                            <SidebarMenu.Item title="Sliders" to='/forms/sliders' />
-                        </SidebarMenu.Item>
-
-                        { /* -------- Pages ---------*/}
-                        <SidebarMenu.Item
-                            icon={<i className="fa fa-fw fa-copy"></i>}
-                            title="Pages"
-                        >
-                            <SidebarMenu.Item title="Register" to="/pages/register" />
-                            <SidebarMenu.Item title="Login" to="/pages/login" />
-                            <SidebarMenu.Item title="Forgot Password" to="/pages/forgot-password" />
-                            <SidebarMenu.Item title="Lock Screen" to="/pages/lock-screen" />
-                            <SidebarMenu.Item title="Error 404" to="/pages/error-404" />
-                            <SidebarMenu.Item title="Confirmation" to="/pages/confirmation" />
-                            <SidebarMenu.Item title="Success" to="/pages/success" />
-                            <SidebarMenu.Item title="Danger" to="/pages/danger" />
-                            <SidebarMenu.Item title="Coming Soon" to="/pages/coming-soon" />
-                            <SidebarMenu.Item title="Timeline" to="/pages/timeline" />
-                        </SidebarMenu.Item>
-                        <SidebarMenu.Item
-                            icon={<i className="fa fa-fw fa-star-o"></i>}
-                            title="Icons"
-                            to='/icons'
-                        />
                         <SidebarMenu.Item
                             icon={<i className="fa fa-fw fa-bookmark-o"></i>}
                             title="Docs"

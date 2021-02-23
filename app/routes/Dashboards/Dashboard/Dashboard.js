@@ -23,7 +23,7 @@ import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import {
     TinyDonutChartBig
-} from "../../components/Financial/TinyDonutChartBig";
+} from "./components/TinyDonutChartBig";
 import { CampaignAnalytics } from './CampaignAnalytics';
 import {isAdmin} from '../../../utilities/admin';
 
