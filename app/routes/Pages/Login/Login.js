@@ -10,6 +10,7 @@ import update from "immutability-helper";
 import {connect} from "react-redux";
 
 import {
+    Alert,
     Form,
     FormGroup,
     FormText,
@@ -28,7 +29,8 @@ class Login extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            form : {}
+            form : {},
+            alerts: {}
         };
         this.handleInputChange = this.handleInputChange.bind(this);
         this.handleLogin = this.handleLogin.bind(this);
@@ -56,6 +58,12 @@ class Login extends React.Component {
                 //localStorage.setItem("permissions", result.permissions);
             }else{
                 console.log("Login error", result.error);
+                that.setState({
+                    alerts: {
+                        color: 'danger',
+                        message: result.error
+                    }
+                });
                 that.setState({errors: result.error});
             }
         })
@@ -93,6 +101,11 @@ class Login extends React.Component {
         return (
             <EmptyLayout>
                 <EmptyLayout.Section center>
+                {(this.state.alerts && this.state.alerts.message) &&
+                        <Alert color={this.state.alerts.color} >
+                            {this.state.alerts.message}
+                        </Alert>
+                    }
                     { /* START Header */}
                     <HeaderAuth
                         title="Sign In to Application"
@@ -103,7 +116,7 @@ class Login extends React.Component {
                         <FormGroup>
                             <Label for="emailAdress">
                                 Email Adress
-                    </Label>
+                            </Label>
                             <Input onChange={this.handleInputChange} type="email" name="email" id="email" placeholder="Enter email..." className="bg-white" />
                             <FormText color="muted">
                                 We&amp;ll never share your email with anyone else.

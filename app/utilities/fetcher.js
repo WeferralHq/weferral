@@ -17,7 +17,7 @@ let Fetcher = function(path, method="GET", body, init=null){
 
         init = { method: method,
             headers: headers,
-            credentials: 'include',
+            credentials: "include"
         };
 
         if(method == "POST" || method=="PUT"){

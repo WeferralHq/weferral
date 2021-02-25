@@ -64,7 +64,8 @@ class ThemeSelector extends React.Component {
         });
 
         return (
-            <div className={ rootClass }>
+            <div></div>
+            /*<div className={ rootClass }>
                 <Button
                     color="primary"
                     className="theme-config__trigger"
@@ -151,7 +152,7 @@ class ThemeSelector extends React.Component {
                         </FormGroup>
                     </CardBody>
                 </Card>
-            </div>
+            </div>*/
         );
     }
 }

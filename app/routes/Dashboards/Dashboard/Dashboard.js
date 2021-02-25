@@ -175,7 +175,51 @@ export class Dashboard extends React.Component {
                             </Table>
                         </Col>
                     </Row>
-                    <CampaignAnalytics />
+                    <Row>
+                        <Col lg="6">
+                            <CampaignAnalytics />
+                        </Col>
+                        <Col lg="6">
+                            <div className="hr-text hr-text-left my-2">
+                                <span>Social Media Shares</span>
+                            </div>
+                            <Table size="sm">
+                                <tbody>
+                                    <tr>
+                                        <td className="text-inverse bt-0">Facebook Shares</td>
+                                        <td className="text-right bt-0">
+                                            <Badge color="blue" pill>{stats.mediaStats.fb_shares}</Badge>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-inverse">Twitter Shares</td>
+                                        <td className="text-right">
+                                            <Badge color="primary" pill>{stats.mediaStats.twitter_shares}</Badge>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-inverse">Email Shares</td>
+                                        <td className="text-right">
+                                            <Badge color="secondary" pill>{stats.mediaStats.email_shares}</Badge>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-inverse">Linkedin Shares</td>
+                                        <td className="text-right">
+                                            <Badge color="linkedin" pill>{stats.mediaStats.linkedin_shares}</Badge>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="text-inverse">Whatsapp Shares</td>
+                                        <td className="text-right">
+                                            <Badge color="teal" pill>{stats.mediaStats.whatsapp_shares}</Badge>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </Table>
+                        </Col>
+                    </Row>
+                    
                 </Container>
             )
         }

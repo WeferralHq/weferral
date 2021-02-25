@@ -7,6 +7,7 @@ import Cookies from 'js-cookie';
 import update from "immutability-helper";
 
 import {
+    Alert,
     Form,
     FormGroup,
     FormText,
@@ -31,9 +32,11 @@ class referralSignup extends React.Component{
             token: token,
             data: {},
             form : {},
+            alerts: {},
+            invalidpassword: false,
             id: false,
             url: `${port}/api/v1/system-setting/${campaignName}`,
-            createUrl: token ? `/api/v1/participant/${id}/register?token=${token}` : `${port}/api/v1/participant/${id}/register`
+            createUrl: token ? `/api/v1/participant/${campaignName}/register?token=${token}` : `${port}/api/v1/participant/${campaignName}/register`
         }
         this.handleSubmit = this.handleSubmit.bind(this);
         this.fetchData = this.fetchData.bind(this);
@@ -72,18 +75,33 @@ class referralSignup extends React.Component{
 
           //let payload = new FormData(document.getElementById("admin_form"))
         console.log(JSON.stringify(self.state.form));
-        
-
-        Fetcher(this.state.createUrl, 'POST', self.state.form).then((res) => {
-            if(!res.error){
-                console.log(JSON.stringify(res));
-                Cookies.set("pid", res.data.id);
-                const dash = '/my-dashboard';
-                this.props.history.push(dash);
-            }
-        }, (error) => {
-            console.log(error);
-        })
+        let form = self.state.form;
+        if(form.copassword !== form.password){
+            self.setState({
+                alerts: {
+                    color: 'danger',
+                    message: 'The password and confirmation password do not match'
+                }
+            });
+        }else{
+            Fetcher(this.state.createUrl, 'POST', self.state.form).then((res) => {
+                if(!res.error){
+                    console.log(JSON.stringify(res));
+                    Cookies.set("pid", res.data.id);
+                    const dash = '/my-dashboard';
+                    this.props.history.push(dash);
+                }else{
+                    self.setState({
+                        alerts: {
+                            color: 'danger',
+                            message: 'Some fields are missing'
+                        }
+                    });
+                }
+            }, (error) => {
+                console.log(error);
+            })
+        }
     }
 
     handleChange(e) {
@@ -120,6 +138,11 @@ class referralSignup extends React.Component{
             return (  
                     <EmptyLayout>
                         <EmptyLayout.Section center width={480}>
+                        {(this.state.alerts && this.state.alerts.message) &&
+                            <Alert color={this.state.alerts.color} >
+                                {this.state.alerts.message}
+                            </Alert>
+                        }
                             { /* START Header */}
                             <HeaderSignup types={types} group={group}/>
                             {this.state.token &&
@@ -157,14 +180,14 @@ class referralSignup extends React.Component{
                                     <Label for="password">
                                         Password
                                     </Label>
-                                    <Input type="text" name="password" id="password" placeholder="Enter Password..." className="bg-white" onChange={this.handleChange} />
+                                    <Input type="password" name="password" id="password" placeholder="Enter Password..." className="bg-white" onChange={this.handleChange} />
 
                                 </FormGroup>
                                 <FormGroup>
                                     <Label for="confirm_password">
                                         Confirm Password
                                     </Label>
-                                    <Input type="text" name="confirm_password" id="confirm_password" placeholder="Confirm Password" className="bg-white" onChange={this.handleChange} />
+                                    <Input type="password" name="copassword" invalid={this.state.invalidpassword} id="confirm_password" placeholder="Confirm Password" className="bg-white" onChange={this.handleChange} />
 
                                 </FormGroup>
                                 
