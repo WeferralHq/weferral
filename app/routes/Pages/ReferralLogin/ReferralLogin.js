@@ -8,6 +8,7 @@ import update from "immutability-helper";
 import {connect} from "react-redux";
 
 import {
+    UncontrolledAlert,
     Form,
     FormGroup,
     FormText,
@@ -58,7 +59,6 @@ class ReferralLogin extends React.Component {
                 that.setState({
                     alerts: {
                         color: 'danger',
-                        icon: 'times',
                         message: result.error
                     }
                 });
@@ -90,9 +90,9 @@ class ReferralLogin extends React.Component {
         return (
             <EmptyLayout>
                 {(this.state.alerts && this.state.alerts.message) &&
-                    <Alert color={this.state.alerts.color} >
+                    <UncontrolledAlert color={this.state.alerts.color} >
                         {this.state.alerts.message}
-                    </Alert>
+                    </UncontrolledAlert>
                 }
                 <EmptyLayout.Section center>
                     { /* START Header */}

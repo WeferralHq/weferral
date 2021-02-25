@@ -5,7 +5,7 @@ import port from '../../../port';
 import DateFormat from '../../../utilities/dateformat';
 import { ToastContainer, toast } from 'react-toastify';
 import { 
-    Alert,
+    UncontrolledAlert,
     Badge,
     UncontrolledButtonDropdown,
     DropdownToggle,
@@ -222,9 +222,9 @@ export class ManageParticipantList extends React.Component {
             let alert = this.state.alerts;
             return(
                 <Container>
-                    {alert.message && <Alert color={alert.color}>
+                    {alert.message && <UncontrolledAlert color={alert.color}>
                         {alert.message}
-                    </Alert>}
+                    </UncontrolledAlert>}
                     <Row>
                     <Col xl={ 12 }>
                         <ImportButton />

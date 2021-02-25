@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { 
-    Alert,
+    UncontrolledAlert,
     Button,
     Container,
     Row,
@@ -109,9 +109,9 @@ export class EditParticipant extends React.Component {
             return (
                 <React.Fragment>
                     {(this.state.alerts && this.state.alerts.message) &&
-                        <Alert color={this.state.alerts.color} >
+                        <UncontrolledAlert color={this.state.alerts.color} >
                             {this.state.alerts.message}
-                        </Alert>
+                        </UncontrolledAlert>
                     }
                 <Container>
                     <HeaderMain

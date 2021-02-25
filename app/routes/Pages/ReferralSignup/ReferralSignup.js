@@ -7,7 +7,6 @@ import Cookies from 'js-cookie';
 import update from "immutability-helper";
 
 import {
-    Alert,
     Form,
     FormGroup,
     FormText,
@@ -16,6 +15,7 @@ import {
     Button,
     Label,
     EmptyLayout,
+    UncontrolledAlert,
     ThemeConsumer
 } from './../../../components';
 
@@ -139,9 +139,9 @@ class referralSignup extends React.Component{
                     <EmptyLayout>
                         <EmptyLayout.Section center width={480}>
                         {(this.state.alerts && this.state.alerts.message) &&
-                            <Alert color={this.state.alerts.color} >
+                            <UncontrolledAlert color={this.state.alerts.color} >
                                 {this.state.alerts.message}
-                            </Alert>
+                            </UncontrolledAlert>
                         }
                             { /* START Header */}
                             <HeaderSignup types={types} group={group}/>

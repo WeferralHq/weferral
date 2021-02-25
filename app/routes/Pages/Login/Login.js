@@ -10,7 +10,7 @@ import update from "immutability-helper";
 import {connect} from "react-redux";
 
 import {
-    Alert,
+    UncontrolledAlert,
     Form,
     FormGroup,
     FormText,
@@ -102,9 +102,9 @@ class Login extends React.Component {
             <EmptyLayout>
                 <EmptyLayout.Section center>
                 {(this.state.alerts && this.state.alerts.message) &&
-                        <Alert color={this.state.alerts.color} >
+                        <UncontrolledAlert color={this.state.alerts.color} >
                             {this.state.alerts.message}
-                        </Alert>
+                        </UncontrolledAlert>
                     }
                     { /* START Header */}
                     <HeaderAuth
