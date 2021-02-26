@@ -38,8 +38,9 @@ export class ParticipantDetails extends React.Component {
     async componentDidMount() {
         if (await isParticipant() === false) {
             return this.props.history.push("/login");
+        }else{
+            this.fetchData();
         }
-        this.fetchData();
     }
 
     fetchData() {
@@ -62,53 +63,53 @@ export class ParticipantDetails extends React.Component {
             )
         } else {
             return(
-                            <Container>
-                                <Row>
-                                    <Col lg={12}>
-                                        <CardGroup className="mb-5">
-                                        <Card>
-                                            <CardBody>
-                                                <ProfileOverviewCard
-                                                    title="Signups"
-                                                    //badgeTitle="Monthly"
-                                                    value={this.state.rows.totalsignups}
-                                                    valueTitle="Total Signups"
-                                                />
-                                            </CardBody>
-                                        </Card>
-                                        <Card>
-                                            <CardBody>
-                                                <ProfileOverviewCard
-                                                    title="Customers"
-                                                    //badgeTitle="Annual"
-                                                    value={this.state.rows.totalcustomers}
-                                                    valueTitle="Total Customers"
-                                                />
-                                            </CardBody>
-                                        </Card>
-                                        <Card>
-                                            <CardBody>
-                                                <ProfileOverviewCard
-                                                    title="Clicks"
-                                                    value={this.state.rows.totalclicks}
-                                                    valueTitle="Total Clicks"
-                                                />
-                                            </CardBody>
-                                        </Card>
-                                        <Card>
-                                            <CardBody>
-                                                <ProfileOverviewCard
-                                                    title="Awaiting Payouts"
-                                                    value={`$${this.state.rows.awaitingpayout}`}
-                                                    valueTitle="Total Awaiting Payouts"
-                                                />
-                                            </CardBody>
-                                        </Card>
-                                        </CardGroup>
-                                        <ShareCard rows={this.state.rows}/>
-                                    </Col>
-                                </Row>
-                            </Container>
+                <Container>
+                    <Row>
+                        <Col lg={12}>
+                            <CardGroup className="mb-5">
+                                <Card>
+                                    <CardBody>
+                                        <ProfileOverviewCard
+                                            title="Signups"
+                                            //badgeTitle="Monthly"
+                                            value={this.state.rows.totalsignups}
+                                            valueTitle="Total Signups"
+                                        />
+                                    </CardBody>
+                                </Card>
+                                <Card>
+                                    <CardBody>
+                                        <ProfileOverviewCard
+                                            title="Customers"
+                                            //badgeTitle="Annual"
+                                            value={this.state.rows.totalcustomers}
+                                            valueTitle="Total Customers"
+                                        />
+                                    </CardBody>
+                                </Card>
+                                <Card>
+                                    <CardBody>
+                                        <ProfileOverviewCard
+                                            title="Clicks"
+                                            value={this.state.rows.totalclicks}
+                                            valueTitle="Total Clicks"
+                                        />
+                                    </CardBody>
+                                </Card>
+                                <Card>
+                                    <CardBody>
+                                        <ProfileOverviewCard
+                                            title="Awaiting Payouts"
+                                            value={`$${this.state.rows.awaitingpayout}`}
+                                            valueTitle="Total Awaiting Payouts"
+                                        />
+                                    </CardBody>
+                                </Card>
+                            </CardGroup>
+                            <ShareCard rows={this.state.rows} />
+                        </Col>
+                    </Row>
+                </Container>
                 
             )
         }

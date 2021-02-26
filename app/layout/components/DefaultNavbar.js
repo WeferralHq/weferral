@@ -12,7 +12,13 @@ import NavbarActivityFeed from './NavbarActivityFeed';
 import { NavbarUser } from './NavbarUser';
 import { NavbarMessages } from './NavbarMessages';
 import { NavbarLogout } from './NavbarLogout';
+import {isAdmin, isParticipant} from '../../utilities/admin';
 import { LogoThemed } from './../../routes/components/LogoThemed/LogoThemed';
+
+const isadmin = async function() {
+    let result = await isAdmin();
+    return result;
+}
 
 export const DefaultNavbar = () => (
     <Navbar light expand="xs" fluid>
@@ -46,7 +52,7 @@ export const DefaultNavbar = () => (
             </NavItem>
         </Nav>
         <Nav navbar className="ml-auto">
-            <NavbarActivityFeed />
+            {isadmin === true && <NavbarActivityFeed />}
             <NavbarUser />
             <NavbarLogout className="ml-2" />
         </Nav>

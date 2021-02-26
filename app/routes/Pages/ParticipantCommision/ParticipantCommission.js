@@ -61,7 +61,7 @@ export class ParticipantCommission extends React.Component {
 
     fetchData() {
         let self = this;
-        let id = self.props.pid;
+        let id = Cookie.get('pid');
         Fetcher(`${port}/api/v1/participant/commissions/${id}`).then(function(response){
             if(!response.error){
                 console.log(response);

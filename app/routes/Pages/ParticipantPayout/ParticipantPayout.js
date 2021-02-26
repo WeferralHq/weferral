@@ -20,6 +20,7 @@ import { Link } from 'react-router-dom';
 import DateFormat from '../../../utilities/dateformat';
 import Price from '../../../utilities/price';
 import Fetcher from '../../../utilities/fetcher';
+import Cookie from 'js-cookie';
 import port from '../../../port';
 import {isParticipant} from '../../../utilities/admin';
 
@@ -56,7 +57,7 @@ export class ParticipantPayout extends React.Component {
 
     fetchData() {
         let self = this;
-        let id = self.props.pid;
+        let id = Cookie.get('pid');
         Fetcher(`${port}/api/v1/participant/payouts/${id}`).then(function(response){
             if(!response.error){
                 console.log(response);
