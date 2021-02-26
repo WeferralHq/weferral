@@ -115,6 +115,7 @@ export const RoutedContent = () => {
                 <Route component={DatePicker} path="/forms/date-picker" />
                 <Route component={Dropzone} path="/forms/dropzone" />
                 <Route component={CreateCampaign} path="/create-campaign" />
+                <Route component={CreateCampaign} path="/edit-campaign" />
                 <Route component={CampaignPageEditor} path="/edit-campaign-page" />
                 <Route component={Email} path="/notifications-templates" />
                 <Route component={CampaignTable} path="/campaign" />
@@ -131,7 +132,7 @@ export const RoutedContent = () => {
                 <Route component={ParticipantCommision} path="/profile/commissions" />
                 <Route component={ManageCommissionList} path="/commissions" />
                 <Route component={File} path="/files" />
-                <Route component={secretKey} path="/secret-key" />
+                <Route component={secretKey} path="/settings" />
 
 
 

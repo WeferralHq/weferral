@@ -9,7 +9,7 @@ class SecretKey extends React.Component{
         super(props);
         this.state = {
             loading : true,
-            secretKey: ''
+            settings: {}
         };
 
         this.fetchData = this.fetchData.bind(this);
@@ -27,7 +27,7 @@ class SecretKey extends React.Component{
         Fetcher(`${port}/api/v1/secret-key/`).then(function(response){
             if(!response.error){
                 console.log(response);
-                self.setState({secretKey: response, loading: false});
+                self.setState({settings: response, loading: false});
                 //console.log(self.state.campaigns);
             }
         });
@@ -42,7 +42,10 @@ class SecretKey extends React.Component{
             return(
                 <div>
                     <h6>Secret Api Key</h6>
-                    <p>{this.state.secretKey}</p>
+                    <p>{this.state.settings.secretKey}</p>
+                    <br/>
+                    <h6>Account Id</h6>
+                    <p>{this.state.settings.account_id}</p>
                 </div>
                 
             )

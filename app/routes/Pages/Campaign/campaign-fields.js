@@ -4,7 +4,6 @@ import paginationFactory from 'react-bootstrap-table2-paginator';
 import filterFactory, { Comparator, dateFilter } from 'react-bootstrap-table2-filter'
 import ToolkitProvider from 'react-bootstrap-table2-toolkit';
 import _ from 'lodash';
-import faker from 'faker/locale/en_US';
 import moment from 'moment';
 
 import {
@@ -19,18 +18,10 @@ import { CustomSearch } from '../../Tables/components/CustomSearch';
 import { CustomPaginationPanel } from '../../Tables/components/CustomPaginationPanel';
 import { CustomSizePerPageButton } from '../../Tables/components/CustomSizePerPageButton';
 import { CustomPaginationTotal } from '../../Tables/components/CustomPaginationTotal';
-import { randomArray } from '../../../utilities';
-import {
-    buildCustomTextFilter,
-    buildCustomSelectFilter,
-    buildCustomNumberFilter
-} from '../../../../app/routes/Tables/ExtendedTable/filters/index';
 import { Link } from 'react-router-dom';
 import DateFormat from '../../../utilities/dateformat';
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
-
-const INITIAL_PRODUCTS_COUNT = 500;
 
 const CampaignStatus = {
     Publish: true,
@@ -49,7 +40,6 @@ export class CampaignField extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            //products: _.times(INITIAL_PRODUCTS_COUNT, generateRow),
             selected: [],
             loading : true,
             campaigns : [],
@@ -280,7 +270,14 @@ export class CampaignField extends React.Component {
                                         <Button
                                             size="sm"
                                             outline
-                                            tag={ Link } to={`/create-campaign?_id=${this.state.selected}`}
+                                            tag={ Link } to={`/campaign-settings/${this.state.selected}`}
+                                        >
+                                            <i className="fa fa-fw fa-pencil"></i>
+                                        </Button>
+                                        <Button
+                                            size="sm"
+                                            outline
+                                            tag={ Link } to={`/edit-campaign?_id=${this.state.selected}`}
                                         >
                                             <i className="fa fa-fw fa-pencil"></i>
                                         </Button>
