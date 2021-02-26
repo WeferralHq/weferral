@@ -1,6 +1,6 @@
 
 <p align="center">
-<a href="https://subill.co">
+<a href="#">
 <img width="250" heigth="250" src="#">
 </a>
 </p>
@@ -9,7 +9,6 @@ ___
 <p align="center">
 <b>Weferral is a referral program & affiliata tracking software to grow your buiness</b>
 <p align="center"></p>
-<p align="center"><a href="https://subill.co"><img width="750" src="https://subill.co/newadmin.gif"></a></p>
 </p>
 
 ## Overview
@@ -45,7 +44,15 @@ Get the app running locally in the following way:
 ```
 # Clone the Repo
 git clone https://github.com/WeferralHq/weferral
+run npm install & npm start
+
+# Clone the weferral API Repo
+git clone https://github.com/WeferralHq/weferral-api
+run npm install & npm start
+
+then go to http://localhost:4100/setup to setup the database and admin user
 ```
+Go to https://github.com/Ezehuche/tracker to learn how to weferral javascript tracker
 
 
 
