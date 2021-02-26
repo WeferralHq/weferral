@@ -10,7 +10,7 @@ import {
 
 import { NavbarActivityFeed } from './NavbarActivityFeed';
 import { NavbarMessages } from './NavbarMessages';
-import { NavbarUser } from './NavbarUser';
+import { NavbarLogout } from './NavbarLogout';
 
 export const SidebarANavbar = () => (
     <Navbar light expand="xs" fluid>
@@ -26,8 +26,7 @@ export const SidebarANavbar = () => (
         </Nav>
         <Nav navbar className="ml-auto">
             <NavbarActivityFeed />
-            <NavbarMessages className="ml-2" />
-            <NavbarUser className="ml-2" />
+            <NavbarLogout className="ml-2" />
         </Nav>
     </Navbar>
 );

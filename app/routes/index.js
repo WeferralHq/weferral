@@ -9,6 +9,7 @@ import {
 import Dashboard from './Dashboards/Dashboard';
 
 import NavbarOnly from './Layouts/NavbarOnly';
+import NavProfile from '../layout/components/NavProfile';
 import ParticipantNavBar from './Layouts/ParticipantNavBar';
 
 import ReCharts from './Graphs/ReCharts';
@@ -73,6 +74,7 @@ let initializedState = async function(dispatch){
         options: {},
         notifications: [],
         system_notifications: [],
+        user: [],
         uid : Cookies.get("uid")
     };
     initialState.options = await Fetcher(`${port}/api/v1/system-options/public`);
@@ -106,6 +108,7 @@ export const RoutedContent = () => {
 
                 { /*    Layouts     */}
                 <Route path='/layouts/navbar' component={NavbarOnly} />
+                <Route path='*user/profile' component={NavProfile} />
 
 
                 { /*    Forms Routes    */}

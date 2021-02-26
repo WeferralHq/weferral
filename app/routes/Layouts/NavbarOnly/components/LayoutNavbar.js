@@ -19,8 +19,8 @@ import { NavbarActivityFeed } from
     './../../../../layout/components/NavbarActivityFeed';
 import { NavbarMessages } from
     './../../../../layout/components/NavbarMessages';
-import { NavbarUser } from
-    './../../../../layout/components/NavbarUser';
+import { NavbarLogout } from
+    './../../../../layout/components/NavbarLogout';
 import { DropdownProfile } from
     './../../../components/Dropdowns/DropdownProfile';
 import { NavbarNavigation } from
@@ -49,8 +49,7 @@ export const LayoutNavbar = () => (
             { /* END Navbar: Left Side */ }
             { /* START Navbar: Right Side */ }
             <Nav className="ml-auto" pills>
-                <NavbarMessages />
-                <NavbarActivityFeed />
+                {/*<NavbarActivityFeed />*/}
                 { /* START Navbar: Dropdown */ }
                 <UncontrolledDropdown nav inNavbar>
                     <DropdownToggle nav>
@@ -76,7 +75,7 @@ export const LayoutNavbar = () => (
                     />
                 </UncontrolledDropdown>
                 { /* END Navbar: Dropdown */ }
-                <NavbarUser className="d-none d-lg-block" />
+                <NavbarLogout className="d-none d-lg-block" />
             </Nav>
             { /* END Navbar: Right Side */ }
         </Navbar>

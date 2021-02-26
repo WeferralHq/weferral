@@ -14,80 +14,88 @@ import {
     ListGroupItem,
     Media
 } from './../../components';
+import Fetcher from '../../utilities/fetcher';
+import port from '../../port';
+import DateFormat from '../../utilities/dateformat';
 
-/*eslint-disable */
-const activityFeedIcons = [
-    <span className="fa-stack fa-lg fa-fw d-flex mr-3">
-        <i className="fa fa-circle fa-fw fa-stack-2x text-success"></i>
-        <i className="fa fa-check fa-stack-1x fa-fw text-white"></i>
-    </span>,
-    <span className="fa-stack fa-lg fa-fw d-flex mr-3">
-        <i className="fa fa-circle fa-fw fa-stack-2x text-danger"></i>
-        <i className="fa fa-close fa-stack-1x fa-fw text-white"></i>
-    </span>,
-    <span className="fa-stack fa-lg fa-fw d-flex mr-3">
-        <i className="fa fa-circle fa-fw fa-stack-2x text-warning"></i>
-        <i className="fa fa-exclamation fa-stack-1x fa-fw text-white"></i>
-    </span>,
-    <span className="fa-stack fa-lg fa-fw d-flex mr-3">
-        <i className="fa fa-circle fa-fw fa-stack-2x text-primary"></i>
-        <i className="fa fa-info fa-stack-1x fa-fw text-white"></i>
-    </span>
-];
-/*eslint-enable */
+export class NavbarActivityFeed extends React.Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            loading : true,
+            notifications : []
+        };
+        this.fetchNotifications = this.fetchNotifications.bind(this);
+    }
 
-const NavbarActivityFeed = (props) => (
-    <UncontrolledDropdown nav inNavbar { ...props }>
-        <DropdownToggle nav>
-            <IconWithBadge
-                badge={ <Badge pill color="primary">6</Badge> }
-            >
-                <i className="fa fa-bell-o fa-fw" />
-            </IconWithBadge>
-        </DropdownToggle>
-        <ExtendedDropdown right>
-            <ExtendedDropdown.Section className="d-flex justify-content-between align-items-center">
-                <h6 className="mb-0">Activity Feed</h6>
-                <Badge pill>4</Badge>
-            </ExtendedDropdown.Section>
+    componentDidMount() {
+        this.fetchNotifications();
+    };
 
-            <ExtendedDropdown.Section list>
-                <ListGroup>
-                {
-                    _.times(7, (index) => (
-                        <ListGroupItem key={ index } action>
-                            <Media>
-                                <Media left>
-                                    { activityFeedIcons[index%4] }
-                                </Media>
-                                <Media body>
-                                    <span className="h6">
-                                        { faker.name.firstName() } { faker.name.lastName() }
-                                    </span> changed Description to &quot;{ faker.random.words() }&quot;
-                                    <p className="mt-2 mb-1">
-                                        { faker.lorem.sentence() }
-                                    </p>
-                                    <div className="small mt-2">
-                                        { faker.date.past().toString() }
-                                    </div>
-                                </Media>
-                            </Media>
-                        </ListGroupItem>
-                    ))
-                }
-                </ListGroup>
-            </ExtendedDropdown.Section>
+    fetchNotifications(){
+        let self = this;
+        Fetcher(`${port}/api/v1/notifications/unread`).then(function(response){
+            if(!response.error){
+                self.setState({notifications: response, loading: false});
+                console.log(self.state.notifications);
+            }
+        });
+    }
 
-            <ExtendedDropdown.Section className="text-center" tag={ Link} to="/apps/widgets">
-                See All Notifications
-                <i className="fa fa-angle-right fa-fw ml-2" />
-            </ExtendedDropdown.Section>
-        </ExtendedDropdown>
-    </UncontrolledDropdown>
-);
-NavbarActivityFeed.propTypes = {
-    className: PropTypes.string,
-    style: PropTypes.object
+    render(){
+        if(this.state.loading){
+            return(
+                <div><p>loading</p></div>
+            )
+        }else{
+            let notifys = this.state.notifications;
+            return(
+                <UncontrolledDropdown nav inNavbar>
+                    <DropdownToggle nav>
+                        <IconWithBadge
+                            badge={<Badge pill color="primary">{notifys.length}</Badge>}
+                        >
+                            <i className="fa fa-bell-o fa-fw" />
+                        </IconWithBadge>
+                    </DropdownToggle>
+                    <ExtendedDropdown right>
+                        <ExtendedDropdown.Section className="d-flex justify-content-between align-items-center">
+                            <h6 className="mb-0">Activity Feed</h6>
+                            <Badge pill>{notifys.length}</Badge>
+                        </ExtendedDropdown.Section>
+    
+                        <ExtendedDropdown.Section list>
+                            <ListGroup>
+                                {
+                                    _.map(notifys, (notify) => (
+                                        <ListGroupItem key={notify.id} action>
+                                            <Media>
+                                                <Media body>
+                                                   <p className="mt-2 mb-1">
+                                                        {notify.message}
+                                                    </p>
+                                                    <div className="small mt-2">
+                                                        {DateFormat(notify.created_at)}
+                                                    </div>
+                                                </Media>
+                                            </Media>
+                                        </ListGroupItem>
+                                    ))
+                                }
+                            </ListGroup>
+                        </ExtendedDropdown.Section>
+    
+                        <ExtendedDropdown.Section className="text-center" tag={Link} to="/apps/widgets">
+                            See All Notifications
+                    <i className="fa fa-angle-right fa-fw ml-2" />
+                        </ExtendedDropdown.Section>
+                    </ExtendedDropdown>
+                </UncontrolledDropdown>
+            )
+        }
+        
+    }
+    
 };
 
-export { NavbarActivityFeed };
+export default NavbarActivityFeed;

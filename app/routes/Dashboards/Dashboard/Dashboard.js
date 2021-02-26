@@ -8,13 +8,7 @@ import {
     CustomInput,
     CardDeck,
     Table,
-    UncontrolledDropdown,
-    DropdownToggle,
-    DropdownMenu,
-    DropdownItem,
     CardTitle,
-    ListGroup,
-    ListGroupItem,
     Button,
     Col,
     Media

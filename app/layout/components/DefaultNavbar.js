@@ -8,9 +8,10 @@ import {
     SidebarTrigger
 } from './../../components';
 
-import { NavbarActivityFeed } from './NavbarActivityFeed';
-import { NavbarMessages } from './NavbarMessages';
+import NavbarActivityFeed from './NavbarActivityFeed';
 import { NavbarUser } from './NavbarUser';
+import { NavbarMessages } from './NavbarMessages';
+import { NavbarLogout } from './NavbarLogout';
 import { LogoThemed } from './../../routes/components/LogoThemed/LogoThemed';
 
 export const DefaultNavbar = () => (
@@ -46,8 +47,8 @@ export const DefaultNavbar = () => (
         </Nav>
         <Nav navbar className="ml-auto">
             <NavbarActivityFeed />
-            <NavbarMessages className="ml-2" />
-            <NavbarUser className="ml-2" />
+            <NavbarUser />
+            <NavbarLogout className="ml-2" />
         </Nav>
     </Navbar>
 );

@@ -17,7 +17,7 @@ import {
     UncontrolledCollapse,
     UncontrolledDropdown,
 } from './../../../components';
-import { NavbarUser } from './../../../layout/components/NavbarUser';
+import { NavbarLogout } from './../../../layout/components/NavbarLogout';
 import { DropdownProfile } from '../../components/Dropdowns/DropdownProfile';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
@@ -119,7 +119,7 @@ export class ParticipantNavBar extends React.Component {
                             />
                         </UncontrolledDropdown>
                         { /* END Navbar: Dropdown */}
-                        <NavbarUser className="d-none d-lg-block" />
+                        <NavbarLogout className="d-none d-lg-block" />
                     </Nav>
                     { /* END Navbar: Right Side */}
                 </Navbar>

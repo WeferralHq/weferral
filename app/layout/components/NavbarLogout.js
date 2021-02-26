@@ -5,18 +5,21 @@ import PropTypes from 'prop-types';
 import {
     NavItem,
     NavLink
-} from './../../components';
+} from '../../components';
 
-const NavbarUser = (props) => (
+const NavbarLogout = (props) => (
     <NavItem { ...props }>
-        <NavLink tag={ Link } to="/user/profile">
-            <i className="fa fa-user"></i>
+        <NavLink 
+            tag={ Link } 
+            to="/logout"
+            >
+            <i className="fa fa-power-off"></i>
         </NavLink>
     </NavItem>
 );
-NavbarUser.propTypes = {
+NavbarLogout.propTypes = {
     className: PropTypes.string,
     style: PropTypes.object
 };
 
-export { NavbarUser };
+export { NavbarLogout };

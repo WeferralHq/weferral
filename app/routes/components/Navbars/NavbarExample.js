@@ -20,7 +20,7 @@ import {
 
 import { NavbarActivityFeed } from './../../../layout/components/NavbarActivityFeed';
 import { NavbarMessages } from './../../../layout/components/NavbarMessages';
-import { NavbarUser } from './../../../layout/components/NavbarUser';
+import { NavbarLogout } from './../../../layout/components/NavbarLogout';
 import { NavbarNavigation } from './NavbarNavigation';
 import { DropdownProfile } from './../Dropdowns/DropdownProfile';
 
@@ -55,7 +55,6 @@ const NavbarExample = ({ themeColor, themeStyle, navStyle }) => {
                 { /* END Navbar: Left Side */ }
                 { /* START Navbar: Right Side */ }
                 <Nav className="ml-auto" pills>
-                    <NavbarMessages />
                     <NavbarActivityFeed />
                     { /* START Navbar: Dropdown */ }
                     <UncontrolledDropdown nav inNavbar>
@@ -82,7 +81,7 @@ const NavbarExample = ({ themeColor, themeStyle, navStyle }) => {
                         />
                     </UncontrolledDropdown>
                     { /* END Navbar: Dropdown */ }
-                    <NavbarUser className="d-none d-lg-block" />
+                    <NavbarLogout className="d-none d-lg-block" />
                 </Nav>
                 { /* END Navbar: Right Side */ }
             </Navbar>

@@ -7,6 +7,7 @@ const defaultAppState = {
     options: {},
     notifications: [],
     system_notifications: [],
+    user: [],
     uid : Cookies.get("uid")
 };
 
