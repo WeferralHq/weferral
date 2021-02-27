@@ -1,7 +1,7 @@
 {
-  "name": "airframe-dashboard",
+  "name": "weferral-dashboard",
   "version": "0.1.0",
-  "description": "Seed project for flexible light React/Bootstrap 4 dashboards.",
+  "description": "Weferral provides all the tools needed to start, manage, and grow your affiliate program",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
@@ -11,7 +11,7 @@
     "start:dev": "node ./build/cli-tools.js --clear dist --create dist && webpack-dev-server --config ./build/webpack.config.client.dev.js",
     "start:prod": "node ./build/cli-tools.js --clear dist --create dist && webpack-dev-server --config ./build/webpack.config.client.prod.js"
   },
-  "author": "Webkom",
+  "author": "Ezeh Uche",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.4.4",

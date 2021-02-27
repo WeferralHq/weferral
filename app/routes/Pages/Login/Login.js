@@ -147,9 +147,6 @@ class Login extends React.Component {
                         <Link to="/pages/forgotpassword" className="text-decoration-none">
                             Forgot Password
                         </Link>
-                        <Link to="/pages/register" className="ml-auto text-decoration-none">
-                            Register
-                        </Link>
                     </div>
                     { /* END Bottom Links */}
                 </EmptyLayout.Section>
