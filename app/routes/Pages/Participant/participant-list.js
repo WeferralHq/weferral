@@ -5,6 +5,7 @@ import port from '../../../port';
 import DateFormat from '../../../utilities/dateformat';
 import { ToastContainer, toast } from 'react-toastify';
 import { 
+    EmptyLayout,
     UncontrolledAlert,
     Badge,
     UncontrolledButtonDropdown,
@@ -21,6 +22,7 @@ import WeferralTableBase from '../../components/Datatable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import { ImportButton } from './ImportButton';
 import {isAdmin} from '../../../utilities/admin';
+import Load from '../../../utilities/load';
 
 //const history = useHistory();
 
@@ -216,7 +218,11 @@ export class ManageParticipantList extends React.Component {
     render() {
         if(this.state.loading){
             return(
-                <div><p>loading</p></div>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }else {
             let alert = this.state.alerts;

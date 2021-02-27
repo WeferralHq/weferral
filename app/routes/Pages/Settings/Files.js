@@ -1,21 +1,13 @@
 import React from 'react';
 import {
-    Col,
-    Row,
-    Button,
-    HolderProvider,
-    CardImg,
-    Input,
-    CustomInput,
-    UncontrolledModal,
-    ModalHeader,
-    ModalBody,
-    ModalFooter
+    EmptyLayout,
+    Input
 } from '../../../components';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import ImageUploader from '../../../utilities/image-uploader';
 import {isAdmin} from '../../../utilities/admin';
+import Load from '../../../utilities/load';
 
 class File extends React.Component {
 
@@ -105,7 +97,11 @@ class File extends React.Component {
     render(){
         if(this.state.loading){
             return(
-                <div><p>loading</p></div>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }else{
             return(

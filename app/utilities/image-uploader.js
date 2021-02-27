@@ -13,6 +13,7 @@ import {
     ModalFooter
 } from '../components';
 import Fetcher from '../utilities/fetcher.js';
+import Load from '../utilities/load';
 import port from '../port';
 
 class ImageUploader extends React.Component {
@@ -172,7 +173,7 @@ class ImageUploader extends React.Component {
                                     width: '100px',
                                 }}/>
                                 <br></br>
-                            { this.state.loadingImage && <div><p>Loading</p></div> }
+                            { this.state.loadingImage && <Load /> }
                             <CustomInput type="file" name={this.props.name || 'file'} id={this.state.elementID} onChange={this.onImageSelected} label="Browse for a file to upload...." />
                             {/*<input id={this.state.elementID} type="file" onChange={this.onImageSelected} name={this.props.name || 'file'}/>*/}
                         </div>

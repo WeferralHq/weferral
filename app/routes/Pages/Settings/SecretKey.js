@@ -1,4 +1,8 @@
 import React from 'react';
+import { 
+    EmptyLayout,
+} from '../../../components';
+import Load from '../../../utilities/load';
 import Fetcher from '../../../utilities/fetcher.js';
 import port from '../../../port';
 import {isAdmin} from '../../../utilities/admin';
@@ -36,7 +40,11 @@ class SecretKey extends React.Component{
     render(){
         if(this.state.loading){
             return(
-                <div><p>loading</p></div>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }else{
             return(

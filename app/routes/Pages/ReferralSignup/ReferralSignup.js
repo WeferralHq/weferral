@@ -5,6 +5,7 @@ import Fetcher from '../../../utilities/fetcher';
 import { HeaderSignup } from './SignupHeader';
 import Cookies from 'js-cookie';
 import update from "immutability-helper";
+import Load from '../../../utilities/load';
 
 import {
     Form,
@@ -207,7 +208,11 @@ class referralSignup extends React.Component{
             )
         }else {
             return(
-                <div><p>loading</p></div>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }
         

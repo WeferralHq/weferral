@@ -5,6 +5,7 @@ import port from '../../../port';
 import DateFormat from '../../../utilities/dateformat';
 import ImportCsv from '../../../utilities/import';
 import { 
+    EmptyLayout,
     Badge,
     Button,
     CustomInput,
@@ -23,6 +24,7 @@ import {
 import WeferralTableBase from '../../components/Datatable';
 import {BootstrapTable, TableHeaderColumn} from 'react-bootstrap-table';
 import Dropzone from 'react-dropzone';
+import Load from '../../../utilities/load';
 
 //const history = useHistory();
 
@@ -137,7 +139,11 @@ export class ManageCustomerList extends React.Component {
     render() {
         if(this.state.loading){
             return(
-                <div><p>loading</p></div>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }else {
             return(

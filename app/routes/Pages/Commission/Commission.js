@@ -6,6 +6,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import {
+    EmptyLayout,
     Badge,
     Button,
     CustomInput,
@@ -26,6 +27,7 @@ import Price from '../../../utilities/price';
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
 import {isAdmin} from '../../../utilities/admin';
+import Load from '../../../utilities/load';
 
 const sortCaret = (order) => {
     if (!order)
@@ -318,7 +320,11 @@ export class ManageCommissionList extends React.Component {
             );
         } else{
             return(
-                <p>Loading</p>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }
         

@@ -1,5 +1,6 @@
 import React from 'react';
 import { 
+    EmptyLayout,
     Container,
     Row,
     Col,
@@ -24,6 +25,7 @@ import {
     TrTableDefault
 } from "./components/TrTableDefault";
 import Fetcher from '../../../utilities/fetcher';
+import Load from '../../../utilities/load';
 import port from '../../../port';
 
 
@@ -154,7 +156,11 @@ export class Email extends React.Component {
             )
         } else{
             return(
-                <p>Loading</p>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }
         

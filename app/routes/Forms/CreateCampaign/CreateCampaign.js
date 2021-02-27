@@ -2,6 +2,7 @@ import React from 'react';
 import _ from 'lodash';
 
 import {
+    EmptyLayout,
     Container,
     Wizard,
     Card,
@@ -27,7 +28,8 @@ import {
     createNumberMask,
     emailMask
 } from 'text-mask-addons';
-import MaskedInput from 'react-text-mask'
+import MaskedInput from 'react-text-mask';
+import Load from '../../../utilities/load';
 
 const sequence = ['get-started', 'rewards', 'settings', 'finish'];
 const dolarsMask = createNumberMask({ prefix: '' });
@@ -128,7 +130,11 @@ export class CreateCampaign extends React.Component {
         const { currentStep } = this.state;
         if(this.state.loading){
             return(
-                <div><p>loading</p></div>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }else {
             let data = this.state.data;

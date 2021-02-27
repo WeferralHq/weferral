@@ -5,8 +5,7 @@ import {
     Row,
     Card,
     CardBody,
-    CustomInput,
-    CardDeck,
+    EmptyLayout,
     Table,
     CardTitle,
     Button,
@@ -20,6 +19,7 @@ import {
 } from "./components/TinyDonutChartBig";
 import { CampaignAnalytics } from './CampaignAnalytics';
 import {isAdmin} from '../../../utilities/admin';
+import Load from '../../../utilities/load';
 
 export class Dashboard extends React.Component {
 
@@ -53,7 +53,11 @@ export class Dashboard extends React.Component {
         let stats = this.state.analytics;
         if(this.state.loading){
             return(
-                <div><p>loading</p></div>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         } else{
             return(

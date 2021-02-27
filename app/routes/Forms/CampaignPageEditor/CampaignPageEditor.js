@@ -3,6 +3,7 @@ import ReactQuill from 'react-quill';
 import faker from 'faker/locale/en_US';
 
 import { 
+    EmptyLayout,
     Button,
     Container,
     Row,
@@ -16,6 +17,7 @@ import {
 import Fetcher from '../../../utilities/fetcher';
 import port from '../../../port';
 import {isAdmin} from '../../../utilities/admin';
+import Load from '../../../utilities/load';
 
 import { HeaderMain } from "../../components/HeaderMain";
 const text= `
@@ -154,7 +156,11 @@ export class CampaignPageEditor extends React.Component {
             );
         } else {
             return(
-                <p>Loading</p>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }
         

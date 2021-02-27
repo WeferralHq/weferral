@@ -25,7 +25,7 @@ const SidebarTopB = () => (
                         <VersionSelector
                             down
                             sidebar
-                            dashboard="Airframe"
+                            dashboard="Weferral"
                             render={(currentVersion) => (
                                 <React.Fragment>
                                     <div className="h4 fw-600 sidebar-logo mb-1 text-left">

@@ -14,6 +14,7 @@ import {
     FormGroup, 
     Label, 
     Input, 
+    EmptyLayout,
     FormText
 } from './../../../components';
 import { HeaderMain } from "../../components/HeaderMain";
@@ -24,6 +25,7 @@ import { NavLink as Link } from 'react-router-dom';
 import EmailEditor from './EmailEditor';
 import ReactQuill, {Quill} from 'react-quill';
 import {isAdmin} from '../../../utilities/admin';
+import Load from '../../../utilities/load';
 
 const modules = {
     toolbar: [
@@ -278,7 +280,11 @@ export class NotificationTemplateForm extends React.Component {
             )
         } else {
             return(
-                <p>Loading</p>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }
         

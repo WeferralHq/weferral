@@ -6,6 +6,7 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import {
+    EmptyLayout,
     Badge,
     Button,
     CustomInput,
@@ -24,6 +25,7 @@ import { Link } from 'react-router-dom';
 import DateFormat from '../../../utilities/dateformat';
 import Price from '../../../utilities/price';
 import Fetcher from '../../../utilities/fetcher';
+import Load from '../../../utilities/load';
 import port from '../../../port';
 import Cookie from 'js-cookie';
 import {isParticipant} from '../../../utilities/admin';
@@ -259,7 +261,11 @@ export class ParticipantCommission extends React.Component {
             );
         } else{
             return(
-                <p>Loading</p>
+                <EmptyLayout>
+                    <EmptyLayout.Section center>
+                        <Load/>
+                    </EmptyLayout.Section>
+                </EmptyLayout>
             )
         }
         
