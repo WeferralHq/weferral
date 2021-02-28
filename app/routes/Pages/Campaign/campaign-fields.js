@@ -179,6 +179,20 @@ export class CampaignField extends React.Component {
             sort: true,
             sortCaret
         }, {
+            dataField: 'name',
+            text: 'Affiliate Url',
+            sort: true,
+            sortCaret,
+            formatter: (cell) => {
+                //alert(cell);
+                cell = cell.toLowerCase().replace(/\s+/g,"-");
+                return (
+                <span className="text-inverse">
+                    { `${window.location.host}/${cell}` }
+                </span>
+                )
+            }
+        }, {
             dataField: 'reward_type',
             text: 'Reward Type',
             sort: true,
@@ -274,7 +288,7 @@ export class CampaignField extends React.Component {
                                             outline
                                             tag={ Link } to={`/campaign-settings/${this.state.selected}`}
                                         >
-                                            <i className="fa fa-fw fa-pencil"></i>
+                                            <i className="fa fa-fw fa-gear"></i>
                                         </Button>
                                         <Button
                                             size="sm"

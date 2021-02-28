@@ -32,9 +32,9 @@ class ReferralMetrics extends React.Component {
         let self = this;
         let referrals = self.state.referrals;
         //console.log(referrals);
-        let months = _.uniq(_.map(referrals, (referral) => referral.data.created_at.substring(0,7)));
+        let months = _.uniq(_.map(referrals, (referral) => referral.created_at.substring(0,7)));
         let groupByReferralMonth = _.groupBy(referrals, (referral) => {
-            return referral.data.created_at.substring(0, 7);
+            return referral.created_at.substring(0, 7);
         });
         console.log(groupByReferralMonth);
         let sortReferralMonths = months.sort(function (a, b) {

@@ -174,9 +174,11 @@ export class Dashboard extends React.Component {
                         </Col>
                     </Row>
                     <Row>
-                        <Col lg="6">
+                        <Col lg="12">
                             <CampaignAnalytics />
                         </Col>
+                    </Row>
+                    <Row>
                         <Col lg="6">
                             <div className="hr-text hr-text-left my-2">
                                 <span>Social Media Shares</span>
@@ -186,7 +188,7 @@ export class Dashboard extends React.Component {
                                     <tr>
                                         <td className="text-inverse bt-0">Facebook Shares</td>
                                         <td className="text-right bt-0">
-                                            <Badge color="blue" pill>{stats.mediaStats.fb_shares}</Badge>
+                                            <Badge color="facebook" pill>{stats.mediaStats.fb_shares}</Badge>
                                         </td>
                                     </tr>
                                     <tr>
@@ -204,13 +206,13 @@ export class Dashboard extends React.Component {
                                     <tr>
                                         <td className="text-inverse">Linkedin Shares</td>
                                         <td className="text-right">
-                                            <Badge color="linkedin" pill>{stats.mediaStats.linkedin_shares}</Badge>
+                                            <Badge color="teal" pill>{stats.mediaStats.linkedin_shares}</Badge>
                                         </td>
                                     </tr>
                                     <tr>
                                         <td className="text-inverse">Whatsapp Shares</td>
                                         <td className="text-right">
-                                            <Badge color="teal" pill>{stats.mediaStats.whatsapp_shares}</Badge>
+                                            <Badge color="green" pill>{stats.mediaStats.whatsapp_shares}</Badge>
                                         </td>
                                     </tr>
                                 </tbody>

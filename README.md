@@ -1,7 +1,7 @@
 
 <p align="center">
 <a href="#">
-<img width="250" heigth="250" src="#">
+<img width="250" heigth="250" src="https://res.cloudinary.com/spotshop/image/upload/v1614472368/weferral/weferral-dashboard_clbi9e.png">
 </a>
 </p>
 

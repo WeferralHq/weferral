@@ -73,7 +73,7 @@ export class CampaignAnalytics extends React.Component {
             Fetcher(`${port}/api/v1/participants`).then(function (response) {
                 console.log(response);
                 let referral_data = response.filter(entry => {
-                    const time = new Date(entry.data.created_at);
+                    const time = new Date(entry.created_at);
                     return time >= fromDate && time <= toDate
                 });
                 console.log(referral_data)

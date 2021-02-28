@@ -117,9 +117,6 @@ class ReferralLogin extends React.Component {
                     </Label>
                             <Input onChange={this.handleInputChange} type="password" name="password" id="password" placeholder="Password..." className="bg-white" />
                         </FormGroup>
-                        <FormGroup>
-                            <CustomInput type="checkbox" id="rememberPassword" label="Remember Password" inline />
-                        </FormGroup>
                         <ThemeConsumer>
                             {
                                 ({ color }) => (
