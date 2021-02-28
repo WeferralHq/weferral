@@ -1,7 +1,7 @@
 
 <p align="center">
 <a href="#">
-<img width="250" heigth="250" src="https://res.cloudinary.com/spotshop/image/upload/v1614472368/weferral/weferral-dashboard_clbi9e.png">
+<img width="500" heigth="500" src="https://res.cloudinary.com/spotshop/image/upload/v1614472368/weferral/weferral-dashboard_clbi9e.png">
 </a>
 </p>
 
@@ -37,6 +37,8 @@ Weferral provides all the tools needed to start, manage, and grow your affiliate
 
 
 **Managed Solution** - (comming soon)
+
+**Documation** - (comming soon)
 
 
 ## Setup Guide
