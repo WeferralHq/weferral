@@ -49,6 +49,8 @@ export class ManageParticipantList extends React.Component {
         this.DeleteParticipant = this.DeleteParticipant.bind(this);
         this.showHandler = this.showHandler.bind(this);
         this.contentInfo = this.contentInfo.bind(this);
+        this.approve = this.approve.bind(this);
+        this.disapprove = this.disapprove.bind(this);
     }
 
     async componentDidMount() {
@@ -111,7 +113,6 @@ export class ManageParticipantList extends React.Component {
         let self = this;
         let id = self.state.selectedId;
         let value = self.state.content;
-        alert(id);
         return(
             <Media>
                 <Media middle left className="mr-3">
@@ -147,6 +148,40 @@ export class ManageParticipantList extends React.Component {
         let self = this;
         await self.setState({selectedId: id, content: value});
         toast.info(self.contentInfo());
+    }
+
+    approve(id){
+        let self = this;
+        Fetcher(`${port}/api/v1/participant/approve/${id}`).then(function (response) {
+            if(!response.error){
+                self.setState({success: true, response: response, alerts: {color:'info', message: 'Successfully approved'}});
+            }else{
+                let msg = 'Cannot approve participant.'
+                self.setState({
+                    alerts: {
+                        color: 'danger',
+                        message: `${response.error} : ${msg}`
+                    }
+                });
+            }
+        })
+    }
+
+    disapprove(id){
+        let self = this;
+        Fetcher(`${port}/api/v1/participant/disapprove/${id}`).then(function (response) {
+            if(!response.error){
+                self.setState({success: true, response: response, alerts: {color:'info', message: 'Successfully disapproved'}});
+            }else{
+                let msg = 'Cannot disapprove participant.'
+                self.setState({
+                    alerts: {
+                        color: 'danger',
+                        message: `${response.error} : ${msg}`
+                    }
+                });
+            }
+        })
     }
 
     /**
@@ -198,15 +233,23 @@ export class ManageParticipantList extends React.Component {
                 </DropdownToggle>
                 <DropdownMenu right>
                     <DropdownItem tag={Link} to={`/edit-participant/${row.id}`}>
-                        <i className="fa fa-fw fa-envelope mr-2"></i>
+                        <i className="fa fa-fw fa-edit mr-2"></i>
                             Edit
                     </DropdownItem>
                     <DropdownItem onClick={() => { this.showHandler(row.id, 'suspend') }}>
-                        <i className="fa fa-fw fa-phone mr-2"></i>
+                        <i className="fa fa-fw fa-archive mr-2"></i>
                             Suspend
                     </DropdownItem>
+                    {row.status === 'active' ? <DropdownItem onClick={() => { this.disapprove(row.id) }}>
+                        <i className="fa fa-fw fa-minus-square mr-2"></i>
+                        Disapprove
+                    </DropdownItem>
+                    : <DropdownItem onClick={() => { this.approve(row.id) }}>
+                    <i className="fa fa-fw fa-check mr-2"></i>
+                        Approve
+                    </DropdownItem>}
                     <DropdownItem onClick={() => { this.showHandler(row.id, 'delete') }}>
-                        <i className="fa fa-fw fa-phone mr-2"></i>
+                        <i className="fa fa-fw fa-trash mr-2"></i>
                             Delete
                     </DropdownItem>
                     
