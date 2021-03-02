@@ -17,7 +17,7 @@ import ReCharts from './Graphs/ReCharts';
 import DatePicker from './Forms/DatePicker';
 import Dropzone from './Forms/Dropzone';
 import CreateCampaign from './Forms/CreateCampaign';
-import CampaignTable from './Pages/Campaign';
+import CampaignField from './Pages/Campaign';
 import CampaignPageEditor from './Forms/CampaignPageEditor';
 import Email from './Pages/Email';
 import NotificationTemplateForm from './Forms/EditEmailTemplate';
@@ -118,7 +118,7 @@ export const RoutedContent = () => {
                 <Route component={CreateCampaign} path="/edit-campaign" />
                 <Route component={CampaignPageEditor} path="/edit-campaign-page" />
                 <Route component={Email} path="/notifications-templates" />
-                <Route component={CampaignTable} path="/campaign" />
+                <Route component={CampaignField} path="/campaign" />
                 <Route component={NotificationTemplateForm} path="/edit-template/:id" />
                 <Route component={CampaignSettings} path="/campaign-settings/:id" />
                 <Route component={ManageParticipantList} path="/participants" />

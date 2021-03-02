@@ -95,7 +95,7 @@ export class SidebarMiddleNav extends React.Component{
                         ></SidebarMenu.Item>*/}
                         { /* -------- Settings ---------*/}
                         <SidebarMenu.Item
-                            icon={<i className="fa fa-fw fa-gear"></i>}
+                            icon={<i className="fa fa-fw fa-wrench"></i>}
                             title="Webhooks"
                             to='/webhook'
                         ></SidebarMenu.Item>

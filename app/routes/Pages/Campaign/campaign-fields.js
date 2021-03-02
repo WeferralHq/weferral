@@ -7,6 +7,10 @@ import _ from 'lodash';
 import moment from 'moment';
 
 import {
+    UncontrolledAlert,
+    Container,
+    Row,
+    Col,
     EmptyLayout,
     Badge,
     Button,
@@ -24,6 +28,7 @@ import DateFormat from '../../../utilities/dateformat';
 import Fetcher from '../../../utilities/fetcher';
 import Load from '../../../utilities/load';
 import port from '../../../port';
+import { HeaderMain } from "../../components/HeaderMain";
 
 const CampaignStatus = {
     Publish: true,
@@ -46,6 +51,7 @@ export class CampaignField extends React.Component {
             loading : true,
             campaigns : [],
             generatedrows : [],
+            alerts: {}
         };
 
         this.headerCheckboxRef = React.createRef();
@@ -126,8 +132,34 @@ export class CampaignField extends React.Component {
             }
         });
     }
-    editCampaign(){
-        this.props.history.push(`/create-campaign?_id=${this.state.selected}`);
+    editCampaign(id) {
+        console.log(id.length);
+        let self = this;
+        if(id.length === 0){
+            self.setState({
+                alerts: {
+                    color: 'danger',
+                    message: 'You must select a campaign to continue'
+                }
+            });
+        }else{
+            self.props.history.push(`/edit-campaign?_id=${id}`);
+        }
+        
+    }
+
+    campaignSettings(id) {
+        let self = this;
+        if (id.length === 0) {
+            self.setState({
+                alerts: {
+                    color: 'danger',
+                    message: 'You must select a campaign to continue'
+                }
+            });
+        } else {
+            self.props.history.push(`/campaign-settings/${id}`);
+        }
     }
 
     createColumnDefinitions() {
@@ -242,76 +274,93 @@ export class CampaignField extends React.Component {
             };
 
             return (
-                <ToolkitProvider
-                    keyField="id"
-                    data={this.state.generatedrows}
-                    columns={columnDefs}
-                    search
-                    exportCSV
-                >
-                    {
-                        props => (
-                            <React.Fragment>
-                                <div className="d-flex justify-content-end align-items-center mb-2">
-                                    <h6 className="my-0">
-                                        Campaign
+                <Container>
+                     {(this.state.alerts && this.state.alerts.message) &&
+                            <UncontrolledAlert color={this.state.alerts.color} >
+                                {this.state.alerts.message}
+                            </UncontrolledAlert>
+                        }
+                    <HeaderMain
+                        title="Campaigns"
+                        className="mb-5 mt-4"
+                    />
+                    <Row className="mb-5">
+                        <Col>
+                            <ToolkitProvider
+                                keyField="id"
+                                data={this.state.generatedrows}
+                                columns={columnDefs}
+                                search
+                                exportCSV
+                            >
+                                {
+                                    props => (
+                                        <React.Fragment>
+                                            <div className="d-flex justify-content-end align-items-center mb-2">
+                                                <h6 className="my-0">
+                                                    Campaign
                             </h6>
-                                    <div className="d-flex ml-auto">
-                                        <CustomSearch
-                                            className="mr-2"
-                                            {...props.searchProps}
-                                        />
-                                        <ButtonGroup>
-                                            <CustomExportCSV
-                                                {...props.csvProps}
-                                            >
-                                                Export
+                                                <div className="d-flex ml-auto">
+                                                    <CustomSearch
+                                                        className="mr-2"
+                                                        {...props.searchProps}
+                                                    />
+                                                    <ButtonGroup>
+                                                        <CustomExportCSV
+                                                            {...props.csvProps}
+                                                        >
+                                                            Export
                                            </CustomExportCSV>
-                                            <Button
-                                                size="sm"
-                                                outline
-                                                onClick={this.handleDeleteRow.bind(this)}
-                                            >
-                                                Delete
+                                                        <Button
+                                                            size="sm"
+                                                            outline
+                                                            onClick={this.handleDeleteRow.bind(this)}
+                                                        >
+                                                            Delete
                                             </Button>
-                                            
-                                        </ButtonGroup>
-                                        <Button
-                                                size="sm"
-                                                outline
-                                                tag={ Link } to="/create-campaign"
-                                            >
-                                                <i className="fa fa-fw fa-plus"></i>
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            outline
-                                            tag={ Link } to={`/campaign-settings/${this.state.selected}`}
-                                        >
-                                            <i className="fa fa-fw fa-gear"></i>
-                                        </Button>
-                                        <Button
-                                            size="sm"
-                                            outline
-                                            tag={ Link } to={`/edit-campaign?_id=${this.state.selected}`}
-                                        >
-                                            <i className="fa fa-fw fa-pencil"></i>
-                                        </Button>
-                                    </div>
-                                </div>
-                                <BootstrapTable
-                                    classes="table-responsive"
-                                    pagination={paginationDef}
-                                    //filter={filterFactory()}
-                                    selectRow={ selectRowConfig }
-                                    bordered={false}
-                                    responsive
-                                    {...props.baseProps}
-                                />
-                            </React.Fragment>
-                        )
-                    }
-                </ToolkitProvider>
+
+                                                    </ButtonGroup>
+                                                    <Button
+                                                        size="sm"
+                                                        outline
+                                                        tag={Link} to="/create-campaign"
+                                                    >
+                                                        <i className="fa fa-fw fa-plus"></i>
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        outline
+                                                        onClick={() => { this.campaignSettings(this.state.selected)}}
+                                                        //tag={Link} to={`/campaign-settings/${this.state.selected}`}
+                                                    >
+                                                        <i className="fa fa-fw fa-gear"></i>
+                                                    </Button>
+                                                    <Button
+                                                        size="sm"
+                                                        outline
+                                                        onClick={() => { this.editCampaign(this.state.selected) }}
+                                                    //tag={ Link } to={`/edit-campaign?_id=${this.state.selected}`}
+                                                    >
+                                                        <i className="fa fa-fw fa-pencil"></i>
+                                                    </Button>
+                                                </div>
+                                            </div>
+                                            <BootstrapTable
+                                                classes="table-responsive"
+                                                pagination={paginationDef}
+                                                //filter={filterFactory()}
+                                                selectRow={selectRowConfig}
+                                                bordered={false}
+                                                responsive
+                                                {...props.baseProps}
+                                            />
+                                        </React.Fragment>
+                                    )
+                                }
+                            </ToolkitProvider>
+                        </Col>
+                    </Row>
+                </Container>
             );
         } else{
             return(

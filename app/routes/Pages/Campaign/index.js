@@ -1,3 +1,5 @@
-import { CampaignTable } from './Campaign';
+import {
+    CampaignField
+} from './campaign-fields';
 
-export default CampaignTable;
+export default CampaignField;
