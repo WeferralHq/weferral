@@ -63,3 +63,10 @@ Go to https://github.com/Ezehuche/tracker to learn how to weferral javascript tr
 - [React](https://github.com/facebook/react) &mdash; Our front end is a React app that communicates with the Node Express api server.
 - [PostgreSQL](http://www.postgresql.org/) &mdash; Our database is Postgres.
 
+## Author
+Ezeokeke Uche 
+* Email: <ezeokeke.remigius@gmail.com>
+
+* Github: [@ezehuche](https://github.com/ezehuche)
+
+* Twitter: [@ezeokekeuche](https://twitter.com/ezeokekeuche)
