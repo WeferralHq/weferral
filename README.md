@@ -12,7 +12,9 @@ ___
 </p>
 
 ## Overview
-Weferral provides all the tools needed to start, manage, and grow your affiliate program. Weferral affiliate management software is simple, powerful and easily customizable based on your needs
+Weferral provides all the tools needed to start, manage, and grow your affiliate program. Weferral affiliate management software is simple, powerful and easily customizable based on your needs.
+
+* Note: It's not production ready yet, still a work in progress. So please use with caution. Thanks
 
 
 ## Features
