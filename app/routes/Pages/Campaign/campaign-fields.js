@@ -220,7 +220,7 @@ export class CampaignField extends React.Component {
                 cell = cell.toLowerCase().replace(/\s+/g,"-");
                 return (
                 <span className="text-inverse">
-                    { `${window.location.host}/${cell}` }
+                    { `${window.location.host}/#/${cell}` }
                 </span>
                 )
             }

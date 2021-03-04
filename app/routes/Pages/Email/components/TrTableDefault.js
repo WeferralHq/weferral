@@ -8,11 +8,9 @@ import {
     UncontrolledButtonDropdown,
     DropdownToggle,
     DropdownMenu,
-    DropdownItem,
-    Media,
-    Avatar,
-    AvatarAddOn
+    DropdownItem
 } from './../../../../components';
+import DateFormat from '../../../../utilities/dateformat';
 
 /*eslint-enable */
 
@@ -38,7 +36,7 @@ const TrTableDefault = (props) => (
                     </td>
                     <td className="align-middle">
                         <div>
-                            30th Dec 2020
+                            {DateFormat(template.created_at)}
                         </div>
                     </td>
                     <td className="align-middle text-right">
@@ -48,12 +46,8 @@ const TrTableDefault = (props) => (
                             </DropdownToggle>
                             <DropdownMenu right>
                                 <DropdownItem tag={ Link } to={`/edit-template/${template.id}`}>
-                                    <i className="fa fa-fw fa-envelope mr-2"></i>
+                                    <i className="fa fa-fw fa-pencil mr-2"></i>
                                     Edit
-                                </DropdownItem>
-                                <DropdownItem>
-                                    <i className="fa fa-fw fa-phone mr-2"></i>
-                                    Delete
                                 </DropdownItem>
                             </DropdownMenu>
                         </UncontrolledButtonDropdown>
