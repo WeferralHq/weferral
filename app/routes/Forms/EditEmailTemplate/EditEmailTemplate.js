@@ -180,14 +180,6 @@ export class NotificationTemplateForm extends React.Component {
                                             inline
                                             checked={template.data.send_email}
                                         />
-                                        <CustomInput
-                                            type="checkbox"
-                                            onChange={this.handleChange}
-                                            name="send_admin"
-                                            label="Send To Admin"
-                                            inline
-                                            checked={template.data.send_to_owner}
-                                        />
                                     </FormGroup>
                                     { /* START Input */}
                                     <FormGroup row>

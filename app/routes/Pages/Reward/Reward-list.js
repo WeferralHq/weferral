@@ -82,7 +82,7 @@ export class ManageRewardList extends React.Component {
             return {
                 id: row.id,
                 campaign_name: row.references.campaigns[0].name,
-                status: row.dateScheduledFor,
+                status: {'due': row.dateScheduledFor, 'paid': row.assignedCredit},
                 participant_name: row.references.participants[0].name,
                 amount_due: row.assignedCredit,
                 amount_paid: row.redeemedCredit,
@@ -113,7 +113,7 @@ export class ManageRewardList extends React.Component {
     }
 
     handlePayoutRow() {
-        alert(this.state.selected);
+        //alert(this.state.selected);
         Fetcher(`${port}/api/v1/reward/payout/${this.state.selected}`).then(function(response){
             if(!response.error){
                 console.log(response);
@@ -160,7 +160,11 @@ export class ManageRewardList extends React.Component {
             formatter: (cell) => {
                 let pqProps;
                 let today = new Date().toISOString().slice(0, 10);
-                if (cell <= today) {
+                if (cell.paid == 0) {
+                    return(
+                        <Badge color="success">Paid</Badge>
+                    ) 
+                } else if (cell.due <= today) {
                     return(
                         <Badge color="warning">Due</Badge>
                     ) 
@@ -172,7 +176,7 @@ export class ManageRewardList extends React.Component {
             },
             sort: true,
             sortCaret
-        }, {
+        },{
             dataField: 'commission_type',
             text: 'Commission Type',
             sort: true,
@@ -261,7 +265,7 @@ export class ManageRewardList extends React.Component {
                                             <Button
                                                 size="sm"
                                                 outline
-                                                //onClick={this.handleDeleteRow.bind(this)}
+                                                onClick={this.handlePayoutRow.bind(this)}
                                             >
                                                 Mark as Paid
                                             </Button>
