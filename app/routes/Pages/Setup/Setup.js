@@ -47,7 +47,10 @@ class setupAdmin extends React.Component{
               company_address: this.state.company_address,
               company_email:this.state.company_email,
               company_name: this.state.company_name,
-              company_phone_number: this.state.company_phone_number
+              company_phone_number: this.state.company_phone_number,
+              cloudinary_name: this.state.cloudinary_name,
+              cloudinary_api_key: this.state.cloudinary_api_key,
+              cloudinary_api_secret: this.state.cloudinary_api_secret
           }
 
           //let payload = new FormData(document.getElementById("admin_form"))
@@ -181,6 +184,27 @@ class setupAdmin extends React.Component{
                         Company Phone Number
                     </Label>
                     <Input type="text" name="company_phone_number" id="company_phone_number" placeholder="Enter a Company Phone Number..." className="bg-white" onChange={this.handleChange}/>
+                    
+                </FormGroup>
+                <FormGroup>
+                    <Label for="cloudinary_name">
+                        Cloudinary Name
+                    </Label>
+                    <Input type="text" name="cloudinary_name" id="cloudinary_name" placeholder="Cloudinary Name" className="bg-white" onChange={this.handleChange}/>
+                    
+                </FormGroup>
+                <FormGroup>
+                    <Label for="cloudinary_api_key">
+                        Cloudinary Api Key
+                    </Label>
+                    <Input type="text" name="cloudinary_api_key" id="cloudinary_api_key" placeholder="Cloudinary Api Key" className="bg-white" onChange={this.handleChange}/>
+                    
+                </FormGroup>
+                <FormGroup>
+                    <Label for="cloudinary_api_secret">
+                        Cloudinary Api Secret
+                    </Label>
+                    <Input type="text" name="cloudinary_api_secret" id="cloudinary_api_secret" placeholder="Cloudinary Api Secret" className="bg-white" onChange={this.handleChange}/>
                     
                 </FormGroup>
                 <ThemeConsumer>

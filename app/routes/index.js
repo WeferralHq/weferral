@@ -154,7 +154,7 @@ export const RoutedContent = () => {
                 <Redirect from="/#/:campaignName" to="/:campaignName/login" exact />
                 <Route component={ReferralLogin} path="/:campaignName/login" />
                 <Route component={Register} path="/pages/register" />
-                <Route component={setupAdmin} path="/pages/setup" />
+                <Route component={setupAdmin} path="/setup" />
                 <Route component={referralSignup} path="/:campaignName/signup" />
                 <Route name="Finish Your Registration" path="/:campaignName/invitation/:token" component={referralSignup}/>
                 <Route component={ReferralReset} path="/:campaignName/forgot-password" />
