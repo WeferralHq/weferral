@@ -19,6 +19,20 @@ let isAdmin = async function(){
     return result;
 }
 
+let checkEnv = async function(){
+    let result = false;
+    await Fetcher(`${port}/api/v1/check/env/`).then(response => {
+        if (response.env) {
+            result = true;
+        } else {
+            result = false;
+        }
+    }).catch(err => {
+        console.log(err);
+    })
+    return result;
+}
+
 let isParticipant = async function(){
     let result = false;
     let pid = Cookies.get("pid");
@@ -36,5 +50,5 @@ let isParticipant = async function(){
     return result;
 }
 
-export {isAdmin, isParticipant};
+export {isAdmin, checkEnv, isParticipant};
 

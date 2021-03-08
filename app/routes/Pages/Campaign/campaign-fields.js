@@ -29,6 +29,7 @@ import Fetcher from '../../../utilities/fetcher';
 import Load from '../../../utilities/load';
 import port from '../../../port';
 import { HeaderMain } from "../../components/HeaderMain";
+import {isAdmin} from '../../../utilities/admin';
 
 const CampaignStatus = {
     Publish: true,
@@ -61,7 +62,10 @@ export class CampaignField extends React.Component {
         this.editCampaign = this.editCampaign.bind(this);
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         this.fetchData();
     };
 

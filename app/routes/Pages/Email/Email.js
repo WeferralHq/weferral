@@ -16,6 +16,7 @@ import {
 } from './../../../components';
 
 import { HeaderMain } from "../../components/HeaderMain";
+import {isAdmin} from '../../../utilities/admin';
 
 import {
     HeaderDemo
@@ -42,8 +43,11 @@ export class Email extends React.Component {
         this.handleChange = this.handleChange.bind(this);
     }
 
-    componentDidMount(){
+    async componentDidMount(){
         let self = this;
+        if (await isAdmin() === false) {
+            return this.props.history.push("/login");
+        }
         //alert('this');
         Fetcher(`${port}/api/v1/campaigns`).then((res) => {
             if(!res.err){

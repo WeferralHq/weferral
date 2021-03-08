@@ -18,7 +18,7 @@ import {
     TinyDonutChartBig
 } from "./components/TinyDonutChartBig";
 import { CampaignAnalytics } from './CampaignAnalytics';
-import {isAdmin} from '../../../utilities/admin';
+import {isAdmin, checkEnv} from '../../../utilities/admin';
 import Load from '../../../utilities/load';
 
 export class Dashboard extends React.Component {
@@ -34,10 +34,13 @@ export class Dashboard extends React.Component {
     }
 
     async componentDidMount() {
-        if (await isAdmin() === false) {
+        if (await checkEnv() === false) {
+            return this.props.history.push("/setup");
+        }else if (await isAdmin() === false) {
             return this.props.history.push("/login");
+        }else{
+            this.fetchAnalytics();
         }
-        this.fetchAnalytics();
     }
 
     fetchAnalytics() {

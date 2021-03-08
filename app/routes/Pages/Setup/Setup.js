@@ -58,7 +58,9 @@ class setupAdmin extends React.Component{
         
 
         Fetcher(`${port}/setup`, 'POST', payload).then((res) => {
-            return <link to='/'></link>
+            if(res.message === 'setup-initialized'){
+                return this.props.history.push("/login");
+            }
         }, (error) => {
             console.log(error);
         })
