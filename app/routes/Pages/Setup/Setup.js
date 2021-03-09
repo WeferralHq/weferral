@@ -16,6 +16,7 @@ import {
 } from './../../../components';
 
 import { HeaderAuth } from "../../components/Pages/HeaderAuth";
+import 'whatwg-fetch';
 
 
 class setupAdmin extends React.Component{
@@ -55,9 +56,17 @@ class setupAdmin extends React.Component{
 
           //let payload = new FormData(document.getElementById("admin_form"))
         console.log(JSON.stringify(payload));
+        let headers = new Headers({
+            "Content-Type": "application/json"
+        });
+
+        let init = { method: 'POST',
+            headers: headers,
+            body: JSON.stringify(payload)
+        };
         
 
-        Fetcher(`${port}/setup`, 'POST', payload).then((res) => {
+        Fetcher(`${port}/setup`, 'POST', payload, init).then((res) => {
             if(res.message === 'setup-initialized'){
                 return this.props.history.push("/login");
             }

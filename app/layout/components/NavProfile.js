@@ -64,7 +64,7 @@ export default class NavProfile  extends React.Component {
               if(!res.error){
                   console.log(JSON.stringify(res));
                   Cookies.set("pid", res.data.id);
-                  const dash = '/my-dashboard';
+                  const dash = '/dashboard';
                   this.props.history.push(dash);
               }else{
                   self.setState({
@@ -104,7 +104,7 @@ export default class NavProfile  extends React.Component {
                                         Name
                                     </Label>
                                     <Col sm={8}>
-                                        <Input type="text" name="name" defaultValue={user.name}
+                                        <Input type="text" name="name" defaultValue={user.name} onChange={this.handleChange}
                                         />
                                     </Col>
                                 </FormGroup>
@@ -113,7 +113,7 @@ export default class NavProfile  extends React.Component {
                                         Email
                                     </Label>
                                     <Col sm={8}>
-                                        <Input type="email" name="email" defaultValue={user.email} />
+                                        <Input type="email" name="email" defaultValue={user.email} onChange={this.handleChange} />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>
@@ -121,7 +121,7 @@ export default class NavProfile  extends React.Component {
                                         Password
                                     </Label>
                                     <Col sm={8}>
-                                        <Input type="password" name="password" />
+                                        <Input type="password" name="password" onChange={this.handleChange} />
                                     </Col>
                                 </FormGroup>
                                 <FormGroup row>
@@ -129,7 +129,7 @@ export default class NavProfile  extends React.Component {
                                         Confirm Password
                                     </Label>
                                     <Col sm={8}>
-                                        <Input type="password" name="copassword" />
+                                        <Input type="password" name="copassword" onChange={this.handleChange} />
                                     </Col>
                                 </FormGroup>
                             </Form>
