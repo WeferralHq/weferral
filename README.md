@@ -7,7 +7,7 @@
 
 ___
 <p align="center">
-<b>Weferral is a referral program & affiliata tracking software to grow your buiness</b>
+<b>Weferral is a referral management & affiliate tracking software to grow your buiness</b>
 <p align="center"></p>
 </p>
 
@@ -40,7 +40,11 @@ Weferral provides all the tools needed to start, manage, and grow your affiliate
 
 **Managed Solution** - (comming soon)
 
-**Documation** - (comming soon)
+### Demo 
+- [Check out the demo](https://weferral-demo.vercel.app/)
+
+### Documation 
+- [Documation](https://weferralhq.github.io/weferral-docs/#/) 
 
 
 ## Setup Guide
