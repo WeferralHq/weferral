@@ -42,6 +42,8 @@ Weferral provides all the tools needed to start, manage, and grow your affiliate
 
 ### Demo 
 - [Check out the demo](https://weferral-demo.vercel.app/)
+Email: demo@example.com
+password: demo
 
 ### Documation 
 - [Documation](https://weferralhq.github.io/weferral-docs/#/) 
