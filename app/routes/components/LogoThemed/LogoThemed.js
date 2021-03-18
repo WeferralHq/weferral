@@ -5,16 +5,7 @@ import classNames from 'classnames';
 import { ThemeConsumer } from '../../../components/Theme';
 
 const logos = {
-    'white': require('./../../../images/logos/logo-white.svg'),
-    'primary': require('./../../../images/logos/weferral.svg'),
-    'success': require('./../../../images/logos/logo-success.svg'),
-    'warning': require('./../../../images/logos/logo-warning.svg'),
-    'danger': require('./../../../images/logos/logo-danger.svg'),
-    'info': require('./../../../images/logos/logo-info.svg'),
-    'indigo': require('./../../../images/logos/logo-indigo.svg'),
-    'purple': require('./../../../images/logos/logo-purple.svg'),
-    'pink': require('./../../../images/logos/logo-pink.svg'),
-    'yellow': require('./../../../images/logos/logo-yellow.svg')
+    'primary': require('./../../../images/logos/weferral.svg')
 }
 
 const getLogoUrl = (style, color) => {
