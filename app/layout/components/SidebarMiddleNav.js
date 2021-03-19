@@ -88,11 +88,11 @@ export class SidebarMiddleNav extends React.Component{
                             to='/notifications-templates'
                         ></SidebarMenu.Item>
                         { /* -------- Assets ---------*/}
-                        <SidebarMenu.Item
+                        {/*<SidebarMenu.Item
                             icon={<i className="fa fa-fw fa-folder-open-o"></i>}
                             title="Assets"
                             to='/files'
-                        ></SidebarMenu.Item>
+                        ></SidebarMenu.Item>*/}
                         { /* -------- Settings ---------*/}
                         <SidebarMenu.Item
                             icon={<i className="fa fa-fw fa-wrench"></i>}

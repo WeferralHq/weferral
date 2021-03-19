@@ -222,6 +222,7 @@ export class CampaignField extends React.Component {
             formatter: (cell) => {
                 //alert(cell);
                 cell = cell.toLowerCase().replace(/\s+/g,"-");
+                cell = cell.replace(/[&\/\\#,+()$~%.:*?<>{}]/g,"");
                 return (
                 <span className="text-inverse">
                     { `${window.location.host}/#/${cell}` }
