@@ -89,7 +89,9 @@ export class CreateCampaign extends React.Component {
             auto_approval: this.state.auto_approval,
             minimum_cash_payout: this.state.minimum_cash_payout,
             cookie_life: this.state.cookie_life,
-            payout_term: this.state.payout_term
+            payout_term: this.state.payout_term,
+            recurring_limit: this.state.recurring_limit,
+            trial_period_days: this.state.trial_period_days
         }
 
         console.log(JSON.stringify(payload));
@@ -403,7 +405,7 @@ export class CreateCampaign extends React.Component {
                                                         <CardBody>
                                                             <FormGroup>
                                                                 <Label for="cookie-life">
-                                                                    Cookie Life
+                                                                    Cookie Life(Days)
                                                                 </Label>
                                                                 <Input
                                                                     type="text"
