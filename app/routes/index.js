@@ -113,7 +113,7 @@ export const RoutedContent = () => {
 
                 { /*    Forms Routes    */}
                 <Route component={DatePicker} path="/forms/date-picker" />
-                <Route component={Dropzone} path="/forms/dropzone" />
+                <Route component={Dropzone} path="/assets" />
                 <Route component={CreateCampaign} path="/create-campaign" />
                 <Route component={CreateCampaign} path="/edit-campaign" />
                 <Route component={CampaignPageEditor} path="/edit-campaign-page" />

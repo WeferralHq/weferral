@@ -16,7 +16,8 @@ class File extends React.Component {
         this.state = {
             loading : true,
             campaigns : [],
-            files: []
+            files: [],
+            id: 0
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -70,24 +71,24 @@ class File extends React.Component {
     handleChange(e){
         let self = this;
         let target = e.target;
-        //let value = target.value;
-        let value = target.type === "file" ? e.target.files[0] : target.value;
+        let value = target.value;
+        //let value = target.type === "file" ? e.target.files[0] : target.value;
         let name = target.name;
 
-        self.setState({[name]: value});
+        self.setState({id: value});
     }
 
     onSubmit(e){
         //e.preventDefault();
         let self = this;
 
-        const payload = {
+        /*const payload = {
             name: self.state.name,
             image: self.state.image
         }
-        console.log(JSON.stringify(payload));
+        console.log(JSON.stringify(payload));*/
 
-        Fetcher(`${port}/api/v1/system-options/file/${self.state.campaign_id}`, 'POST', payload).then((res) => {
+        Fetcher(`${port}/api/v1/system-options/file/brand_logo/${self.state.id}`, 'POST').then((res) => {
             //this.props.history.push('/settings');
         }, (error) => {
             console.log(error);
@@ -115,11 +116,11 @@ class File extends React.Component {
                             <option value={camp.id}>{camp.name}</option>))}
                     </Input>
                     <br></br>
-                    <ImageUploader name="file" elementID="brand-logo"
-                                           imageURL={`${port}/api/v1/system-options/file/brand_logo`}
+                    {this.state.id > 0 && <ImageUploader name="file" elementID="brand-logo"
+                                           imageURL={`${port}/api/v1/system-options/file/brand_logo/${this.state.id}`}
                                            imageStyle="badge badge-lg" uploadButton={true}
                                            reloadNotice="Please reload the application."
-                    />
+                    />}
                     {/*<Row>
                         <Col>
                             <h6 className="mb-2">
