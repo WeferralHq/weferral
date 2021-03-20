@@ -96,17 +96,22 @@ class ImageUploader extends React.Component {
         let self = this;
         let myImage = document.getElementById(`edit-${this.state.elementID}-img`);
         Fetcher(this.props.imageGETURL || self.state.imageURL).then(function(response){
-            if(response.ok){
+            if(response){
+                let img = response.logo;
                 self.setState({hasImage: true});
-                return response.blob();
+                return img;
             }
             throw new Error('Network response was not ok.');
-        }).then(function(myBlob) {
-            if(myBlob.type == "text/html"){
-                throw "not an image";
-            }
-            let objectURL = URL.createObjectURL(myBlob);
-            myImage.src = objectURL;
+        }).then(function(imgUrl){
+            fetch(imgUrl).then(function (response){
+                return response.blob();
+            }).then(function(myBlob) {
+                if(myBlob.type == "text/html"){
+                    throw "not an image";
+                }
+                let objectURL = URL.createObjectURL(myBlob);
+                myImage.src = objectURL;
+            })
         }).catch(function(error) {
             self.setState({image: false});
             // myImage.src = '/assets/custom_icons/cloud-computing.png?' + new Date().getTime();

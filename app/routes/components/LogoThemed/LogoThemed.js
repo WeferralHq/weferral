@@ -8,8 +8,12 @@ const logos = {
     'primary': require('./../../../images/logos/weferral.svg')
 }
 
-const getLogoUrl = (style, color) => {
+const getLogo = (style, color) => {
     return logos[color];
+}
+
+const getLogoUrl = (logo) => {
+    return logo;
 }
 
 // Check for background
@@ -17,19 +21,19 @@ const getLogoUrlBackground = (style, color) => {
     if (style === 'color') {
         return logos['white'];
     } else {
-        return getLogoUrl(style, color);
+        return getLogo(style, color);
     }
 }
 
-const LogoThemed = ({ checkBackground, className, ...otherProps }) => (
+const LogoThemed = ({ checkBackground, logo, className, ...otherProps }) => (
     <ThemeConsumer>
     {
         ({ style, color }) => (
             <img
                 src={
-                    checkBackground ?
-                        getLogoUrlBackground(style, color) :
-                        getLogoUrl(style, color)
+                    logo ?
+                        getLogoUrl(logo) :
+                        getLogo(style, 'primary')
                 }
                 className={ classNames('d-block', className) }
                 alt="Weferral Logo"

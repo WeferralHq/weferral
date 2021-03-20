@@ -1,6 +1,9 @@
 import React from 'react';
 import { EmptyLayout } from './../../../components';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import { LogoThemed } from '../../components/LogoThemed/LogoThemed';
 
 const HeaderSignup = (props) => (
         props.types.map((type) => {
@@ -18,6 +21,16 @@ const HeaderSignup = (props) => (
                         return(
                             <div className="mb-4">
                                 <p className="text-center">
+                                    <Link to="/" className="d-inline-block">
+                                        {
+                                            props.icon ? (
+                                                <i className={`fa fa-${props.icon} fa-3x ${props.iconClassName}`}></i>
+                                            ) : (
+                                                    <LogoThemed checkBackground logo={props.logo} height="30" />
+                                                )
+                                        }
+                                    </Link>
+                                    <br></br>
                                     {group.value}
                                 </p>
                             </div>

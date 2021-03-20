@@ -54,13 +54,19 @@ class referralSignup extends React.Component{
         let self = this;
         Fetcher(self.state.url).then(function (response) {
             if (!response.error) {
-                console.log(response);
                 self.setState({ loading: false, system_settings: response});
+                return response;
             } else {
                 console.log("system setting error", response);
                 self.setState({ loading: false });
             }
-        });
+        }).then(function (response){
+            Fetcher(`${port}/api/v1/system-setting/brand_logo/${campaignName}`).then(function(response){
+                if(response){
+                    self.setState({imgUrl: response.brand_logo});
+                }
+            })
+        })
     }
     
       handleSubmit(e) {
@@ -145,7 +151,7 @@ class referralSignup extends React.Component{
                             </UncontrolledAlert>
                         }
                             { /* START Header */}
-                            <HeaderSignup types={types} group={group}/>
+                            <HeaderSignup types={types} group={group} logo={this.state.imgUrl}/>
                             {this.state.token &&
                             <div className="mb-4">
                                 <h3 className="text-center mb-4">Finish Your Invitation</h3>
