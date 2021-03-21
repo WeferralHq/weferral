@@ -120,22 +120,13 @@ export class CampaignPageEditor extends React.Component {
                     <Card>
                         <Form>
                             <FormGroup>
-                                <Label for="defaultSelect" sm={3}>
-                                    Select Campaign
-                                </Label>
+                                <Label for="defaultSelect" sm={3}>Select Campaign</Label>
                                 <Col sm={9}>
-                                    
-                                        <Input
-                                            type="select"
-                                            onChange={this.handleChange}
-                                            name="select"
-                                            id="defaultSelect"
-                                        >
+                                        <Input type="select" onChange={this.handleChange} name="select" id="defaultSelect">
                                             <option defaultValue="">Select Campaign</option>
                                             {this.state.campaigns.map(camp => (
                                             <option value={camp.id}>{camp.name}</option>))}
                                         </Input>
-                                    
                                 </Col>
                             </FormGroup>
                         </Form>
