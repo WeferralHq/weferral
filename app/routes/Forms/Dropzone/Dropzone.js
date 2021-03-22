@@ -41,6 +41,7 @@ export class Dropzone extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this._removeFile = this._removeFile.bind(this);
     }
 
     async componentDidMount(){
@@ -58,26 +59,47 @@ export class Dropzone extends React.Component {
     }
 
     handleChange(e){
+        if(e != undefined)
+            e.preventDefault();
         let self = this;
         let target = e.target;
         let value = target.value;
         let imgArr = [];
-        self.setState({campaignId: value});
         Fetcher(`${port}/api/v1/system-options/file/brand_assets/${value}`).then((res) => {
             if(!res.err){
                 imgArr = res;
                 return imgArr;
             }
-            //self.setState({loading:false});
         }).then(function (imgArr){
-            let asstArr = [];
             imgArr.map(function (img){
-                fetch(img.url).then(function (response){
-                    asstArr.push(response.blob());
-                })
+                img.type = img.url.split('.').pop();
+                img.name = img.file_name;
             })
-            self.setState({assets: asstArr});
+            console.log(imgArr);
+            const {assets, campaignId} = self.state;
+            if(assets.length === 0 && campaignId === 0){
+                self.setState({assets: imgArr, campaignId: value});
+            }
         })
+    }
+
+   _removeFile(file){
+       if(file){
+        let self = this;
+        Fetcher(`${port}/api/v1/system-options/file/${file.id}`, 'DELETE').then((res) => {
+            if(!res.err){
+                imgArr = res;
+            }
+        }).then(function (imgArr){
+            imgArr.map(function (img){
+                img.type = img.url.split('.').pop();
+                img.name = img.file_name;
+            })
+            console.log(imgArr);
+            self.setState({assets: imgArr});
+        })
+       }
+        
     }
 
     onSubmit(e){
@@ -132,7 +154,7 @@ export class Dropzone extends React.Component {
                     <Form>
                         <FormGroup>
                             <Col sm={12}>
-                                <Input type="select" onChange={this.handleChange} name="select" id="defaultSelect">
+                                <Input type="select" onChange={(e) => this.handleChange(e)} name="select" id="defaultSelect">
                                     <option defaultValue="">Select Campaign</option>
                                     {this.state.campaign.map(camp => (
                                         <option value={camp.id}>{camp.name}</option>))}
@@ -176,8 +198,8 @@ export class Dropzone extends React.Component {
                                 </div>
                                 {
                                     listStyle === 'grid' ?
-                                        <FilesGrid files={ assets } onFileRemove={this._removeFile} /> :
-                                        <FilesList files={ assets } onFileRemove={this._removeFile} />
+                                        <FilesGrid files={ assets } onFileRemove={this._removeFile()} /> :
+                                        <FilesList files={ assets } onFileRemove={this._removeFile()} />
                                 }
                             </div>
                         )
@@ -219,7 +241,7 @@ export class Dropzone extends React.Component {
                                     </div>
                                 </Divider>
                             </div>
-                            <FilesGrid files={ files } onFileRemove={this._removeFile} />
+                            <FilesGrid files={ files } onFileRemove={this._removeFile()} />
                             <Button color="primary" onClick={() => { this.onSubmit() }}>
                                 Upload
                             </Button>
@@ -238,9 +260,9 @@ export class Dropzone extends React.Component {
         })
     }
 
-    _removeFile = (file) => {
+    /*_removeFile = (file) => {
         this.setState({
             files: _.reject(this.state.files, file)
         })
-    }
+    }*/
 }

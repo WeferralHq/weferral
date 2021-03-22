@@ -16,6 +16,7 @@ import ReCharts from './Graphs/ReCharts';
 
 import DatePicker from './Forms/DatePicker';
 import Dropzone from './Forms/Dropzone';
+import ParticipantDropzone from './Forms/Dropzone/ParticipantsDropzone';
 import CreateCampaign from './Forms/CreateCampaign';
 import CampaignField from './Pages/Campaign';
 import CampaignPageEditor from './Forms/CampaignPageEditor';
@@ -125,6 +126,7 @@ export const RoutedContent = () => {
                 <Route component={ManageCustomerList} path="/customers" />
                 <Route component={ParticipantDetails} path="/my-dashboard" />
                 <Route component={EditParticipant} path="/edit-participant/:id" />
+                <Route component={ParticipantDropzone} path="/profile/assets"/>
                 <Route component={Webhook} path="/webhook" />
                 <Route component={Logout} path="/logout" />
                 <Route component={ManageRewardList} path="/payouts" />

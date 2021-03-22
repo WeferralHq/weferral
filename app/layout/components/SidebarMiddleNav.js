@@ -130,6 +130,11 @@ export class SidebarMiddleNav extends React.Component{
                             title="Payouts"
                             to='/profile/payouts'
                         ></SidebarMenu.Item>
+                        <SidebarMenu.Item
+                            icon={<i className="fa fa-fw fa-credit-card"></i>}
+                            title="Assets"
+                            to='/profile/assets'
+                        ></SidebarMenu.Item>
                     </SidebarMenu>
                 )
             }

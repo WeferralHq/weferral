@@ -20,8 +20,6 @@ export const FilesList = ({ files, onFileRemove }) => (
             <tr>
                 <th className="bt-0"></th>
                 <th className="bt-0">File Name</th>
-                <th className="bt-0">Size</th>
-                <th className="bt-0">Owner</th>
                 <th className="bt-0">Modified Date</th>
                 <th className="bt-0 text-right">Actions</th>
             </tr>
@@ -38,14 +36,8 @@ export const FilesList = ({ files, onFileRemove }) => (
                     <td className="align-middle">
                         { file.name }
                     </td>
-                    <td className="align-middle text-uppercase">
-                        { numeral(file.size).format('0.00a') }B
-                    </td>
                     <td className="align-middle">
-                        You
-                    </td>
-                    <td className="align-middle">
-                        { moment(file.modifiedDate).format('DD-MMM-YYYY, HH:mm') }
+                        { moment(file.modifiedDate || file.created_at).format('DD-MMM-YYYY, HH:mm') }
                     </td>
                     <td className="text-right align-middle">
                         <Button

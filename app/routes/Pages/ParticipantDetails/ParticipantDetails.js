@@ -47,10 +47,10 @@ export class ParticipantDetails extends React.Component {
     fetchData() {
         let self = this;
         let id = Cookies.get("pid");
-        alert(id);
         let url = `${port}/api/v1/participant/profile/${id}`;
         Fetcher(url).then(function (response) {
             if (!response.error) {
+                console.log(response);
                 self.setState({rows: response});
             }
             self.setState({loading: false});

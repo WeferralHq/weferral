@@ -44,11 +44,8 @@ export const FilesGrid = ({ files, onFileRemove }) => (
                                 Delete File
                             </UncontrolledTooltip>
                         </div>
-                        <div className="mb-0">
-                            by You &middot; <span className='text-uppercase'>{`${numeral(file.size).format('0.00a')}B`}</span>
-                        </div>
                         <div className='mb-0'>
-                            { moment(file.modifiedDate).format('DD-MMM-YYYY, HH:mm') }
+                            { moment(file.modifiedDate || file.created_at).format('DD-MMM-YYYY, HH:mm') }
                         </div>
                     </CardBody>
                 </Card>
