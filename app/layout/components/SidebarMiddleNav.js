@@ -131,7 +131,7 @@ export class SidebarMiddleNav extends React.Component{
                             to='/profile/payouts'
                         ></SidebarMenu.Item>
                         <SidebarMenu.Item
-                            icon={<i className="fa fa-fw fa-credit-card"></i>}
+                            icon={<i className="fa fa-fw fa-folder-o"></i>}
                             title="Assets"
                             to='/profile/assets'
                         ></SidebarMenu.Item>

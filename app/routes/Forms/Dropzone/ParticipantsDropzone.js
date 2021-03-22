@@ -25,7 +25,7 @@ import Load from '../../../utilities/load';
 import port from '../../../port';
 import {isParticipant} from '../../../utilities/admin';
 import Cookie from 'js-cookie';
-
+import fileDownload from 'js-file-download'
 
 class ParticipantDropzone extends React.Component {
     constructor() {
@@ -38,6 +38,7 @@ class ParticipantDropzone extends React.Component {
             campaignId: 0,
             listStyle: 'grid'
         }
+        this.handleDownload = this.handleDownload.bind(this);
     }
 
     async componentDidMount(){
@@ -46,21 +47,29 @@ class ParticipantDropzone extends React.Component {
         if (await isParticipant() === false) {
             return this.props.history.push("/login");
         }
+        let imgArr = [];
         Fetcher(`${port}/api/v1/system-options/participant/file/brand_assets/${pid}`).then((res) => {
             console.log(res);
             if(!res.err){
                 imgArr = res;
                 return imgArr;
             }
-            self.setState({loading: false});
         }).then(function (imgArr){
             imgArr.map(function (img){
                 img.type = img.url.split('.').pop();
                 img.name = img.file_name;
             })
             console.log(imgArr);
-            self.setState({assets: imgArr});
+            self.setState({assets: imgArr, loading: false});
         });
+    }
+
+    handleDownload(url, filename) {
+        fetch(url).then(function (response){
+            return response.blob();
+        }).then((res) => {
+          fileDownload(res.data, filename)
+        })
     }
 
     render() {
@@ -77,7 +86,6 @@ class ParticipantDropzone extends React.Component {
                 </EmptyLayout>
             )
         }else{
-            const id = this.state.campaignId;
             const assets = this.state.assets;
             return (
                 <Container>
@@ -118,8 +126,8 @@ class ParticipantDropzone extends React.Component {
                                 </div>
                                 {
                                     listStyle === 'grid' ?
-                                        <FilesGrid files={ assets } onFileRemove={this._removeFile()} /> :
-                                        <FilesList files={ assets } onFileRemove={this._removeFile()} />
+                                        <FilesGrid files={ assets } onFileRemove={this.handleDownload()} /> :
+                                        <FilesList files={ assets } onFileRemove={this.handleDownload()}/>
                                 }
                             </div>
                         )

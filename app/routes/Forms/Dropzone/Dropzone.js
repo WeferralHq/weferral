@@ -86,6 +86,7 @@ export class Dropzone extends React.Component {
    _removeFile(file){
        if(file){
         let self = this;
+        let imgArr = [];
         Fetcher(`${port}/api/v1/system-options/file/${file.id}`, 'DELETE').then((res) => {
             if(!res.err){
                 imgArr = res;

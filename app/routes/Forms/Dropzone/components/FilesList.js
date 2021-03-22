@@ -13,6 +13,17 @@ import classes from './common.scss';
 import {
     getFileIcon
 } from './../utilities';
+import {isAdmin} from '../../../../utilities/admin';
+import fileDownload from 'js-file-download';
+
+const handleDownload = (url, filename) => {
+    fetch(url).then(function (response){
+        return response.blob();
+    }).then((res) => {
+        console.log(res);
+      fileDownload(res, filename)
+    })
+}
 
 export const FilesList = ({ files, onFileRemove }) => (
     <Table responsive hover className="mt-3">
@@ -29,9 +40,10 @@ export const FilesList = ({ files, onFileRemove }) => (
             _.map(files, (file, index) => (
                 <tr key={ index }>
                     <td className="align-middle">
-                        <div className={ classes['ph--small'] }>
+                        <img width="50" heigth="50" src={file.url} alt={file.name} />
+                        {/*<div className={ classes['ph--small'] }>
                             <i className={`fa fa-fw fa-2x ${getFileIcon(file)}`} />
-                        </div>
+            </div>*/}
                     </td>
                     <td className="align-middle">
                         { file.name }
@@ -40,17 +52,21 @@ export const FilesList = ({ files, onFileRemove }) => (
                         { moment(file.modifiedDate || file.created_at).format('DD-MMM-YYYY, HH:mm') }
                     </td>
                     <td className="text-right align-middle">
-                        <Button
+                        {isAdmin() === false ? <Button
                             color="link"
                             onClick={() => {onFileRemove(file)}}
                             size="sm"
                             id={`delete-file-${index}`}
                         >
                             <i className="fa fa-times fa-fw text-danger"></i>
-                        </Button>
-                        <UncontrolledTooltip placement="left" target={`delete-file-${index}`}>
-                            Delete File
-                        </UncontrolledTooltip>
+                        </Button> : 
+                        <Button
+                            color="link"
+                            onClick={() => {handleDownload(file.url, file.name)}}
+                            size="sm"
+                            id={`download-file-${index}`}
+                        >
+                        <i className="fa fa-times fa-download"></i></Button>}
                     </td>
                 </tr>
             ))
