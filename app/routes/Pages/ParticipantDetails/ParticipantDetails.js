@@ -77,7 +77,7 @@ export class ParticipantDetails extends React.Component {
                                         <ProfileOverviewCard
                                             title="Signups"
                                             //badgeTitle="Monthly"
-                                            value={this.state.rows.totalsignups}
+                                            value={this.state.rows.participantStats.totalsignups}
                                             valueTitle="Total Signups"
                                         />
                                     </CardBody>
@@ -87,7 +87,7 @@ export class ParticipantDetails extends React.Component {
                                         <ProfileOverviewCard
                                             title="Customers"
                                             //badgeTitle="Annual"
-                                            value={this.state.rows.totalcustomers}
+                                            value={this.state.rows.participantStats.totalcustomers}
                                             valueTitle="Total Customers"
                                         />
                                     </CardBody>
@@ -96,7 +96,7 @@ export class ParticipantDetails extends React.Component {
                                     <CardBody>
                                         <ProfileOverviewCard
                                             title="Clicks"
-                                            value={this.state.rows.totalclicks}
+                                            value={this.state.rows.participantStats.totalclicks}
                                             valueTitle="Total Clicks"
                                         />
                                     </CardBody>
@@ -105,7 +105,7 @@ export class ParticipantDetails extends React.Component {
                                     <CardBody>
                                         <ProfileOverviewCard
                                             title="Awaiting Payouts"
-                                            value={`$${this.state.rows.awaitingpayout}`}
+                                            value={`$${this.state.rows.participantStats.awaitingpayout}`}
                                             valueTitle="Total Awaiting Payouts"
                                         />
                                     </CardBody>

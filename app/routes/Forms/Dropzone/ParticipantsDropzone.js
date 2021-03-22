@@ -25,7 +25,6 @@ import Load from '../../../utilities/load';
 import port from '../../../port';
 import {isParticipant} from '../../../utilities/admin';
 import Cookie from 'js-cookie';
-import fileDownload from 'js-file-download'
 
 class ParticipantDropzone extends React.Component {
     constructor() {
@@ -38,7 +37,6 @@ class ParticipantDropzone extends React.Component {
             campaignId: 0,
             listStyle: 'grid'
         }
-        this.handleDownload = this.handleDownload.bind(this);
     }
 
     async componentDidMount(){
@@ -62,14 +60,6 @@ class ParticipantDropzone extends React.Component {
             console.log(imgArr);
             self.setState({assets: imgArr, loading: false});
         });
-    }
-
-    handleDownload(url, filename) {
-        fetch(url).then(function (response){
-            return response.blob();
-        }).then((res) => {
-          fileDownload(res.data, filename)
-        })
     }
 
     render() {
@@ -126,8 +116,8 @@ class ParticipantDropzone extends React.Component {
                                 </div>
                                 {
                                     listStyle === 'grid' ?
-                                        <FilesGrid files={ assets } onFileRemove={this.handleDownload()} /> :
-                                        <FilesList files={ assets } onFileRemove={this.handleDownload()}/>
+                                        <FilesGrid files={ assets } /> :
+                                        <FilesList files={ assets } />
                                 }
                             </div>
                         )
