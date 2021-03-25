@@ -91,8 +91,10 @@ export class SidebarMiddleNav extends React.Component{
                         <SidebarMenu.Item
                             icon={<i className="fa fa-fw fa-folder-open-o"></i>}
                             title="Assets"
-                            to='/files'
-                        ></SidebarMenu.Item>
+                        >
+                            <SidebarMenu.Item title="Brand Logo" to='/logo' exact />
+                            <SidebarMenu.Item title="Brand Assets" to='/assets' exact />
+                        </SidebarMenu.Item>
                         { /* -------- Settings ---------*/}
                         <SidebarMenu.Item
                             icon={<i className="fa fa-fw fa-wrench"></i>}

@@ -133,7 +133,7 @@ export const RoutedContent = () => {
                 <Route component={ParticipantPayout} path="/profile/payouts" />
                 <Route component={ParticipantCommision} path="/profile/commissions" />
                 <Route component={ManageCommissionList} path="/commissions" />
-                <Route component={File} path="/files" />
+                <Route component={File} path="/logo" />
                 <Route component={secretKey} path="/settings" />
 
 
