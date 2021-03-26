@@ -71,7 +71,7 @@
     "numeral": "^2.0.6",
     "prop-types": "^15.7.2",
     "query-string": "^6.7.0",
-    "rc-slider": "^8.6.13",
+    "rc-slider": "^9.7.2",
     "react": "^16.8.6",
     "react-beautiful-dnd": "^11.0.4",
     "react-big-calendar": "^0.22.0",
