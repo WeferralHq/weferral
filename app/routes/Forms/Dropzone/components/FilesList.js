@@ -25,7 +25,7 @@ const handleDownload = (url, filename) => {
     })
 }
 
-export const FilesList = ({ files, onFileRemove, admin }) => (
+export const FilesList = ({ files, onDeleteFile, admin }) => (
     <Table responsive hover className="mt-3">
         <thead>
             <tr>
@@ -54,7 +54,7 @@ export const FilesList = ({ files, onFileRemove, admin }) => (
                     <td className="text-right align-middle">
                         {admin ? <Button
                             color="link"
-                            onClick={() => {onFileRemove(file)}}
+                            onClick={() => {onDeleteFile(file)}}
                             size="sm"
                             id={`delete-file-${index}`}
                         >
@@ -77,5 +77,5 @@ export const FilesList = ({ files, onFileRemove, admin }) => (
 
 FilesList.propTypes = {
     files: PropTypes.array,
-    onFileRemove: PropTypes.func
+    onDeleteFile: PropTypes.func
 }

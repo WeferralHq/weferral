@@ -17,25 +17,14 @@ import classes from './common.scss';
 import {
     getFileIcon
 } from './../utilities';
-import {isAdmin} from '../../../../utilities/admin';
-import fileDownload from 'js-file-download';
 
-const handleDownload = (url, filename) => {
-    fetch(url).then(function (response){
-        return response.blob();
-    }).then((res) => {
-        console.log(res);
-      fileDownload(res, filename)
-    })
-}
-
-export const FilesGrid = ({ files, onDeleteFile, admin }) => (
+export const UploadsGrid = ({ files, onFileRemove }) => (
     <Row className="mt-4">
     {
         _.map(files, (file, index) => (
             <Col lg={ 4 } md={ 6 } key={index}>
                 <Card className="mb-3">
-                    <img className="img-thumbnail" src={file.url} alt={file.name} />
+                    <img className="img-thumbnail" src={file.url || file.path} alt={file.name} />
                     {/*<div className={ classNames("card-img-top", classes['ph--large']) }>
                         <i className={`fa fa-fw fa-3x ${getFileIcon(file)}`} />
         </div>*/}
@@ -44,21 +33,17 @@ export const FilesGrid = ({ files, onDeleteFile, admin }) => (
                             <h6 className="text-truncate mb-0">
                                 { file.name }
                             </h6>
-                            {admin ? <Button
-                            color="link"
-                            onClick={() => {onDeleteFile(file)}}
-                            size="sm"
-                            id={`delete-file-${index}`}
-                        >
-                            <i className="fa fa-times fa-fw text-danger"></i>
-                        </Button> : 
-                        <Button
-                            color="link"
-                            onClick={() => {handleDownload(file.url, file.name)}}
-                            size="sm"
-                            id={`download-file-${index}`}
-                        >
-                        <i className="fa fa-times fa-download"></i></Button>}
+                            <Button
+                                color="link"
+                                onClick={() => { onFileRemove(file) }}
+                                size="sm"
+                                id={`delete-file-${index}`}
+                            >
+                                <i className="fa fa-times fa-fw text-danger"></i>
+                            </Button>
+                            <UncontrolledTooltip placement="left" target={`delete-file-${index}`}>
+                                Delete File
+                            </UncontrolledTooltip>
                         </div>
                         <div className='mb-0'>
                             { moment(file.modifiedDate || file.created_at).format('DD-MMM-YYYY, HH:mm') }
@@ -71,7 +56,7 @@ export const FilesGrid = ({ files, onDeleteFile, admin }) => (
     </Row>
 );
 
-FilesGrid.propTypes = {
+UploadsGrid.propTypes = {
     files: PropTypes.array,
     onDeleteFile: PropTypes.func
 }

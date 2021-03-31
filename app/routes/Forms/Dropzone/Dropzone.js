@@ -18,7 +18,8 @@ import {
 } from './../../../components';
 import {
     FilesGrid,
-    FilesList
+    FilesList,
+    UploadsGrid
 } from './components';
 import Fetcher from '../../../utilities/fetcher';
 import Load from '../../../utilities/load';
@@ -42,6 +43,8 @@ export class Dropzone extends React.Component {
         }
         this.handleChange = this.handleChange.bind(this);
         this.onSubmit = this.onSubmit.bind(this);
+        this.deleteFile = this.deleteFile.bind(this);
+        this._filesDropped = this._filesDropped.bind(this);
         this._removeFile = this._removeFile.bind(this);
     }
 
@@ -84,7 +87,7 @@ export class Dropzone extends React.Component {
         })
     }
 
-   _removeFile(file){
+    deleteFile(file){
        if(file){
         let self = this;
         let imgArr = [];
@@ -102,6 +105,20 @@ export class Dropzone extends React.Component {
         })
        }
         
+    }
+
+    _filesDropped(files){
+        console.log(files);
+        this.setState({
+            files: [...this.state.files, ...files],
+            isOver: false
+        })
+    }
+
+    _removeFile(file){
+        this.setState({
+            files: _.reject(this.state.files, file)
+        })
     }
 
     onSubmit(e){
@@ -200,8 +217,8 @@ export class Dropzone extends React.Component {
                                 </div>
                                 {
                                     listStyle === 'grid' ?
-                                        <FilesGrid files={ assets } onFileRemove={this._removeFile()} admin={this.state.admin}/> :
-                                        <FilesList files={ assets } onFileRemove={this._removeFile()} admin={this.state.admin} />
+                                        <FilesGrid files={ assets } onDeleteFile={this.deleteFile()} admin={this.state.admin}/> :
+                                        <FilesList files={ assets } onDeleteFile={this.deleteFile()} admin={this.state.admin} />
                                 }
                             </div>
                         )
@@ -243,7 +260,7 @@ export class Dropzone extends React.Component {
                                     </div>
                                 </Divider>
                             </div>
-                            <FilesGrid files={ files } onFileRemove={this._removeFile()} />
+                            <UploadsGrid files={ files } onFileRemove={() => this._removeFile()} />
                             <Button color="primary" onClick={() => { this.onSubmit() }}>
                                 Upload
                             </Button>
@@ -254,17 +271,4 @@ export class Dropzone extends React.Component {
             );
         }
     }
-
-    _filesDropped = (files) => {
-        this.setState({
-            files: [...this.state.files, ...files],
-            isOver: false
-        })
-    }
-
-    /*_removeFile = (file) => {
-        this.setState({
-            files: _.reject(this.state.files, file)
-        })
-    }*/
 }
