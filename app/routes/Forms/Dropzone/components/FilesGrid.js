@@ -29,7 +29,7 @@ const handleDownload = (url, filename) => {
     })
 }
 
-export const FilesGrid = ({ files, onFileRemove }) => (
+export const FilesGrid = ({ files, onFileRemove, admin }) => (
     <Row className="mt-4">
     {
         _.map(files, (file, index) => (
@@ -44,7 +44,7 @@ export const FilesGrid = ({ files, onFileRemove }) => (
                             <h6 className="text-truncate mb-0">
                                 { file.name }
                             </h6>
-                            {isAdmin() === false ? <Button
+                            {admin ? <Button
                             color="link"
                             onClick={() => {onFileRemove(file)}}
                             size="sm"

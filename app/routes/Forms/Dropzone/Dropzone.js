@@ -36,6 +36,7 @@ export class Dropzone extends React.Component {
             campaign: [],
             assets: [],
             loading: true,
+            admin: false,
             campaignId: 0,
             listStyle: 'grid'
         }
@@ -54,7 +55,7 @@ export class Dropzone extends React.Component {
             if(!res.err){
                 self.setState({campaign : res});
             }
-            self.setState({loading:false});
+            self.setState({loading:false, admin: true});
         });
     }
 
@@ -199,8 +200,8 @@ export class Dropzone extends React.Component {
                                 </div>
                                 {
                                     listStyle === 'grid' ?
-                                        <FilesGrid files={ assets } onFileRemove={this._removeFile()} /> :
-                                        <FilesList files={ assets } onFileRemove={this._removeFile()} />
+                                        <FilesGrid files={ assets } onFileRemove={this._removeFile()} admin={this.state.admin}/> :
+                                        <FilesList files={ assets } onFileRemove={this._removeFile()} admin={this.state.admin} />
                                 }
                             </div>
                         )

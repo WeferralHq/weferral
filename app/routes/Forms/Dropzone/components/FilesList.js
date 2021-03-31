@@ -25,7 +25,7 @@ const handleDownload = (url, filename) => {
     })
 }
 
-export const FilesList = ({ files, onFileRemove }) => (
+export const FilesList = ({ files, onFileRemove, admin }) => (
     <Table responsive hover className="mt-3">
         <thead>
             <tr>
@@ -52,7 +52,7 @@ export const FilesList = ({ files, onFileRemove }) => (
                         { moment(file.modifiedDate || file.created_at).format('DD-MMM-YYYY, HH:mm') }
                     </td>
                     <td className="text-right align-middle">
-                        {isAdmin() === false ? <Button
+                        {admin ? <Button
                             color="link"
                             onClick={() => {onFileRemove(file)}}
                             size="sm"
