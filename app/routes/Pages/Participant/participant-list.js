@@ -120,7 +120,7 @@ export class ManageParticipantList extends React.Component {
                 </Media>
                 <Media body>
                     <Media heading tag="h6">
-                        Information!
+                        Alert!
                     </Media>
                     <p>
                         Are you sure you want to do this.
@@ -131,7 +131,7 @@ export class ManageParticipantList extends React.Component {
                         Suspend
                         </Button>}
                         {value === 'delete' &&
-                        <Button color="primary" onClick={() => { self.DeleteParticipant(id, value) }} >
+                        <Button color="danger" onClick={() => { self.DeleteParticipant(id, value) }} >
                         Delete
                         </Button>
                         }
@@ -147,7 +147,7 @@ export class ManageParticipantList extends React.Component {
     async showHandler(id, value){
         let self = this;
         await self.setState({selectedId: id, content: value});
-        toast.info(self.contentInfo());
+        toast.error(self.contentInfo());
     }
 
     approve(id){

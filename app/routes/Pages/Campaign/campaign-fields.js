@@ -12,6 +12,7 @@ import {
     Row,
     Col,
     EmptyLayout,
+    Media,
     Badge,
     Button,
     CustomInput,
@@ -30,6 +31,7 @@ import Load from '../../../utilities/load';
 import port from '../../../port';
 import { HeaderMain } from "../../components/HeaderMain";
 import {isAdmin} from '../../../utilities/admin';
+import { ToastContainer, toast } from 'react-toastify';
 
 const CampaignStatus = {
     Publish: true,
@@ -52,7 +54,8 @@ export class CampaignField extends React.Component {
             loading : true,
             campaigns : [],
             generatedrows : [],
-            alerts: {}
+            alerts: {},
+            content: ''
         };
 
         this.headerCheckboxRef = React.createRef();
@@ -60,6 +63,8 @@ export class CampaignField extends React.Component {
         this.generateRow = this.generateRow.bind(this);
         this.handleAddCampaign = this.handleAddCampaign.bind(this);
         this.editCampaign = this.editCampaign.bind(this);
+        this.contentInfo = this.contentInfo.bind(this);
+        this.handleDeleteRow = this.handleDeleteRow.bind(this);
     }
 
     async componentDidMount() {
@@ -109,6 +114,47 @@ export class CampaignField extends React.Component {
         }
     }
 
+    contentInfo(closeToast) {
+        let self = this;
+        let id = self.state.selected;
+        let value = self.state.content;
+        return(
+            <Media>
+                <Media middle left className="mr-3">
+                    <i className="fa fa-fw fa-2x fa-info"></i>
+                </Media>
+                <Media body>
+                    <Media heading tag="h6">
+                        Alert!
+                    </Media>
+                    <p>
+                        Are you sure you want to do this.
+                    </p>
+                    <div className="d-flex mt-2">
+                        {value === 'unpublish' &&
+                        <Button color="primary" onClick={() => { }} >
+                        Unpublish
+                        </Button>}
+                        {value === 'delete' &&
+                        <Button color="danger" onClick={() => { self.handleDeleteRow(id) }} >
+                        Delete
+                        </Button>
+                        }
+                        <Button color="link" onClick={() => { closeToast }} className="ml-2 text-primary">
+                            No
+                        </Button>
+                    </div>
+                </Media>
+            </Media>
+        )
+    }
+
+    async showHandler(value){
+        let self = this;
+        await self.setState({content: value});
+        toast.error(self.contentInfo());
+    }
+
     handleSelectAll(isSelected, rows) {
         if (isSelected) {
             this.setState({ selected: _.map(rows, 'id') })
@@ -125,9 +171,8 @@ export class CampaignField extends React.Component {
         )*/
     }
 
-    handleDeleteRow() {
-        alert(this.state.selected);
-        Fetcher(`${port}/api/v1/campaign/${this.state.selected}/delete`, 'POST').then(function(response){
+    handleDeleteRow(id) {
+        Fetcher(`${port}/api/v1/campaign/${id}/delete`, 'POST').then(function(response){
             if(!response.error){
                 console.log(response);
                 this.setState({campaigns: response, loading: false});
@@ -319,10 +364,10 @@ export class CampaignField extends React.Component {
                                                         <Button
                                                             size="sm"
                                                             outline
-                                                            onClick={this.handleDeleteRow.bind(this)}
+                                                            onClick={() => { this.showHandler('delete') }}
                                                         >
                                                             Delete
-                                            </Button>
+                                                        </Button>
 
                                                     </ButtonGroup>
                                                     <Button
@@ -358,6 +403,12 @@ export class CampaignField extends React.Component {
                                                 bordered={false}
                                                 responsive
                                                 {...props.baseProps}
+                                            />
+                                            <ToastContainer
+                                                position="top-center"
+                                                autoClose={50000}
+                                                draggable={true}
+                                                hideProgressBar={true}
                                             />
                                         </React.Fragment>
                                     )
