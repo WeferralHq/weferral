@@ -53,16 +53,26 @@ password: demo
 Get the app running locally in the following way:
 ```
 # Clone the Repo
-git clone https://github.com/WeferralHq/weferral
+git clone https://github.com/WeferralHq/weferral.git
 run npm install & npm start
 
 # Clone the weferral API Repo
-git clone https://github.com/WeferralHq/weferral-api
+git clone https://github.com/WeferralHq/weferral-api.git
 run npm install & npm start
 
 then go to http://localhost:4100/setup to setup the database and admin user
 ```
-Go to https://github.com/Ezehuche/tracker to learn how to weferral javascript tracker
+### Weferral Tracker
+Go to https://github.com/Ezehuche/tracker to learn how to use weferral javascript tracker.
+
+### Weferral Server & API 
+You checkout the api repo here https://github.com/WeferralHq/weferral-api
+
+### Production
+To create a production build type `npm run build:prod`. After the process is complete you can copy the output from the `/dist/` directory. The output files are minified and ready to be used in a production environment.
+
+### Build Customization
+You can customize the build to suit your specific needs by adjusting the [Webpack](https://webpack.js.org) configuration files. Those files can be found in the `/build` directory. For more details checkout the documentation of WebPack.
 
 
 
