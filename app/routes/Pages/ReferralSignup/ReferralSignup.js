@@ -72,15 +72,7 @@ class referralSignup extends React.Component{
       handleSubmit(e) {
           e.preventDefault();
           let self = this;
-          
-          /*const payload = {
-              fname: this.state.fname,
-              lname: this.state.lname,
-              email: this.state.email,
-              password: this.state.password
-          }*/
-
-          //let payload = new FormData(document.getElementById("admin_form"))
+        
         console.log(JSON.stringify(self.state.form));
         let form = self.state.form;
         if(form.copassword !== form.password){
@@ -91,10 +83,12 @@ class referralSignup extends React.Component{
                 }
             });
         }else{
-            Fetcher(this.state.createUrl, 'POST', self.state.form).then((res) => {
+            delete form.copassword;
+            Fetcher(this.state.createUrl, 'POST', form).then((res) => {
                 if(!res.error){
                     console.log(JSON.stringify(res));
                     Cookies.set("pid", res.data.id);
+                    Cookies.set("cName", res.data.campaignName);
                     const dash = '/my-dashboard';
                     this.props.history.push(dash);
                 }else{

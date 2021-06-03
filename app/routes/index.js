@@ -29,6 +29,7 @@ import ParticipantDetails from './Pages/ParticipantDetails';
 import ManageCustomerList from './Pages/Customer';
 import Webhook from "./Pages/Webhook";
 import Logout from "./Pages/Logout";
+import ParticipantLogout from "./Pages/ParticipantLogout";
 import ManageRewardList from "./Pages/Reward";
 import ParticipantPayout from "./Pages/ParticipantPayout";
 import ParticipantCommision from "./Pages/ParticipantCommision";
@@ -58,7 +59,7 @@ import Timeline from './Pages/Timeline';
 import Icons from './Icons';
 
 // ----------- Layout Imports ---------------
-import { DefaultNavbar } from './../layout/components/DefaultNavbar';
+import DefaultNavbar from './../layout/components/DefaultNavbar';
 import { DefaultSidebar } from './../layout/components/DefaultSidebar';
 
 import { SidebarANavbar } from './../layout/components/SidebarANavbar';
@@ -129,6 +130,7 @@ export const RoutedContent = () => {
                 <Route component={ParticipantDropzone} path="/profile/assets"/>
                 <Route component={Webhook} path="/webhook" />
                 <Route component={Logout} path="/logout" />
+                <Route component={ParticipantLogout} path="/:campaignName/logout"/>
                 <Route component={ManageRewardList} path="/payouts" />
                 <Route component={ParticipantPayout} path="/profile/payouts" />
                 <Route component={ParticipantCommision} path="/profile/commissions" />
@@ -153,7 +155,7 @@ export const RoutedContent = () => {
                 <Route component={ForgotPassword} path="/pages/forgot-password" />
                 <Route component={LockScreen} path="/pages/lock-screen" />
                 <Route component={Login} path="/login" />
-                <Redirect from="/#/:campaignName" to="/:campaignName/login" exact />
+                <Redirect from="/pub/:campaignName" to="/:campaignName/login" exact />
                 <Route component={ReferralLogin} path="/:campaignName/login" />
                 <Route component={Register} path="/pages/register" />
                 <Route component={setupAdmin} path="/setup" />

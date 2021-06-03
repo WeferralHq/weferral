@@ -17,7 +17,7 @@ import update from "immutability-helper";
 import Fetcher from '../../utilities/fetcher';
 import port from '../../port';
 import { store } from "../../store";
-import Cookie from "js-cookie";
+import Cookies from 'js-cookie';
 
 
 export default class NavProfile  extends React.Component {
@@ -50,7 +50,7 @@ export default class NavProfile  extends React.Component {
     handleSubmit(e) {
         e.preventDefault();
         let self = this;
-        let uid = Cookie.get('uid');
+        let uid = Cookies.get('uid');
       let form = self.state.form;
       if(form.copassword !== form.password){
           self.setState({
@@ -63,7 +63,6 @@ export default class NavProfile  extends React.Component {
           Fetcher(`${port}/api/v1/users/${uid}`, 'PUT', form).then((res) => {
               if(!res.error){
                   console.log(JSON.stringify(res));
-                  Cookies.set("pid", res.data.id);
                   const dash = '/dashboard';
                   this.props.history.push(dash);
               }else{

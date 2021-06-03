@@ -270,7 +270,7 @@ export class CampaignField extends React.Component {
                 cell = cell.replace(/[&\/\\#,+()$~%.:*?<>{}]/g,"");
                 return (
                 <span className="text-inverse">
-                    { `${window.location.host}/#/${cell}` }
+                    { `${window.location.host}/pub/${cell}` }
                 </span>
                 )
             }

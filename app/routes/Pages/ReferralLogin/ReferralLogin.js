@@ -46,6 +46,7 @@ class ReferralLogin extends React.Component {
         Fetcher(`${port}/api/v1/participants/login/${campaignName}`, "POST", that.state.form).then(async function(result){
             if(result.status !== 401) {
                 localStorage.setItem("bearerToken", result.token);
+                Cookies.set("cName", campaignName);
                 await fetchParticipants(Cookies.get("pid"), (err, participant) => (that.props.setParticipant(participant)));
 
                 //update redux store with the uid
