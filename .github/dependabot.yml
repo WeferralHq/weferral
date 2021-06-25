@@ -1,0 +1,21 @@
+version: 2
+updates:
+- package-ecosystem: npm
+  directory: "/"
+  schedule:
+    interval: daily
+  open-pull-requests-limit: 10
+  ignore:
+  - dependency-name: recharts
+    versions:
+    - 2.0.4
+    - 2.0.6
+    - 2.0.7
+    - 2.0.8
+  - dependency-name: webpack-cli
+    versions:
+    - 4.4.0
+    - 4.5.0
+  - dependency-name: rc-slider
+    versions:
+    - 9.7.1
