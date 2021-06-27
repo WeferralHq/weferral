@@ -30,7 +30,7 @@ import Fetcher from '../../../utilities/fetcher';
 import Load from '../../../utilities/load';
 import port from '../../../port';
 import { HeaderMain } from "../../components/HeaderMain";
-import {isAdmin} from '../../../utilities/admin';
+import { isAdmin } from '../../../utilities/admin';
 import { ToastContainer, toast } from 'react-toastify';
 
 const CampaignStatus = {
@@ -51,9 +51,9 @@ export class CampaignField extends React.Component {
         super(props);
         this.state = {
             selected: [],
-            loading : true,
-            campaigns : [],
-            generatedrows : [],
+            loading: true,
+            campaigns: [],
+            generatedrows: [],
             alerts: {},
             content: ''
         };
@@ -76,20 +76,20 @@ export class CampaignField extends React.Component {
 
     fetchData() {
         let self = this;
-        Fetcher(`${port}/api/v1/campaigns/`).then(function(response){
-            if(!response.error){
+        Fetcher(`${port}/api/v1/campaigns/`).then(function (response) {
+            if (!response.error) {
                 console.log(response);
-                self.setState({campaigns: response, loading: false});
+                self.setState({ campaigns: response, loading: false });
                 self.generateRow();
                 //console.log(self.state.campaigns);
             }
         });
     }
 
-    generateRow(){
+    generateRow() {
         let self = this;
 
-        const campaigns = self.state.campaigns.map(function (camps){
+        const campaigns = self.state.campaigns.map(function (camps) {
             //alert(DateFormat(camps.created_at));
             return {
                 id: camps.id,
@@ -101,7 +101,7 @@ export class CampaignField extends React.Component {
             }
         });
         //alert(JSON.stringify(campaigns));
-        self.setState({generatedrows: campaigns});
+        self.setState({ generatedrows: campaigns });
     }
 
     handleSelect(row, isSelected) {
@@ -118,7 +118,7 @@ export class CampaignField extends React.Component {
         let self = this;
         let id = self.state.selected;
         let value = self.state.content;
-        return(
+        return (
             <Media>
                 <Media middle left className="mr-3">
                     <i className="fa fa-fw fa-2x fa-info"></i>
@@ -132,12 +132,12 @@ export class CampaignField extends React.Component {
                     </p>
                     <div className="d-flex mt-2">
                         {value === 'unpublish' &&
-                        <Button color="primary" onClick={() => { }} >
-                        Unpublish
+                            <Button color="primary" onClick={() => { }} >
+                                Unpublish
                         </Button>}
                         {value === 'delete' &&
-                        <Button color="danger" onClick={() => { self.handleDeleteRow(id) }} >
-                        Delete
+                            <Button color="danger" onClick={() => { self.handleDeleteRow(id) }} >
+                                Delete
                         </Button>
                         }
                         <Button color="link" onClick={() => { closeToast }} className="ml-2 text-primary">
@@ -149,9 +149,9 @@ export class CampaignField extends React.Component {
         )
     }
 
-    async showHandler(value){
+    async showHandler(value) {
         let self = this;
-        await self.setState({content: value});
+        await self.setState({ content: value });
         toast.error(self.contentInfo());
     }
 
@@ -172,10 +172,10 @@ export class CampaignField extends React.Component {
     }
 
     handleDeleteRow(id) {
-        Fetcher(`${port}/api/v1/campaign/${id}/delete`, 'POST').then(function(response){
-            if(!response.error){
+        Fetcher(`${port}/api/v1/campaign/${id}/delete`, 'POST').then(function (response) {
+            if (!response.error) {
                 console.log(response);
-                this.setState({campaigns: response, loading: false});
+                this.setState({ campaigns: response, loading: false });
                 this.generateRow();
                 //console.log(self.state.campaigns);
             }
@@ -184,17 +184,17 @@ export class CampaignField extends React.Component {
     editCampaign(id) {
         console.log(id.length);
         let self = this;
-        if(id.length === 0){
+        if (id.length === 0) {
             self.setState({
                 alerts: {
                     color: 'danger',
                     message: 'You must select a campaign to continue'
                 }
             });
-        }else{
+        } else {
             self.props.history.push(`/edit-campaign?_id=${id}`);
         }
-        
+
     }
 
     campaignSettings(id) {
@@ -214,11 +214,11 @@ export class CampaignField extends React.Component {
     createColumnDefinitions() {
         return [{
             dataField: 'id',
-            text: 'Product ID',
+            text: 'ID',
             headerFormatter: column => (
                 <React.Fragment>
-                    <span className="text-nowrap">{ column.text }</span>
-                    
+                    <span className="text-nowrap">{column.text}</span>
+
                 </React.Fragment>
             )
         }, {
@@ -228,7 +228,7 @@ export class CampaignField extends React.Component {
             sortCaret,
             formatter: (cell) => (
                 <span className="text-inverse">
-                    { cell }
+                    { cell}
                 </span>
             )
         }, {
@@ -242,7 +242,7 @@ export class CampaignField extends React.Component {
                             color: 'success',
                             text: 'True'
                         }
-                    break;
+                        break;
                     case CampaignStatus.Unpublish:
                     default:
                         pqProps = {
@@ -253,7 +253,7 @@ export class CampaignField extends React.Component {
 
                 return (
                     <Badge color={pqProps.color}>
-                        { pqProps.text }
+                        { pqProps.text}
                     </Badge>
                 )
             },
@@ -266,12 +266,12 @@ export class CampaignField extends React.Component {
             sortCaret,
             formatter: (cell) => {
                 //alert(cell);
-                cell = cell.toLowerCase().replace(/\s+/g,"-");
-                cell = cell.replace(/[&\/\\#,+()$~%.:*?<>{}]/g,"");
+                cell = cell.toLowerCase().replace(/\s+/g, "-");
+                cell = cell.replace(/[&\/\\#,+()$~%.:*?<>{}]/g, "");
                 return (
-                <span className="text-inverse">
-                    { `${window.location.host}/pub/${cell}` }
-                </span>
+                    <span className="text-inverse">
+                        { `${window.location.host}/pub/${cell}`}
+                    </span>
                 )
             }
         }, {
@@ -291,11 +291,11 @@ export class CampaignField extends React.Component {
                 moment(cell).format('DD/MM/YYYY'),
             sort: true,
             sortCaret
-        }]; 
+        }];
     }
 
     render() {
-        if(!this.state.loading){
+        if (!this.state.loading) {
             const columnDefs = this.createColumnDefinitions();
             const paginationDef = paginationFactory({
                 paginationSize: 5,
@@ -325,11 +325,11 @@ export class CampaignField extends React.Component {
 
             return (
                 <Container>
-                     {(this.state.alerts && this.state.alerts.message) &&
-                            <UncontrolledAlert color={this.state.alerts.color} >
-                                {this.state.alerts.message}
-                            </UncontrolledAlert>
-                        }
+                    {(this.state.alerts && this.state.alerts.message) &&
+                        <UncontrolledAlert color={this.state.alerts.color} >
+                            {this.state.alerts.message}
+                        </UncontrolledAlert>
+                    }
                     <HeaderMain
                         title="Campaigns"
                         className="mb-5 mt-4"
@@ -380,8 +380,8 @@ export class CampaignField extends React.Component {
                                                     <Button
                                                         size="sm"
                                                         outline
-                                                        onClick={() => { this.campaignSettings(this.state.selected)}}
-                                                        //tag={Link} to={`/campaign-settings/${this.state.selected}`}
+                                                        onClick={() => { this.campaignSettings(this.state.selected) }}
+                                                    //tag={Link} to={`/campaign-settings/${this.state.selected}`}
                                                     >
                                                         <i className="fa fa-fw fa-gear"></i>
                                                     </Button>
@@ -418,15 +418,15 @@ export class CampaignField extends React.Component {
                     </Row>
                 </Container>
             );
-        } else{
-            return(
+        } else {
+            return (
                 <EmptyLayout>
                     <EmptyLayout.Section center>
-                        <Load/>
+                        <Load />
                     </EmptyLayout.Section>
                 </EmptyLayout>
             )
         }
-        
+
     }
 }

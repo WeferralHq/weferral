@@ -20,6 +20,7 @@ import Cookies from 'js-cookie';
 import { ProfileOverviewCard } from "../../components/Profile/ProfileOverviewCard";
 import ShareCard from './ShareCard';
 import {isParticipant} from '../../../utilities/admin';
+import Cookie from 'js-cookie';
 
 export class ParticipantDetails extends React.Component {
 
@@ -38,7 +39,8 @@ export class ParticipantDetails extends React.Component {
 
     async componentDidMount() {
         if (await isParticipant() === false) {
-            return this.props.history.push("/login");
+            let campaignName = Cookie.get('cName');
+            return this.props.history.push(`/${campaignName}/login`);
         }else{
             this.fetchData();
         }

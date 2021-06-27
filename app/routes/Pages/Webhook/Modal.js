@@ -53,8 +53,6 @@ class WebhookModal extends React.Component {
         let target = e.target;
         let value = target.value;
         let name = target.name;
-        alert(name);
-
         self.setState({[name]: value});
     }
 
