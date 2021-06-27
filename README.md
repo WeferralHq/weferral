@@ -51,14 +51,23 @@ password: demo
 
 ## Setup Guide
 Get the app running locally in the following way:
+
+### Frontend
+
 ```
 # Clone the Repo
 git clone https://github.com/WeferralHq/weferral.git
-run npm install & npm start
-
-# Clone the weferral API Repo
+cd weferral
+npm install
+npm start
+```
+### Backend
+```
+# Clone the weferral Server Repo
 git clone https://github.com/WeferralHq/weferral-api.git
-run npm install & npm start
+cd weferral-api
+npm install 
+npm start
 
 then go to http://localhost:4100/setup to setup the database and admin user
 ```
