@@ -109,7 +109,7 @@
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "text-mask-addons": "^3.8.0",
-    "uuid": "^3.3.2",
+    "uuid": "^8.3.2",
     "webpack-cli": "^3.1.0",
     "webpack-flush-chunks": "^2.0.3",
     "whatwg-fetch": "^3.6.2",
