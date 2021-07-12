@@ -81,7 +81,7 @@
     "react-bootstrap-table2-filter": "^1.1.9",
     "react-bootstrap-table2-paginator": "^2.0.6",
     "react-bootstrap-table2-toolkit": "^2.0.1",
-    "react-bootstrap-typeahead": "^4.0.0-alpha.9",
+    "react-bootstrap-typeahead": "^5.2.0",
     "react-color": "^2.19.3",
     "react-cookie": "^4.0.3",
     "react-copy-to-clipboard": "^5.0.3",
