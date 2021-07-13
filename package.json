@@ -105,7 +105,7 @@
     "react-toggle": "^4.0.2",
     "react-universal-component": "^4.0.0",
     "reactstrap": "^8.0.0",
-    "recharts": "^1.6.2",
+    "recharts": "^2.0.10",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
     "text-mask-addons": "^3.8.0",
