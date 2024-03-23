@@ -1,5 +1,6 @@
 import React from 'react';
-import faker from 'faker/locale/en_US';
+
+import { faker } from "@faker-js/faker";
 
 import { 
     Card,

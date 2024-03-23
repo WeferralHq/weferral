@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import faker from 'faker/locale/en_US';
+import { faker } from "@faker-js/faker";
 
 import { 
     Badge,
