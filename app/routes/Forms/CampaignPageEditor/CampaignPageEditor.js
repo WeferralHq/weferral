@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactQuill from 'react-quill';
-import faker from 'faker/locale/en_US';
+import { faker } from "@faker-js/faker";
 
 import { 
     EmptyLayout,
