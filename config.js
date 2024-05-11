@@ -18,10 +18,10 @@ var config = {
     srcHtmlLayout:          path.join(root, 'app', 'index.html'),
 
     // Site Config ====================================================
-    siteTitle:              'Weferral',
-    siteDescription:        'Weferral provides all the tools needed to start, manage, and grow your affiliate program',
-    siteCannonicalUrl:      'http://localhost:4100',
-    siteKeywords:           'affiliate referral tracking open-source',
+    siteTitle:              'Zeferral',
+    siteDescription:        'Zeferral to start, manage, and grow affiliate program',
+    siteCannonicalUrl:      'https://zeferral.vercel.app',
+    siteKeywords:           'affiliate tracking',
     scssIncludes:           []
 }
 
